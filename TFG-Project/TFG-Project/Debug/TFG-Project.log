@@ -1,3 +1,142 @@
-﻿  main.cpp
+﻿  CLColor.cpp
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(52,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(54,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(56,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(58,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+  CLEngine.cpp
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(52,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(54,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(56,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(58,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\CLEngine.cpp(994,56): warning C4244: 'argumento': conversión de 'double' a 'uint8_t'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\CLEngine.cpp(994,52): warning C4244: 'argumento': conversión de 'double' a 'uint8_t'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\CLEngine.cpp(994,48): warning C4244: 'argumento': conversión de 'double' a 'uint8_t'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\CLEngine.cpp(994,42): warning C4244: 'argumento': conversión de 'double' a 'uint8_t'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\CLEngine.cpp(1011,17): warning C4244: 'argumento': conversión de 'const int' a 'GLfloat'; posible pérdida de datos
+D:\Microsoft Visual Studio 2019\VC\Tools\MSVC\14.27.29110\include\xmemory(230,33): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+D:\Microsoft Visual Studio 2019\VC\Tools\MSVC\14.27.29110\include\memory(1427): message : Vea la referencia a la creación de una instancia de la función plantilla "void std::_Construct_in_place<_Ty,unsigned int&,unsigned int&,glm::vec3&,std::vector<std::string,std::allocator<std::string>>&,int&,int&,int&,int&,int&,uint_fast8_t&>(_Ty &,unsigned int &,unsigned int &,glm::vec3 &,std::vector<std::string,std::allocator<std::string>> &,int &,int &,int &,int &,int &,uint_fast8_t &) noexcept(false)" que se está compilando
+          with
+          [
+              _Ty=CLE::CLParticleSystem
+          ]
+D:\Microsoft Visual Studio 2019\VC\Tools\MSVC\14.27.29110\include\memory(2071): message : Vea la referencia a la creación de una instancia de la función plantilla "std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<unsigned int&,unsigned int&,glm::vec3&,std::vector<std::string,std::allocator<std::string>>&,int&,int&,int&,int&,int&,uint_fast8_t&>(unsigned int &,unsigned int &,glm::vec3 &,std::vector<std::string,std::allocator<std::string>> &,int &,int &,int &,int &,int &,uint_fast8_t &)" que se está compilando
+          with
+          [
+              _Ty=CLE::CLParticleSystem
+          ]
+D:\Microsoft Visual Studio 2019\VC\Tools\MSVC\14.27.29110\include\memory(2072): message : Vea la referencia a la creación de una instancia de la función plantilla "std::_Ref_count_obj2<_Ty>::_Ref_count_obj2<unsigned int&,unsigned int&,glm::vec3&,std::vector<std::string,std::allocator<std::string>>&,int&,int&,int&,int&,int&,uint_fast8_t&>(unsigned int &,unsigned int &,glm::vec3 &,std::vector<std::string,std::allocator<std::string>> &,int &,int &,int &,int &,int &,uint_fast8_t &)" que se está compilando
+          with
+          [
+              _Ty=CLE::CLParticleSystem
+          ]
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\CLEngine.cpp(668): message : Vea la referencia a la creación de una instancia de la función plantilla "std::shared_ptr<CLE::CLParticleSystem> std::make_shared<CLE::CLParticleSystem,unsigned int&,unsigned int&,glm::vec3&,std::vector<std::string,std::allocator<std::string>>&,int&,int&,int&,int&,int&,uint_fast8_t&>(unsigned int &,unsigned int &,glm::vec3 &,std::vector<std::string,std::allocator<std::string>> &,int &,int &,int &,int &,int &,uint_fast8_t &)" que se está compilando
+  CLFrustum.cpp
+  main.cpp
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(52,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(54,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(56,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(58,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\main.cpp(193,27): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\main.cpp(275,25): warning C4305: '+=': truncamiento de 'double' a 'float'
+  CLResource.cpp
+  CLResourceManager.cpp
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Constants.h(45,58): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Constants.h(45,58): warning C4305: 'inicializando': truncamiento de 'double' a 'const float'
+  CLResourceMaterial.cpp
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\ResourceManager\CLResourceMaterial.cpp(106,78): warning C4244: 'argumento': conversión de 'float' a 'GLint'; posible pérdida de datos
+  CLResourceMesh.cpp
+  CLResourceShader.cpp
+  CLResourceTexture.cpp
+  CLBillboard.cpp
+  CLCamera.cpp
+  CLDirectLight.cpp
+  CLEntity.cpp
+  CLGrassSystem.cpp
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Utils.h(46,29): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Utils.h(50,25): warning C4244: 'inicializando': conversión de 'double' a 'uint32_t'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Utils.h(51,31): warning C4244: 'return': conversión de 'uint32_t' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Utils.h(57,21): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Constants.h(45,58): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Constants.h(45,58): warning C4305: 'inicializando': truncamiento de 'double' a 'const float'
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(35,39): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(36,53): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(38,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(40,27): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(78,34): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(93,72): warning C4244: 'argumento': conversión de '_Rep' a 'unsigned int'; posible pérdida de datos
+          with
+          [
+              _Rep=__int64
+          ]
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(99,51): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(100,50): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(101,50): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(109,34): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(204,45): warning C4305: '+=': truncamiento de 'double' a 'float'
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(219,39): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(220,53): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(222,29): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(224,27): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(248,34): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(262,72): warning C4244: 'argumento': conversión de '_Rep' a 'unsigned int'; posible pérdida de datos
+          with
+          [
+              _Rep=__int64
+          ]
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(268,51): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(269,50): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(270,50): warning C4244: 'argumento': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLGrassSystem.cpp(279,34): warning C4244: '=': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=float
+          ]
+  CLMesh.cpp
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Utils.h(46,29): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Utils.h(50,25): warning C4244: 'inicializando': conversión de 'double' a 'uint32_t'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Utils.h(51,31): warning C4244: 'return': conversión de 'uint32_t' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Utils.h(57,21): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+  CLNode.cpp
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(52,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(54,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(56,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(58,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Constants.h(45,58): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Constants.h(45,58): warning C4305: 'inicializando': truncamiento de 'double' a 'const float'
+  CLParticleSystem.cpp
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(52,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(54,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(56,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Built-In-Classes\CLColor.h(58,52): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Utils.h(46,29): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Utils.h(50,25): warning C4244: 'inicializando': conversión de 'double' a 'uint32_t'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Utils.h(51,31): warning C4244: 'return': conversión de 'uint32_t' a 'float'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Utils.h(57,21): warning C4244: 'inicializando': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Constants.h(45,58): warning C4305: 'inicializando': truncamiento de 'double' a 'float'
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\Constants.h(45,58): warning C4305: 'inicializando': truncamiento de 'double' a 'const float'
+C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\TFG-Project\src\CLEngine\src\SceneTree\CLParticleSystem.cpp(198,82): warning C4244: '=': conversión de '_Rep' a 'float'; posible pérdida de datos
+          with
+          [
+              _Rep=__int64
+          ]
+  CLPointLight.cpp
+  CLShadowMapping.cpp
+  Generando código...
+  Compilando...
+  CLSkybox.cpp
+  CLSpotLight.cpp
+  Generando código...
 LINK : warning LNK4098: la biblioteca predeterminada'MSVCRT' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
   TFG-Project.vcxproj -> C:\Users\ruben\Desktop\Genetic-Algorithm-TFG\TFG-Project\Debug\TFG-Project.exe
