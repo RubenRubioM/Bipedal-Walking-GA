@@ -478,11 +478,6 @@ void CLEngine::SetTitle(string &&t) {
     glfwSetWindowTitle(window, t.c_str());
 }
 
-void CLEngine::RenderImgui(){
-    /*ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());*/
-}
-
 /**
  * Devuelve el tiempo de glfw
  */
@@ -525,22 +520,24 @@ void CLEngine::Clear(){
 // -----------------------------------------------------------
 
 void CLEngine::ImGuiInit(){
-    //IMGUI_CHECKVERSION();
-    //ImGui::CreateContext();
-    //ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-    //// Setup Dear ImGui style
-    //ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 450");
+    ImGui::StyleColorsDark();
+}
 
-    //// Setup Platform/Renderer bindings
-    //ImGui_ImplGlfw_InitForOpenGL(window, true);
-    //ImGui_ImplOpenGL3_Init("#version 450");
+void CLEngine::RenderImgui() {
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
 }
 
 void CLEngine::TerminateImGui(){
-    /*ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
-    ImGui::DestroyContext();*/
+    ImGui::DestroyContext();
 }
 
 /// --------------------------------

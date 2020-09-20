@@ -26,16 +26,10 @@
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-//#include <IMGUI/imgui.h>
-//#include <IMGUI/imgui_impl_opengl3.h>
-//#include <IMGUI/imgui_impl_glfw.h>
-
+#include <IMGUI/imgui.h>
+#include <IMGUI/imgui_impl_glfw.h>
+#include <IMGUI/imgui_impl_opengl3.h>
 #include <SOIL2/SOIL2.h>
-//#define STB_IMAGE_IMPLEMENTATION
-//#include "stb_image.h"
-//#include <freeType2/ft2build.h>
-//#include FT_FREETYPE_H
-
 
 //Motor grafico
 #include "SceneTree/CLNode.h"
@@ -461,6 +455,7 @@ class CLEngine {
 
         int width{};
         int height{};
+        const string shaderVersion = "#version 450";
         GLFWwindow *window { nullptr };
         unsigned int hudShader { 0 };
         unsigned int textShader { 0 };
