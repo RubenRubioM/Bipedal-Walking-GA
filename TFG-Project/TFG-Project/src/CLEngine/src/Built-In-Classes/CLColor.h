@@ -12,10 +12,8 @@
  * 
  * @author Rubén Rubio Martínez <https://www.linkedin.com/in/rub%C3%A9n-rubio-mart%C3%ADnez-938700131/>
  * 
- */
- 
- 
- #pragma once
+ */ 
+#pragma once
 
 #include <stdint.h>
 
@@ -33,8 +31,8 @@ class CLColor{
         //! @param alpha Valor de la trasparencia
         //! @note Valores siempre entre 0 y 255
         CLColor(uint8_t red,uint8_t green,uint8_t blue,uint8_t alpha);
+        //! Destructor
         ~CLColor(){};
-
         //! Devuelve el valor del rojo
         //! @returns red
         uint8_t GetRed()   const { return r;};
@@ -47,7 +45,6 @@ class CLColor{
         //! Devuelve el valor de la trasparencia
         //! @returns alpha
         uint8_t GetAlpha() const { return a;};
-
         //! Devuelve el valor del rojo normalizado
         float GetRedNormalized()   const { return r/255.0;};
         //! Devuelve el valor del verde normalizado
@@ -57,9 +54,9 @@ class CLColor{
         //! Devuelve el valor de la trasparencia normalizado
         float GetAlphaNormalized() const { return a/255.0;};
     private:
-        uint8_t r; 
-        uint8_t g;
-        uint8_t b;
-        uint8_t a;
+        uint8_t r{0};
+        uint8_t g{0};
+        uint8_t b{0};
+        uint8_t a{0};
 };
 };

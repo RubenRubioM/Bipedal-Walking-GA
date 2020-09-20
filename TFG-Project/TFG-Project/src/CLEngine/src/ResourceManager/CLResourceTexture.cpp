@@ -14,8 +14,8 @@
  * 
  */
  
- 
- #include "CLResourceTexture.h"
+#include "CLResourceTexture.h"
+
 using namespace CLE;
 
 bool CLResourceTexture::LoadFile(string file, bool vertically){

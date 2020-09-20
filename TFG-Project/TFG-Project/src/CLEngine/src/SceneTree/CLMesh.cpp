@@ -16,9 +16,7 @@
  * 
  */
  
- 
- #include "CLMesh.h"
-#include "../Utils.h"
+#include "CLMesh.h"
 
 using namespace CLE;
 
@@ -26,78 +24,8 @@ CLMesh::CLMesh() {
 }
 
 void CLMesh::Draw(GLuint shaderID) {
-    if (material) {
-        material->Draw(shaderID);
-    }
     if (mesh) {
         mesh->Draw(shaderID);
-    }
-}
-
-bool CLMesh::ItsTimeToAnimate() {
-    //int64_t now = Utils::getMillisSinceEpoch();
-    //int64_t interval = now - lastTimeFrameChanged;
-    //if(interval > DELTA_ANIMATION) {
-    //    lastTimeFrameChanged = now;
-    //    // cambiamos de frame
-    //    return true;
-    //}
-    //return false;
-    return false;
-}
-
-void CLMesh::GoToNextKeyFrames() {
-    // if(loop || (!loop && currentKeyFrameIndex < keyframes.size()) - 2)
-    if(currentAnimation->loop || currentKeyFrameIndex < currentAnimation->keyframes.size() - 2)
-        currentKeyFrameIndex++;
-
-    if (currentKeyFrameIndex > currentAnimation->keyframes.size() - 1)
-        currentKeyFrameIndex = 0;
-
-    nextKeyFrameIndex = currentKeyFrameIndex + 1;
-    if (nextKeyFrameIndex > currentAnimation->keyframes.size() - 1)
-        nextKeyFrameIndex = 0;
-
-    mesh = currentAnimation->keyframes[currentKeyFrameIndex];
-    nextMesh = currentAnimation->keyframes[nextKeyFrameIndex];
-}
-
-void CLMesh::Animate() {
-    if(ItsTimeToAnimate()) {
-        // cambiamos de frame
-        GoToNextKeyFrames();
-    }
-}
-
-void CLMesh::ResetAnimation() {
-    currentKeyFrameIndex = 0;
-}
-
-void CLMesh::AnimateInterpolated() {
-    if(ItsTimeToAnimate()) {
-            // si tenemos que cambiar ya de keyFrame...
-        if (currentDistance == distanceBetweenKeyFrames[currentKeyFrameIndex]) {
-            GoToNextKeyFrames();
-            currentDistance = 0;
-        }
-
-        float percentTick = std::min(1.0f, (static_cast<float>(currentDistance) / distanceBetweenKeyFrames[currentKeyFrameIndex]));
-
-        // de cada keyframe, recorremos sus mallas
-        for (size_t idxMesh = 0; idxMesh < mesh->GetvectorMesh().size(); idxMesh++) {
-            auto& prevSubMesh = mesh->GetvectorMeshPtr()->at(idxMesh);
-            auto& nextSubMesh = nextMesh->GetvectorMeshPtr()->at(idxMesh);
-            for (size_t idxVertex = 0; idxVertex < prevSubMesh.vertices.size(); idxVertex++) {
-                auto& prevVertex = prevSubMesh.vertices.at(idxVertex);
-                auto& nextVertex = nextSubMesh.vertices.at(idxVertex);
-
-                glm::vec3 position = mix(prevVertex.position, nextVertex.position, percentTick);
-                glm::vec3 normal = mix(prevVertex.normal, nextVertex.normal, percentTick);
-                prevVertex.animationOffsetPos = position - prevVertex.position;
-                prevVertex.animationOffsetNormal = normal - prevVertex.normal;
-            }
-        }
-        currentDistance++;
     }
 }
 

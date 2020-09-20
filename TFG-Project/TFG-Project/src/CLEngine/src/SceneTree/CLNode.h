@@ -20,7 +20,6 @@
 #ifndef CLNODE_H
 #define CLNODE_H
 
-
 #include <vector>
 #include <iostream>
 #include <memory>
@@ -31,18 +30,13 @@
 #include "CLEntity.h"
 #include "CLMesh.h"
 #include "CLPointLight.h"
-#include "CLDirectLight.h"
-#include "CLSpotLight.h"
 #include "CLCamera.h"
 #include "CLParticleSystem.h"
 #include "../ResourceManager/CLResourceMesh.h"
 #include "CLSkybox.h"
 #include "CLShadowMapping.h"
 #include "CLBillboard.h"
-#include "../Frustum/CLFrustum.h"
 #include "../ResourceManager/CLResourceManager.h"
-#include "CLGrassSystem.h"
-
 #include "../Built-In-Classes/CLColor.h"
 
 using namespace std;
@@ -58,9 +52,7 @@ class CLNode{
         CLNode();
         CLNode(shared_ptr<CLEntity> entity);
         ~CLNode(){};
-
         void AddChild(shared_ptr<CLNode> child);
-
         //Getters
         //! Devuelve la entidad del nodo
         //! @returns entity Puntero a la entidad CLE::CLEntity
@@ -111,13 +103,10 @@ class CLNode{
         //! @returns particlesActivated
         bool static GetParticlesActivated() { return particlesActivated; };
 
-        
-
-
         //Setters
         //! Asigna un padre al nodo
         //! @param f Nodo padre
-        bool SetFather(CLNode* f)                        { father = f; return true; }
+        bool SetFather(CLNode* f) { father = f; return true; }
         //! Asigna una traslacion al nodo
         //! @param t Traslacion del nodo
         void SetTranslation(glm::vec3 t); 
@@ -137,11 +126,10 @@ class CLNode{
         //! Activa o desactiva las particulas
         //! @param particlesActivated
         void SetParticlesActivated(bool a) { particlesActivated = a; };
-
-        void SetShaderProgramID(GLuint id)              { shaderProgramID = id; }
-        
+        //! Asigna el shader ID
+        //! @param shaderProgramID
+        void SetShaderProgramID(GLuint id) { shaderProgramID = id; }
         void SetOctreeVisible(bool v) { octreeVisible = v; };
-        
         //! Elimina un hijo de ese nodo
         //! @param child Puntero al hijo para eliminar
         //! @returns bool Si ha sido finalizado con exito o no
@@ -154,7 +142,6 @@ class CLNode{
         //! @param id Identificador para buscar
         //! @returns CLNode* Puntero al nodo
         float GetBoundingSizeById(unsigned int id);
-
         glm::mat4 TranslateMatrix();
         glm::mat4 RotateMatrix();
         glm::mat4 ScaleMatrix();
@@ -162,23 +149,14 @@ class CLNode{
         //! Calcula la bounding box del objeto
         float CalculateBoundingBox();
         void CalculateBoundingBoxOBB();
-
-
         //! Dibuja la escena
         void DFSTree(glm::mat4,CLCamera* cam, const glm::mat4& VPmatrix);
         void DFSTree(glm::mat4 mA,  CLCamera* cam, GLuint shaderID, const glm::mat4& lightSpaceMatrix);
-
-
-        void SetIgnoreFrustrum(bool f) { ignoreFrustrum = f;};
-
-
-
         //DEBUG
         //! Imprime el arbol
         //! @param root Nodo padre
         void DrawTree(CLNode* root); 
     private:
-
         void ActivateFlag();
 
         bool changed { true };
@@ -196,23 +174,11 @@ class CLNode{
         glm::vec3 scalation         {glm::vec3(1.0f)};  // escalado del nodo
         glm::mat4 transformationMat {glm::mat4(1.0f)};  // matriz modelo del nodo
 
-
-
-
         // BOUNDING BOX
         glm::vec3 extremeMinMesh    {glm::vec3(0.0,0.0,0.0)}; // definimos el vertice mayor de la malla para el BoundingBpx
         glm::vec3 extremeMaxMesh    {glm::vec3(0.0,0.0,0.0)}; // definimos el vertice menos de la malla para el BoundingBox
         int frustum_ { typeFrustum::AABB }; // AABB por defecto
         glm::vec3 dimensionsBoundingBox { glm::vec3(0.0,0.0,0.0) };
-        //float dimensionsBoundingBox {0.0}; // width , height, depht
-
-
-        glm::vec3 RotatePointAroundCenter(const glm::vec3& point_ , const glm::vec3& center, const glm::vec3& rot) const;
-        glm::vec3 TranslatePointAroundCenter(const glm::vec3& point_ , const glm::vec3& center, const glm::vec3& trans) const;
-
-
-
-
 
 };
 

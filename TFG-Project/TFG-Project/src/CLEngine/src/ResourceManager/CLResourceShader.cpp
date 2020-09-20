@@ -14,11 +14,9 @@
  * 
  */
  
- 
- #include "CLResourceShader.h"
+#include "CLResourceShader.h"
 
 using namespace CLE;
-
 
 bool CLResourceShader::LoadFile(string file, bool vertically) {
     

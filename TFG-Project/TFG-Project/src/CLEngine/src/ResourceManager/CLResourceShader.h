@@ -13,8 +13,7 @@
  * 
  */
  
- 
- #pragma once
+#pragma once
 
 #include "CLResource.h"
 #include <fstream>
@@ -25,9 +24,10 @@ namespace CLE {
     //! Con ella se pueden leer cualquier shader y acceder de manera rapida durante la ejecición del código
     class CLResourceShader : public CLResource {
         public:
+            //! Constructor
             CLResourceShader() {};
+            //! Destructor
             ~CLResourceShader() {};
-
             void Draw(GLuint shaderID) override;
             bool LoadFile(string, bool) override;
             //! Para leer vertex y fragment
@@ -44,7 +44,6 @@ namespace CLE {
             //! Devuelve el ID del programa
             //! @returns programID identificador de Opengl para shaders
             int GetProgramID()                  const { return programID;   }
-
         private:
             bool LoadShader(string, GLenum);
             bool LinkShaders();
@@ -53,8 +52,5 @@ namespace CLE {
             GLuint fragmentID = 0;
             GLuint geometryID = 0;
             int programID = 0;
-            //GLenum shaderType;
-    
     };
-
 }

@@ -14,8 +14,7 @@
  * 
  */
  
- 
- #pragma once
+#pragma once
 
 #include "CLResource.h"
 
@@ -35,10 +34,6 @@ struct Vertex {
     glm::vec3 normal {0.f,0.f,0.f};
     // texCoords
     glm::vec2 texCoords {0.f,0.f};
-    // offset
-    glm::vec3 animationOffsetPos {0.f,0.f,0.f};
-    // offset
-    glm::vec3 animationOffsetNormal {0.f,0.f,0.f};
 };
 
 //! Estructura para almacenar informacion sobre las texturas del modelado
@@ -50,20 +45,16 @@ struct Texture {
 
 //! Clase auxiliar para manejar mas facil las submallas de una malla que leemos
 class Mesh{
-    
-
     public:
         Mesh() {};
         Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
         ~Mesh(){};
-
         /*  Mesh Data  */
         vector<Vertex> vertices;
         vector<unsigned int> indices;
         vector<Texture> textures;
         //vector<Material> materials;
         unsigned int VAO = 0, VBO = 0, EBO = 0;  
-
 };
 
 namespace CLE {
@@ -80,29 +71,20 @@ namespace CLE {
                     glDeleteVertexArrays(1,&mesh.VAO);
                 }
             };
-
             void Draw(GLuint shaderID) override;
             bool LoadFile(std::string, bool) override;
             void DrawDepthMap(GLuint shaderID);
-            //! Devuelve el vector de mallas
-            //! @returns vecMeshes Las posibles submallas que pueda tener la malla leida
             vector<Mesh> GetvectorMesh() { return vecMesh; }
             vector<Mesh> &GetvectorMeshRef() { return vecMesh; }
             vector<Mesh> *GetvectorMeshPtr() { return &vecMesh; }
-
         private:
             void processNode(aiNode *node, const aiScene *scene);
             Mesh processMesh(aiMesh *mesh, const aiScene *scene);
             vector<Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, string typeName);
             unsigned int TextureFromFile(const char *path, const string &directory, bool gamma = false);
-            //Material loadMaterial(aiMaterial* mat); 
-
             vector<Mesh> vecMesh;
             vector<Texture> textures_loaded;
             string directory;
             bool gammaCorrection = true;
-            //const aiScene *scene;
-
-            
     };
 }

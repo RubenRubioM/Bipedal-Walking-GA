@@ -14,11 +14,8 @@
  * 
  */
  
- 
- #include "CLResourceMesh.h"
+#include "CLResourceMesh.h"
 
-//#define STB_IMAGE_IMPLEMENTATION
-//#include <stb_image.h>
 #include <SOIL2/SOIL2.h>
 
 // MESH -----------------------------------------------------------------------------
@@ -124,7 +121,6 @@ Mesh CLResourceMesh::processMesh(aiMesh *mesh, const aiScene *scene) {
         } else
             vertex.texCoords = glm::vec2(0.0f, 0.0f);
 
-
         //Texture coords
         if (mesh->mTextureCoords[0]) {
             glm::vec2 vec;
@@ -148,8 +144,6 @@ Mesh CLResourceMesh::processMesh(aiMesh *mesh, const aiScene *scene) {
     if (mesh->mMaterialIndex >= 0) {
         // // process materials
         aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-
-
         // 1. diffuse maps
         vector<Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());

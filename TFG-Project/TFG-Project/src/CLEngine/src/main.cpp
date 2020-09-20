@@ -41,7 +41,6 @@
 #include "CLEngine.h"
 #include "ResourceManager/CLResource.h"
 #include "ResourceManager/CLResourceManager.h"
-#include "ResourceManager/CLResourceMaterial.h"
 #include "ResourceManager/CLResourceMesh.h"
 #include "ResourceManager/CLResourceShader.h"
 #include "SceneTree/CLCamera.h"
@@ -148,8 +147,6 @@ int main() {
         double previousTime = glfwGetTime();
         int frameCount = 0;
 
-
-
         while (device->Run()) {
             //Apartir de aqui hacemos cosas, de momento en el main para testear
             device->UpdateViewport();  //Por si reescalamos la ventana
@@ -189,7 +186,6 @@ int main() {
 
             if (glfwGetKey(device->GetWindow(), GLFW_KEY_R)) {
                 static_cast<CLParticleSystem*>(ps2->GetEntity())->StartOneIteration();
-                // cout << "Realizamos una iteracion\n";
             }
 
             mesh2->SetRotation(glm::vec3(mesh2->GetRotation().x,mesh2->GetRotation().y,mesh2->GetRotation().z + 10));
@@ -208,19 +204,6 @@ int main() {
             }
 
             device->DrawObjects();
-
-            device->SetEnableDepthTest(false);
-            
-            string file = "media/logo_clover.png";
-            device->DrawImage2D(10.0f, 10.0f, 200.0f, 200.0f, 0.2f, file, true);
-
-            //TEXTO -----------------
-            string cadena = "Demo tecnica CLEngine";
-            glm::vec3 vect3 = glm::vec3(1.0f, 0.8f, 0.2f);
-            device->RenderText2D(cadena, 25.0f, 25.0f, 0.05f, 1.0f, vect3);
-
-            device->SetEnableDepthTest(true);
-
             device->PollEvents();
             device->RenderImgui();
             device->EndScene();

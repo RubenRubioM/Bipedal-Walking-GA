@@ -14,7 +14,6 @@
  * 
  */
  
- 
- #include "CLResource.h"
+#include "CLResource.h"
 
 using namespace CLE;

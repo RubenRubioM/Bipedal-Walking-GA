@@ -14,15 +14,12 @@
  * 
  */
  
- 
- #include "CLNode.h" 
 
 #include <GLM/gtc/matrix_transform.hpp>
 #include <GLM/ext.hpp>
 #include <GLM/gtx/string_cast.hpp>
 
-
-#include "../Frustum/CLFrustum.h"
+#include "CLNode.h" 
 #include "../Constants.h"
 
 
@@ -45,10 +42,6 @@ void CLNode::AddChild(shared_ptr<CLNode> child){
     child->SetFather(this);
 }
 
-
-
-
-
 bool CLNode::RemoveChild(CLNode* child){
 
     //Childs son los hijos del padre en el que estara child
@@ -60,8 +53,6 @@ bool CLNode::RemoveChild(CLNode* child){
     }
     return false;
 }
-
-
 
 bool CLNode::HasChild(CLNode* child){
 
@@ -114,21 +105,10 @@ void CLNode::SetRotation(glm::vec3 r) {
     ActivateFlag();
 }
 
-glm::vec3 CLNode::RotatePointAroundCenter(const glm::vec3& point_ , const glm::vec3& center, const glm::vec3& rot) const{
-    glm::vec3 newPoint = glm::vec3(0.0,0.0,0.0);
-    // rotation Y
-    if(rotation.y != rot.y){
-        newPoint.x += ((point_.x - center.x) * cos(rot.y-rotation.y))  + center.x;
-        newPoint.z += ((point_.z - center.z) * sin(rot.y-rotation.y))  + center.z;
-    }
-    return newPoint;
-}
-
 void CLNode::SetScalation(glm::vec3 s) {
     scalation = s; 
     ActivateFlag();
 }
-
 
 void CLNode::ActivateFlag() {
     changed = true;
@@ -162,33 +142,16 @@ glm::mat4 CLNode::CalculateTransformationMatrix() {
     return TranslateMatrix()*RotateMatrix()*ScaleMatrix();
 }
 
-
-
-
 void CLNode::DFSTree(glm::mat4 mA, CLCamera* cam, const glm::mat4& VPmatrix) {
-    // > Flag
-    // > > Calcular matriz
-    // > Dibujar
-    // > Para cada hijo
-    // > > DFSTree(mT)
-    
-    /*if(Constants::CLIPPING_OCTREE && !octreeVisible)
-        return;*/
 
     if (changed) {
         transformationMat = mA*CalculateTransformationMatrix();
         changed = false;
     }
     glm::vec3 pos    = GetGlobalTranslation();
-    CLE::CLFrustum::Visibility frusVisibility = CLE::CLFrustum::Visibility::Invisible;
-    if(!ignoreFrustrum){
-        auto& frustrum_m = cam->GetFrustum();
-        if(frustum_ == typeFrustum::AABB)   frusVisibility = frustrum_m.IsInside(pos, dimensionsBoundingBox.x);
-        else                                frusVisibility = frustrum_m.IsInside(extremeMinMesh, extremeMaxMesh);
-    }
 
     //Voy a comentar de momento el frustrum ya que para el particle system puede dar problemas
-    if( (entity && visible && frusVisibility == CLE::CLFrustum::Visibility::Completly) || (entity && visible && ignoreFrustrum) ){ 
+    if( entity && visible ){ 
         glUseProgram(shaderProgramID); 
         glm::mat4 MVP = VPmatrix * transformationMat;
         glUniformMatrix4fv(glGetUniformLocation(shaderProgramID, "model"), 1, GL_FALSE, glm::value_ptr(transformationMat));
@@ -205,50 +168,24 @@ void CLNode::DFSTree(glm::mat4 mA, CLCamera* cam, const glm::mat4& VPmatrix) {
     }
 }
 
-
-
-
-
 void CLNode::DFSTree(glm::mat4 mA,  CLCamera* cam, GLuint shaderID, const glm::mat4& lightSpaceMatrix) {
-
-    /*if(Constants::CLIPPING_OCTREE && !octreeVisible)
-        return;*/
 
     if (changed) {
         transformationMat = mA*CalculateTransformationMatrix();
         changed = false;
     }
     glm::vec3 pos    = GetGlobalTranslation();
-    CLE::CLFrustum::Visibility frusVisibility = CLE::CLFrustum::Visibility::Invisible;
-    if(!ignoreFrustrum){
-        auto& frustrum_m = cam->GetFrustum();
-        if(frustum_ == typeFrustum::AABB)   frusVisibility = frustrum_m.IsInside(pos, dimensionsBoundingBox.x);
-        else                                frusVisibility = frustrum_m.IsInside(extremeMinMesh, extremeMaxMesh);
-    }
 
-
-    //auto& frustum_m = device->GetActiveCamera()->GetFrustum();
-    //CLE::CLFrustum::Visibility frusVisibility = frustum_m.IsInside(translation, dimensionsBoundingBox);
-
-    if( (entity && visible && frusVisibility == CLE::CLFrustum::Visibility::Completly) || (entity && visible && ignoreFrustrum) ){ 
+    if( entity && visible ){ 
         glm::mat4 lightSpaceModel = lightSpaceMatrix * transformationMat;
         glUniformMatrix4fv(glGetUniformLocation(shaderID, "lightSpaceModel"), 1, GL_FALSE, glm::value_ptr(lightSpaceModel));
-
-        
         entity->DrawDepthMap(shaderID);
-
     }
 
     for (auto node : childs) {
         node->DFSTree(transformationMat, cam, shaderID, lightSpaceMatrix);
     }
 }
-
-
-
-
-
-
 
 /**
  * Metodo de debug para imprimir los nodos del arbol
@@ -280,8 +217,6 @@ void CLNode::DrawTree(CLNode* root){
 float CLNode::CalculateBoundingBox(){
     glm::vec3 extremeMinMesh = glm::vec3(0.0,0.0,0.0); 
     glm::vec3 extremeMaxMesh = glm::vec3(0.0,0.0,0.0);
-    //auto mesh_m = static_cast<CLMesh*>(e.get())->GetMesh();
-    //auto vecMesh = mesh_m->GetvectorMesh();
     auto resource = static_cast<CLMesh*>(this->GetEntity())->GetMesh();
     auto vecMesh = static_cast<CLResourceMesh*>(resource)->GetvectorMesh();
 
@@ -324,9 +259,6 @@ float CLNode::CalculateBoundingBox(){
     dimensionsBoundingBox.y = dimGeneral;
     dimensionsBoundingBox.z = dimGeneral;    
 
-    //cout << "Los extremos son: " << endl;
-    //cout << "minimo: ( " << extremeMinMesh.x<< " , " << extremeMinMesh.y<< " , " <<extremeMinMesh.z<< 
-    //" ) , maximo: " << extremeMaxMesh.x<< " , " << extremeMaxMesh.y<< " , " << extremeMaxMesh.z<< " )"<< endl;
     return dimGeneral;
 }
 
@@ -334,8 +266,6 @@ float CLNode::CalculateBoundingBox(){
 void CLNode::CalculateBoundingBoxOBB(){
     extremeMinMesh = glm::vec3(0.0,0.0,0.0); 
     extremeMaxMesh = glm::vec3(0.0,0.0,0.0);
-    //auto mesh_m = static_cast<CLMesh*>(e.get())->GetMesh();
-    //auto vecMesh = mesh_m->GetvectorMesh();
     auto resource = static_cast<CLMesh*>(this->GetEntity())->GetMesh();
     auto vecMesh = static_cast<CLResourceMesh*>(resource)->GetvectorMesh();
 
@@ -375,8 +305,4 @@ void CLNode::CalculateBoundingBoxOBB(){
     dimensionsBoundingBox.z = (glm::distance(extremeMaxMesh.z, extremeMinMesh.z) *GetScalation().z)/2;
 
     frustum_ = typeFrustum::OBB;
-
-    //cout << "Los extremos son: " << endl;
-    //cout << "minimo: ( " << extremeMinMesh.x<< " , " << extremeMinMesh.y<< " , " <<extremeMinMesh.z<< 
-    //" ) , maximo: " << extremeMaxMesh.x<< " , " << extremeMaxMesh.y<< " , " << extremeMaxMesh.z<< " )"<< endl;
 }

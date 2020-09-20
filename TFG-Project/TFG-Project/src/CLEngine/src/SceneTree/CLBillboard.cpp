@@ -14,10 +14,7 @@
  * 
  */
  
- 
  #include "CLBillboard.h"
-
-
 
 CLE::CLBillboard::CLBillboard(unsigned int id,CLResourceTexture* texture_, float width_, float height_) : CLEntity(id){
     texture = texture_;
@@ -44,8 +41,5 @@ void CLE::CLBillboard::Draw(GLuint shaderID){
         glDrawArrays(GL_POINTS, 0, 1);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
-        //glDisableVertexAttribArray(0);
-
     }
 }
-

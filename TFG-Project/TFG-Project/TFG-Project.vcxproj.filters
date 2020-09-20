@@ -24,16 +24,10 @@
     <ClCompile Include="src\CLEngine\src\Built-In-Classes\CLColor.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\CLEngine\src\Frustum\CLFrustum.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="src\CLEngine\src\ResourceManager\CLResource.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\CLEngine\src\ResourceManager\CLResourceManager.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CLEngine\src\ResourceManager\CLResourceMaterial.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\CLEngine\src\ResourceManager\CLResourceMesh.cpp">
@@ -43,42 +37,6 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\CLEngine\src\ResourceManager\CLResourceTexture.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLBillboard.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLCamera.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLDirectLight.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLEntity.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLGrassSystem.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLMesh.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLNode.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLParticleSystem.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLPointLight.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLShadowMapping.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLSkybox.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLSpotLight.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\CLEngine\src\IMGUI\imgui.cpp">
@@ -99,6 +57,33 @@
     <ClCompile Include="src\CLEngine\src\IMGUI\imgui_widgets.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="src\CLEngine\src\SceneTree\CLBillboard.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CLEngine\src\SceneTree\CLCamera.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CLEngine\src\SceneTree\CLEntity.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CLEngine\src\SceneTree\CLMesh.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CLEngine\src\SceneTree\CLNode.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CLEngine\src\SceneTree\CLParticleSystem.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CLEngine\src\SceneTree\CLPointLight.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CLEngine\src\SceneTree\CLShadowMapping.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CLEngine\src\SceneTree\CLSkybox.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CLEngine\src\CLEngine.h">
@@ -107,16 +92,10 @@
     <ClInclude Include="src\CLEngine\src\Built-In-Classes\CLColor.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\CLEngine\src\Frustum\CLFrustum.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="src\CLEngine\src\ResourceManager\CLResource.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\CLEngine\src\ResourceManager\CLResourceManager.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CLEngine\src\ResourceManager\CLResourceMaterial.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\CLEngine\src\ResourceManager\CLResourceMesh.h">
@@ -126,42 +105,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\CLEngine\src\ResourceManager\CLResourceTexture.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLBillboard.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLCamera.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLDirectLight.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLEntity.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLGrassSystem.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLMesh.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLNode.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLParticleSystem.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLPointLight.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLShadowMapping.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLSkybox.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLSpotLight.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\CLEngine\src\Utils.h">
@@ -194,6 +137,33 @@
     <ClInclude Include="src\CLEngine\src\IMGUI\imstb_truetype.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="src\CLEngine\src\SceneTree\CLBillboard.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CLEngine\src\SceneTree\CLCamera.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CLEngine\src\SceneTree\CLEntity.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CLEngine\src\SceneTree\CLMesh.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CLEngine\src\SceneTree\CLNode.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CLEngine\src\SceneTree\CLParticleSystem.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CLEngine\src\SceneTree\CLPointLight.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CLEngine\src\SceneTree\CLShadowMapping.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CLEngine\src\SceneTree\CLSkybox.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\CLEngine\src\Shaders\basicShader.frag" />
@@ -205,9 +175,6 @@
     <None Include="src\CLEngine\src\Shaders\cartoonShader.vert" />
     <None Include="src\CLEngine\src\Shaders\debugShader.frag" />
     <None Include="src\CLEngine\src\Shaders\debugShader.vert" />
-    <None Include="src\CLEngine\src\Shaders\grassShader.frag" />
-    <None Include="src\CLEngine\src\Shaders\grassShader.geom" />
-    <None Include="src\CLEngine\src\Shaders\grassShader.vert" />
     <None Include="src\CLEngine\src\Shaders\lightMapping.frag" />
     <None Include="src\CLEngine\src\Shaders\lightMapping.vert" />
     <None Include="src\CLEngine\src\Shaders\materialShader.frag" />

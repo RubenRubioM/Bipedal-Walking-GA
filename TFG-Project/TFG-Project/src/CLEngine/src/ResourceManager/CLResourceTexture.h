@@ -14,15 +14,12 @@
  * 
  */
  
- 
- #pragma once
+#pragma once
 
 #include "CLResource.h"
 #include <fstream>
 #include <sstream>
 #include <string>
-//#define STB_IMAGE_IMPLEMENTATION
-//#include "stb_image.h"
 #include <SOIL2/SOIL2.h>
 
 

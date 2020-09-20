@@ -149,7 +149,6 @@
   <ItemGroup>
     <ClCompile Include="src\CLEngine\src\Built-In-Classes\CLColor.cpp" />
     <ClCompile Include="src\CLEngine\src\CLEngine.cpp" />
-    <ClCompile Include="src\CLEngine\src\Frustum\CLFrustum.cpp" />
     <ClCompile Include="src\CLEngine\src\IMGUI\imgui.cpp" />
     <ClCompile Include="src\CLEngine\src\IMGUI\imgui_demo.cpp" />
     <ClCompile Include="src\CLEngine\src\IMGUI\imgui_draw.cpp" />
@@ -159,28 +158,23 @@
     <ClCompile Include="src\CLEngine\src\main.cpp" />
     <ClCompile Include="src\CLEngine\src\ResourceManager\CLResource.cpp" />
     <ClCompile Include="src\CLEngine\src\ResourceManager\CLResourceManager.cpp" />
-    <ClCompile Include="src\CLEngine\src\ResourceManager\CLResourceMaterial.cpp" />
     <ClCompile Include="src\CLEngine\src\ResourceManager\CLResourceMesh.cpp" />
     <ClCompile Include="src\CLEngine\src\ResourceManager\CLResourceShader.cpp" />
     <ClCompile Include="src\CLEngine\src\ResourceManager\CLResourceTexture.cpp" />
     <ClCompile Include="src\CLEngine\src\SceneTree\CLBillboard.cpp" />
     <ClCompile Include="src\CLEngine\src\SceneTree\CLCamera.cpp" />
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLDirectLight.cpp" />
     <ClCompile Include="src\CLEngine\src\SceneTree\CLEntity.cpp" />
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLGrassSystem.cpp" />
     <ClCompile Include="src\CLEngine\src\SceneTree\CLMesh.cpp" />
     <ClCompile Include="src\CLEngine\src\SceneTree\CLNode.cpp" />
     <ClCompile Include="src\CLEngine\src\SceneTree\CLParticleSystem.cpp" />
     <ClCompile Include="src\CLEngine\src\SceneTree\CLPointLight.cpp" />
     <ClCompile Include="src\CLEngine\src\SceneTree\CLShadowMapping.cpp" />
     <ClCompile Include="src\CLEngine\src\SceneTree\CLSkybox.cpp" />
-    <ClCompile Include="src\CLEngine\src\SceneTree\CLSpotLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CLEngine\src\Built-In-Classes\CLColor.h" />
     <ClInclude Include="src\CLEngine\src\CLEngine.h" />
     <ClInclude Include="src\CLEngine\src\Constants.h" />
-    <ClInclude Include="src\CLEngine\src\Frustum\CLFrustum.h" />
     <ClInclude Include="src\CLEngine\src\IMGUI\imconfig.h" />
     <ClInclude Include="src\CLEngine\src\IMGUI\imgui.h" />
     <ClInclude Include="src\CLEngine\src\IMGUI\imgui_impl_glfw.h" />
@@ -191,22 +185,18 @@
     <ClInclude Include="src\CLEngine\src\IMGUI\imstb_truetype.h" />
     <ClInclude Include="src\CLEngine\src\ResourceManager\CLResource.h" />
     <ClInclude Include="src\CLEngine\src\ResourceManager\CLResourceManager.h" />
-    <ClInclude Include="src\CLEngine\src\ResourceManager\CLResourceMaterial.h" />
     <ClInclude Include="src\CLEngine\src\ResourceManager\CLResourceMesh.h" />
     <ClInclude Include="src\CLEngine\src\ResourceManager\CLResourceShader.h" />
     <ClInclude Include="src\CLEngine\src\ResourceManager\CLResourceTexture.h" />
     <ClInclude Include="src\CLEngine\src\SceneTree\CLBillboard.h" />
     <ClInclude Include="src\CLEngine\src\SceneTree\CLCamera.h" />
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLDirectLight.h" />
     <ClInclude Include="src\CLEngine\src\SceneTree\CLEntity.h" />
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLGrassSystem.h" />
     <ClInclude Include="src\CLEngine\src\SceneTree\CLMesh.h" />
     <ClInclude Include="src\CLEngine\src\SceneTree\CLNode.h" />
     <ClInclude Include="src\CLEngine\src\SceneTree\CLParticleSystem.h" />
     <ClInclude Include="src\CLEngine\src\SceneTree\CLPointLight.h" />
     <ClInclude Include="src\CLEngine\src\SceneTree\CLShadowMapping.h" />
     <ClInclude Include="src\CLEngine\src\SceneTree\CLSkybox.h" />
-    <ClInclude Include="src\CLEngine\src\SceneTree\CLSpotLight.h" />
     <ClInclude Include="src\CLEngine\src\Utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -220,9 +210,6 @@
     <None Include="src\CLEngine\src\Shaders\cartoonShader.vert" />
     <None Include="src\CLEngine\src\Shaders\debugShader.frag" />
     <None Include="src\CLEngine\src\Shaders\debugShader.vert" />
-    <None Include="src\CLEngine\src\Shaders\grassShader.frag" />
-    <None Include="src\CLEngine\src\Shaders\grassShader.geom" />
-    <None Include="src\CLEngine\src\Shaders\grassShader.vert" />
     <None Include="src\CLEngine\src\Shaders\lightMapping.frag" />
     <None Include="src\CLEngine\src\Shaders\lightMapping.vert" />
     <None Include="src\CLEngine\src\Shaders\materialShader.frag" />

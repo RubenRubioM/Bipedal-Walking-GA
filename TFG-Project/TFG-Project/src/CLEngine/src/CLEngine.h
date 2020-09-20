@@ -14,8 +14,7 @@
  * 
  */
  
- 
- #pragma once
+#pragma once
 
 #ifndef CLENGINE_H
 #define CLENGINE_H
@@ -41,15 +40,8 @@
 #include "ResourceManager/CLResourceManager.h"
 
 using namespace std;
-namespace CLE {
 
-//! Estructura utilizada para el dibujado de caracteres
-//struct Character {
-//    GLuint      TextureID;   // ID handle of the glyph texture
-//    glm::ivec2  Size;    // Size of glyph
-//    glm::ivec2  Bearing;  // Offset from baseline to left/top of glyph
-//    GLuint      Advance;    // Horizontal offset to advance to next glyph
-//};
+namespace CLE {
 
 //! Clase para iniciar el motor
 class CLEngine {
@@ -57,11 +49,9 @@ class CLEngine {
         CLEngine() = default;
         CLEngine(const unsigned int, const unsigned int, const string&);
         ~CLEngine();
-
         //! Activa o desactiva el test de profundidad.
         //! @param e Segun el bool lo activa o desactiva.
         void SetEnableDepthTest( bool e);
-
         //! Devuelve la ventana 
         //! @returns window La ventana de la aplicación
         GLFWwindow* GetWindow() const { return window; }
@@ -95,31 +85,6 @@ class CLEngine {
         void DrawDepthMap(const glm::mat4& lightSpaceMatrix);
         void RenderDepthMap(CLShadowMapping& shadowMap, CLResourceShader* depthShader, const glm::mat4& lightSpaceMatrix);
         void Clear();
-
-        //! Carga una fuente
-        //! @param file Ruta a la fuente
-        void LoadFont(const std::string&);
-        //! Dibuja imagen 2D
-        //! @param _x Valor de X
-        //! @param _y Valor de Y
-        //! @param _width Valor de la anchura
-        //! @param _height Valor de la altura
-        //! @param _depth Valor de la profundidad
-        //! @param file Ruta a la imagen
-        //! @param bool Flip vertical
-        void DrawImage2D(float _x, float _y, float _width, float _height, float _depth, string file, bool);
-        void DrawImage2D(float _x, float _y, float scale, float _depth, string file, bool);
-        //! Dibuja texto 2D
-        //! @param text Texto para dibujar
-        //! @param x Posicion en X
-        //! @param y Posicion en Y
-        //! @param depth Profundidad
-        //! @param scale Escalado
-        //! @param color Color 
-        void RenderText2D(std::string text, GLfloat x, GLfloat y, GLfloat depth, GLfloat scale, glm::vec3 color);
-
-        //void renderBillboard();
-
         //! Devuelve el SceneManager
         //! @returns CLNode*
         //! @see CLE::CLNode()
@@ -128,7 +93,6 @@ class CLEngine {
         //! @returns CLResourceManager*
         //! @see CLE::CLResourceManager()
         CLResourceManager* GetResourceManager();
-
         //! Devuelve la anchura de la pantalla
         //! @returns widht Anchura de la pantalla
         int GetScreenWidth() { return width; };
@@ -141,12 +105,6 @@ class CLEngine {
         //! Cambia el valor de la altura de la pantalla
         //! @param h Altura de la pantalla
         void SetScreenHeight(int h) { height = h; };
-
-
-
-
-
-
         //Methods
         //! Añade un shader al motor
         //! @param vertex Ruta del vertex shader
@@ -188,44 +146,6 @@ class CLEngine {
         //! @returns CLE::CLNode* 
         //! @see CLE::CLPointLight()
         CLNode* AddPointLight(CLNode* parent,unsigned int id,glm::vec3 intensity, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic);
-        //! Añade una luz direccional a la escena
-        //! @param id Identificador del nodo
-        //! @returns CLE::CLNode* 
-        //! @see CLE::CLDirectLight()
-        CLNode* AddDirectLight(CLNode* parent,unsigned int id);
-        //! Añade una luz puntual a la escena
-        //! @param id Identificador del nodo
-        //! @param direction Vector de dirección de la luz
-        //! @param intensity Intensidad de la luz
-        //! @param ambient Valor ambiente de la luz
-        //! @param diffuse Valor difuso de la luz
-        //! @param specular Valor especular de la luz
-        //! @param constant Valor constante de la atenuación de la luz
-        //! @param linear Valor lineal de la atenuación de la luz
-        //! @param quadratic Valor cuadratico de la atenuación de la luz
-        //! @returns CLE::CLNode* 
-        //! @see CLE::CLDirectLight()
-        CLNode* AddDirectLight(CLNode* parent,unsigned int id,glm::vec3 direction,glm::vec3 intensity, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic);
-        //! Añade una luz spot a la escena
-        //! @param id Identificador del nodo
-        //! @returns CLE::CLNode* 
-        //! @see CLE::CLSpotLight()
-        CLNode* AddSpotLight(CLNode* parent,unsigned int id);
-        //! Añade una luz spot a la escena
-        //! @param id Identificador del nodo
-        //! @param direction Vector de dirección de la luz
-        //! @param cutOff Valor de cutOff de la luz
-        //! @param outerCutOff Valor de outerCutOff de la luz
-        //! @param intensity Intensidad de la luz
-        //! @param ambient Valor ambiente de la luz
-        //! @param diffuse Valor difuso de la luz
-        //! @param specular Valor especular de la luz
-        //! @param constant Valor constante de la atenuación de la luz
-        //! @param linear Valor lineal de la atenuación de la luz
-        //! @param quadratic Valor cuadratico de la atenuación de la luz
-        //! @returns CLE::CLNode* 
-        //! @see CLE::CLSpotLight()
-        CLNode* AddSpotLight(CLNode* parent,unsigned int id,glm::vec3 direction,float cutOff,float outerCutOff,glm::vec3 intensity, glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float constant, float linear, float quadratic);
         //! Añade una camara a la escena
         //! @param id Identificador del nodo
         //! @returns CLE::CLNode* 
@@ -291,7 +211,6 @@ class CLEngine {
         //! @returns CLE::CLNode()
         //! @see CLE::CLParticleSystem()
         CLNode* AddParticleSystem(CLNode* parent,unsigned int id,unsigned int nParticles,glm::vec3 velocity,vector<string> textures,int width,int height,int spawnDelay,int particlesToSpawn,int lifeSpan,float radious,glm::vec3 orientation, std::uint_fast8_t flags);
-
         //! Añade un skybox a la escena
         //! @param right Textura right del cubo
         //! @param left Textura left del cubo
@@ -313,21 +232,6 @@ class CLEngine {
         //! @returns CLE::CLNode()
         //! @see CLE::CLBillboard()
         CLNode* AddBillBoard(CLNode* parent,unsigned int id,string& file, bool vertically, float width_, float height_);
-        //! Crea un modulo de hierba cuadrado
-        //! @param _width Anchura de la celda de hierba
-        //! @param _height Altura de la celda de hierba
-        //! @param _position Posicion central de la celda de hierba
-        //! @param _scale Escala de cada planta
-        //! @param realistGrass True, hierba aleatoria. False, cuadrado de hierba.
-        //! @see CLE::CLGrassSystem()
-        void AddGrass(float _width, float _height, const glm::vec3& _position, const glm::vec3& _scale, bool realistGrass);
-        //! Crea un modulo de hierba circular
-        //! @param radious radio de la celda de hierba
-        //! @param _position Posicion central de la celda de hierba
-        //! @param _scale Escala de cada planta
-        //! @param realistGrass True, hierba aleatoria. False, cuadrado de hierba.
-        //! @see CLE::CLGrassSystem()
-        void AddGrass(float radious, const glm::vec3& _position, const glm::vec3& _scale, bool realistGrass);
         //! Elimina un hijo de ese nodo
         //! @param child Puntero al hijo para eliminar
         //! @returns bool Si ha sido finalizado con exito o no
@@ -357,16 +261,8 @@ class CLEngine {
         //! @param node Puntero al hijo para eliminar
         //! @returns bool Si ha sido finalizado con exito o no
         bool DeleteNode(CLNode* node);
-
-
-
         //! Dibuja el skybox
         void DrawSkybox();
-        //! Dibuja la vegetacion
-        void DrawGrass();
-
-
-
         //! Devuelve la matriz view de la escena
         //! @returns view Matriz view de la escena
         static glm::mat4 GetViewMatrix()               { return view; }
@@ -382,9 +278,6 @@ class CLEngine {
         //! Devuelve las luces puntuales de la escena
         //! @returns pointLights Vector de luces puntuales de la escena
         vector<CLNode*> GetPointLights()              { return pointLights; };
-        //! Devuelve las luces direccionales de la escena
-        //! @returns directLights Vector de luces direccionales de la escena
-        vector<CLNode*> GetDirectLights()             { return directLights; };
         //! Devuelve las camaras de la escena
         //! @returns cameras Vector de camaras de la escena
         vector<CLNode*> GetCameras()            { return cameras; };
@@ -403,8 +296,6 @@ class CLEngine {
         //! Devuelve la posicion de la camara
         //! @returns target Posicion de la camara
         glm::vec3 GetPositionActualCamera();
-
-
         //! Dibuja una linea primitiva en 3D
         //! @param x1 X inicial
         //! @param y1 Y inicial
@@ -438,13 +329,8 @@ class CLEngine {
         //! @param mode Booleano para cambiar el modo
         void SetGrassActivate(bool mode) { grassActivate = mode; };
         void SetShadowsActivate(bool mode) { shadowsActivate = mode; };
-
-
-        
     private:
-
         void CreateGlfwWindow(const unsigned int, const unsigned int, const string&);
-
         CLNode* GetNodeByIDAux(unsigned int id, CLNode* node, CLNode* root);
         void ImGuiInit();
         void TerminateImGui();
@@ -459,47 +345,26 @@ class CLEngine {
         GLFWwindow *window { nullptr };
         unsigned int hudShader { 0 };
         unsigned int textShader { 0 };
-
         vector<unsigned int> shaders;
-        
         std::unique_ptr<CLNode> smgr {nullptr};
         std::unique_ptr<CLResourceManager> resourceManager {nullptr};
-
         GLuint VAOText, VBOText;
-        //std::map<GLchar, Character> characters;
-
         bool grassActivate { true };
         bool shadowsActivate { false };
-
         inline static glm::mat4 projection;             // matriz proyeccion del modelo
         inline static glm::mat4 view;                   // matriz view del modelo
-
-
-        // Identificadores de las variables que cambia para pasarle info al shader.
         GLuint shaderProgramID;
         int lineWidth = 1;
         inline static vector<CLNode*> pointLights;
-        inline static vector<CLNode*> directLights;
-        inline static vector<CLNode*> spotLights;
         inline static vector<CLNode*> cameras;
         inline static GLuint debugShader = 0;
-
-        //Skybox
         inline static unique_ptr<CLSkybox> skybox = nullptr;
         inline static GLuint skyboxShader = 0;
-
         inline static GLuint billboardShader = 0;
-
         inline static unique_ptr<CLShadowMapping> shadowMapping = nullptr;
         inline static GLuint simpleDepthShader = 0;
         inline static CLResourceShader* depthShadder = nullptr;
-
-        //Particle system
         inline static GLuint particleSystemShader = 0;
-
-        inline static GLuint grassShader = 0;
-        //unique_ptr<CLGrassSystem> sysGrass = nullptr;
-        std::vector<unique_ptr<CLGrassSystem>> sysGrassVector;
 };
 }
 
