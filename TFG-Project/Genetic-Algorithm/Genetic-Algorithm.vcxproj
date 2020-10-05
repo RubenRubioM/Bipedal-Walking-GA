@@ -19,11 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Entities\EMesh.cpp" />
+    <ClCompile Include="src\Entities\Entity.cpp" />
+    <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Entities\EMesh.h" />
+    <ClInclude Include="src\Entities\Entity.h" />
+    <ClInclude Include="src\Program.h" />
+    <ClInclude Include="src\Utils\Shaders.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -96,7 +101,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Genetic-Algorithm\src;$(SolutionDir)SparkEngine\src\CLEngine\src;$(SolutionDir)Dependencies\BOOST/include;$(SolutionDir)Dependencies\NUMCPP/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Genetic-Algorithm\src;$(SolutionDir)SparkEngine\src\CLEngine\src;$(SolutionDir)Dependencies\BOOST/include;$(SolutionDir)Dependencies\NUMCPP/include;$(SolutionDir)Dependencies/GLM/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -112,7 +117,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Genetic-Algorithm\src;$(SolutionDir)SparkEngine\src\CLEngine\src;$(SolutionDir)Dependencies\BOOST/include;$(SolutionDir)Dependencies\NUMCPP/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Genetic-Algorithm\src;$(SolutionDir)SparkEngine\src\CLEngine\src;$(SolutionDir)Dependencies\BOOST/include;$(SolutionDir)Dependencies\NUMCPP/include;$(SolutionDir)Dependencies/GLM/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

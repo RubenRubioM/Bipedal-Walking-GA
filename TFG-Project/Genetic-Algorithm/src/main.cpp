@@ -1,10 +1,20 @@
 #include <iostream>
 
-#include <Game.h>
-#include <NUMCPP/NumCpp.hpp>
+#include <Program.h>
+#include <Entities/EMesh.h>
+#include <Utils/Shaders.h>
+
+#include <memory>
+
 int main() {
-	Game* game = Game::GetInstance();
-	nc::NdArray<int> a = { {1, 2}, {3, 4}, {5, 6} };
-	std::cout << a << std::endl;
+	Program* program = Program::GetInstance();
+	std::unique_ptr<Entity> mesh = std::make_unique<EMesh>("path1.jpg");
+	std::unique_ptr<Entity> mesh1 = std::make_unique<EMesh>("path2.jpg",5);
+	std::unique_ptr<Entity> mesh2 = std::make_unique<EMesh>("path3.jpg");
+	std::unique_ptr<Entity> mesh3 = std::make_unique<EMesh>("path4.jpg");
+
+	std::cout << mesh->GetShader() << std::endl;
+	mesh->SetShader(Shaders::CartoonShader);
+	std::cout << mesh->GetShader() << std::endl;
 	return 0;
 }

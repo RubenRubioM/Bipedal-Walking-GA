@@ -74,20 +74,12 @@ int main() {
         static_cast<CLPointLight*>(light2->GetEntity())->SetLightAttributes(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(0.1f, 0.1, 0.1f), 1.0f, 0.00007f, 0.00008f);
 
         auto mesh1 = device->AddMesh(device->GetRootNode(),3);
-        mesh1->SetShaderProgramID(resourceShaderCartoon->GetProgramID());
+        //mesh1->SetShaderProgramID(resourceShaderCartoon->GetProgramID());
 
         auto camera = device->AddCamera(device->GetRootNode(),4);
         camera->SetShaderProgramID(resourceShaderCartoon->GetProgramID());
 
-
         auto mesh2 = device->AddMesh(device->GetRootNode(),5);
-        mesh2->SetShaderProgramID(resourceShaderCartoon->GetProgramID());
-
-        auto nodeOctopusAnim = device->AddMesh(device->GetRootNode(),6);
-        nodeOctopusAnim->SetShaderProgramID(resourceShaderCartoon->GetProgramID());
-
-        auto nodeCubeAnim = device->AddMesh(device->GetRootNode(),7);
-        nodeCubeAnim->SetShaderProgramID(resourceShaderCartoon->GetProgramID());
 
         // Particulas
         vector<string> texturesPs1;
@@ -102,7 +94,6 @@ int main() {
         auto ps2 = device->AddParticleSystem(device->GetRootNode(),9, 15, glm::vec3(400.0f, 400.0f, 400.0f), texturePs2, 10, 10, 100, 15, 250, 5, EFFECT_DIR_ALEATORITY);
 
         static_cast<CLCamera*>(camera->GetEntity())->SetCameraTarget(mesh2->GetTranslation());
-
 
         string fileBillBoard = "media/mrPinguin.png";
         device->AddBillBoard(mesh2,10, fileBillBoard, false, 100.0, 50.0);
@@ -171,7 +162,6 @@ int main() {
             light1->SetTranslation(lightPos);
             light2->SetTranslation(lightPos2);
 
-            static_cast<CLCamera*>(camera->GetEntity())->SetCameraTarget(nodeOctopusAnim->GetGlobalTranslation());
             if (glfwGetKey(device->GetWindow(), GLFW_KEY_E)) {
                 static_cast<CLParticleSystem*>(ps2->GetEntity())->SetLoop(true);
             }

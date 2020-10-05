@@ -306,7 +306,8 @@ CLNode* CLEngine::AddMesh(CLNode* parent,unsigned int id){
     shared_ptr<CLNode> node = make_shared<CLNode>(e);
     parent->AddChild(node);
 
-
+    // Por defecto asignamos un shader basico.
+    node->SetShaderProgramID(CLResourceManager::GetResourceManager()->GetResourceShader("src/CLEngine/src/Shaders/basicShader.vert", "src/CLEngine/src/Shaders/basicShader.frag")->GetProgramID());
     return node.get();
 }
 
