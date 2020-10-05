@@ -15,6 +15,12 @@ class Program{
 		/// Destructor.
 		/// </summary>
 		~Program() = default;
+
+		/// <summary>
+		/// Start the program.
+		/// </summary>
+		void Start();
+
 	private:
 		/// <summary>
 		/// Private constructor.

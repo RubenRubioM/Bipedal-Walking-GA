@@ -28,38 +28,37 @@ class Entity{
 		/// <summary>
 		/// Returns the entity Id.
 		/// </summary>
-		/// <returns> Id. </returns>
-		//virtual const uint32_t GetId() = 0;
+		/// <returns> Entity identifier. </returns>
 		const uint32_t GetId() { return id; }
 
 		/// <summary>
 		/// Returns the entity parent id.
 		/// </summary>
-		/// <returns> ParentId. </returns>
+		/// <returns> Parent identifier. </returns>
 		const uint32_t GetParentId() { return parentId; }
 
 		/// <summary>
 		/// Returns the entity position.
 		/// </summary>
-		/// <returns> Position. </returns>
+		/// <returns> Entity position. </returns>
 		const glm::vec3 GetPosition() { return position; }
 
 		/// <summary>
 		/// Returns the entity rotation.
 		/// </summary>
-		/// <returns> Rotation. </returns>
+		/// <returns> Entity rotation. </returns>
 		const glm::vec3 GetRotation() { return rotation; }
 
 		/// <summary>
 		/// Returns the entity scalation.
 		/// </summary>
-		/// <returns> scalation. </returns>
+		/// <returns> Entity scalation. </returns>
 		const glm::vec3 GetScalation() { return scalation; }
 
 		/// <summary>
 		/// Returns the entity shader.
 		/// </summary>
-		/// <returns> shader. </returns>
+		/// <returns> Entity shader. </returns>
 		const Shader GetShader() { return shader; }
 
 		/// <summary>

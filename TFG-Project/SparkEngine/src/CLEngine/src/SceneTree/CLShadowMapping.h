@@ -14,11 +14,9 @@
  * 
  */
  
- 
  #pragma once
 
 #include "CLEntity.h"
-
 
 namespace CLE {
     //! Clase para añadir sombras en el motor
@@ -28,8 +26,8 @@ namespace CLE {
             ~CLShadowMapping() {};
 
             //void PrepareToRender();
-            void Draw(GLuint shaderID);
-            void DrawDepthMap(GLuint shaderID);
+            void Draw(GLuint shaderID) override;
+            void DrawDepthMap(GLuint shaderID) override;
 
             // variables
             //GLuint lightId = 0;

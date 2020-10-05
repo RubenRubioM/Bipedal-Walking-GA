@@ -22,9 +22,9 @@ class EMesh : public Entity {
 		~EMesh();
 
 		/// <summary>
-		/// Returns meshPath.
+		/// Returns mesh path.
 		/// </summary>
-		/// <returns> MeshPath. </returns>
+		/// <returns> Mesh path. </returns>
 		const std::string GetMeshPath() { return meshPath; }
 
 	private:

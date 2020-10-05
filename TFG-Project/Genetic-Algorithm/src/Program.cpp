@@ -19,3 +19,10 @@ Program* Program::GetInstance() {
 Program::Program(){
 	
 }
+
+/// <summary>
+/// Start the program.
+/// </summary>
+void Program::Start(){
+
+}
