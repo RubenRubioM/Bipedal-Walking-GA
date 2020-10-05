@@ -341,6 +341,9 @@ CLNode* CLEngine::AddCamera(CLNode* parent,unsigned int id){
     parent->AddChild(node);
     cameras.push_back(node.get());
 
+    // Por defecto asignamos un shader basico.
+    node->SetShaderProgramID(CLResourceManager::GetResourceManager()->GetResourceShader("src/CLEngine/src/Shaders/basicShader.vert", "src/CLEngine/src/Shaders/basicShader.frag")->GetProgramID());
+
     return node.get(); 
 }
 
@@ -471,8 +474,6 @@ CLNode* CLEngine::AddBillBoard(CLNode* parent,unsigned int id,string& file, bool
         
     }
 
-    
-
     CLResourceTexture* texture = rm->GetResourceTexture(file, vertically);
     auto entity = make_shared<CLBillboard>(id,texture,width_,height_);
     auto node = make_shared<CLNode>(entity);
@@ -539,57 +540,6 @@ float CLEngine::GetBoundingSizeById(unsigned int id){
 void CLEngine::SetParticlesVisibility(bool mode){
     smgr->SetParticlesActivated(mode);
 }
-
-
-// Comprueba si el cubo del octree se ve en la camara del jugador
-bool CLEngine::OctreeIncamera(float size, const glm::vec3& pos){
-    glm::vec3 pos2 = glm::vec3(pos.x, pos.y, -pos.z);
-    glm::vec3 pointBox[]{
-        {pos2 - glm::vec3(size, size, size)},
-        {pos2 - glm::vec3(size, size, -size)},
-        {pos2 - glm::vec3(size, -size, size)},
-        {pos2 - glm::vec3(size, -size, -size)},
-        {pos2 - glm::vec3(-size, size, size)},
-        {pos2 - glm::vec3(-size, size, -size)},
-        {pos2 - glm::vec3(-size, -size, size)},
-        {pos2 - glm::vec3(-size, -size, -size)}
-    };
-
-    CLCamera* camera = GetActiveCamera();
-    CLNode* nodeCam = GetNodeByID(camera->GetID());
-
-    float vectorToTargetX = camera->GetCameraTarget().x - nodeCam->GetGlobalTranslation().x;
-    float vectorToTargetZ = camera->GetCameraTarget().z - nodeCam->GetGlobalTranslation().z;
-    float valueCentralDegree = glm::degrees( atan2(vectorToTargetZ, vectorToTargetX) );
-    if (valueCentralDegree < 0) valueCentralDegree += 360;
-
-    float minVision = valueCentralDegree - camera->GetCameraFov();
-    if (minVision < 0) minVision += 360;
-
-    float maxVision = valueCentralDegree + camera->GetCameraFov();
-    if (maxVision >= 360) maxVision -= 360;
-
-    // comprobamos si algun punto del cubo se encuentra dentro de la camara
-    for(unsigned int i=0; i<8; i++){
-        float vectorToBoxX = pointBox[i].x - nodeCam->GetGlobalTranslation().x;
-        float vectorToBoxZ = pointBox[i].z - nodeCam->GetGlobalTranslation().z;
-        float valueDegreeBox = glm::degrees( atan2(vectorToBoxZ, vectorToBoxX) );
-        if (valueDegreeBox < 0) valueDegreeBox += 360;
-
-        if(minVision>maxVision){
-            if(minVision<valueDegreeBox || maxVision>valueDegreeBox)
-                return true;
-        }else{
-            if(minVision<valueDegreeBox && maxVision>valueDegreeBox)
-                return true;
-        }
-    }
-
-    // no se ve en caso que que ningun punto este dentro de la camara
-    return false;
-}
-
-
 
 bool CLEngine::DeleteNode(unsigned int id){
     CLNode* node = nullptr;
@@ -753,10 +703,4 @@ void CLEngine::CalculateViewProjMatrix(const glm::mat4& lightSpaceMatrix){
         glUniformMatrix4fv(glGetUniformLocation(shader, "lightSpaceMatrix"), 1, GL_FALSE, glm::value_ptr(lightSpaceMatrix));
         glUniform3fv(glGetUniformLocation(shader, "lightShadowDir"), 1, glm::value_ptr(directionShadowLight));
     }
-}
-
-
-void CLEngine::SetOctreeVisibleById(unsigned int id, bool v){
-    CLNode* node = GetNodeByID(id);
-    node->SetOctreeVisible(v);
 }

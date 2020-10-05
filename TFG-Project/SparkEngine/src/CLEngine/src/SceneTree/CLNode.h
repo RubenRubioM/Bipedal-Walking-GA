@@ -119,17 +119,12 @@ class CLNode{
         //! Asigna la visibilidad del nodo
         //! @param v Si es visible o no
         void SetVisible(bool v) {visible = v;};
-        //! Asigna la visibilidad del nodo dependiendo del octree
-        //! @param id El id del nodo
-        //! @param v Si es visible o no
-        void SetOctreeVisibleById(unsigned int id, bool v);
         //! Activa o desactiva las particulas
         //! @param particlesActivated
         void SetParticlesActivated(bool a) { particlesActivated = a; };
         //! Asigna el shader ID
         //! @param shaderProgramID
         void SetShaderProgramID(GLuint id) { shaderProgramID = id; }
-        void SetOctreeVisible(bool v) { octreeVisible = v; };
         //! Elimina un hijo de ese nodo
         //! @param child Puntero al hijo para eliminar
         //! @returns bool Si ha sido finalizado con exito o no
@@ -141,7 +136,6 @@ class CLNode{
         //! Busca un nodo en el arbol por su ID
         //! @param id Identificador para buscar
         //! @returns CLNode* Puntero al nodo
-        float GetBoundingSizeById(unsigned int id);
         glm::mat4 TranslateMatrix();
         glm::mat4 RotateMatrix();
         glm::mat4 ScaleMatrix();

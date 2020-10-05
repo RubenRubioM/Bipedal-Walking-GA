@@ -248,11 +248,6 @@ class CLEngine {
         //! @param id Identificador para buscar
         //! @returns float tamanyo de lado del cuadrado
         float GetBoundingSizeById(unsigned int id);
-        //! Compureba si el Bounding Volume se encuentra en camara
-        //! @param size Longitud de un lado
-        //! @param pos Posicion
-        //! @returns bool si se encuentra en camara
-        bool OctreeIncamera(float size, const glm::vec3& pos);
         //! Elimina un hijo del arbol por su id
         //! @param id Identificador al hijo para eliminar
         //! @returns bool Si ha sido finalizado con exito o no
@@ -320,8 +315,6 @@ class CLEngine {
         void RemoveLightsAndCameras();
         //! Devuelve el nodo padre de la escena
         CLNode* GetRootNode() const { return smgr.get(); };
-        //! Asigna si el nodo es visible en el octree
-        void SetOctreeVisibleById(unsigned int id, bool v);
         //! Activa o desactiva las particulas
         //! @param mode Booleano para cambiar el modo
         void SetParticlesVisibility(bool mode);
