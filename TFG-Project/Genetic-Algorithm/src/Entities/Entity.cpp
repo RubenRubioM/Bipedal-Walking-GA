@@ -6,7 +6,8 @@
 /// Entity constructor. Increments the static ID field everytime an entity is created.
 /// </summary>
 Entity::Entity(){
-	id++;
+	id = nextId;
+	nextId++;
 }
 
 /// <summary>
@@ -14,6 +15,8 @@ Entity::Entity(){
 /// </summary>
 /// <param name="parentId"> Parent Id. </param>
 Entity::Entity(uint32_t parentId) : parentId(parentId){
+	id = nextId;
+	nextId++;
 }
 
 /// <summary>

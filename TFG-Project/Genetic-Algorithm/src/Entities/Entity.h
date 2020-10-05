@@ -29,6 +29,7 @@ class Entity{
 		/// Returns the entity Id.
 		/// </summary>
 		/// <returns> Id. </returns>
+		//virtual const uint32_t GetId() = 0;
 		const uint32_t GetId() { return id; }
 
 		/// <summary>
@@ -71,7 +72,7 @@ class Entity{
 		/// Sets the entity rotation.
 		/// </summary>
 		/// <param name="rotation"> Entity rotation. </param>
-		void SetRotation(glm::vec3 rotation) { this->rotation = rotation; }
+		void SetRotation(glm::vec3 rotation)  { this->rotation = rotation; }
 
 		/// <summary>
 		/// Sets the entity scalation.
@@ -89,7 +90,7 @@ class Entity{
 		/// <summary>
 		/// Entity Id.
 		/// </summary>
-		inline static uint32_t id{ 0 };
+		uint32_t id{ 0 };
 
 		/// <summary>
 		/// Parent Id.
@@ -115,4 +116,10 @@ class Entity{
 		/// Entity shader.
 		/// </summary>
 		Shader shader = Shaders::BasicShader;
+
+	private:
+		/// <summary>
+		/// Entity next Id.
+		/// </summary>
+		inline static uint32_t nextId{ 0 };
 };

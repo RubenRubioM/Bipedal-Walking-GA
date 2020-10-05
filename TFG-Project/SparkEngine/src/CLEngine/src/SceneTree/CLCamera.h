@@ -74,14 +74,14 @@ namespace CLE {
             glm::mat4 CalculateProjectionMatrix();
             //! Calcula el frustrum
         private:
-            GLfloat m_near = 0;
-            GLfloat m_far = 0;
-            GLfloat right = 0;
+            GLfloat m_near = 0.1f;
+            GLfloat m_far = 5000.0f;
+            GLfloat right = 1280.0f;
             GLfloat left = 0;
-            GLfloat top = 0;
+            GLfloat top = 720.0f;
             GLfloat bottom = 0;
-            GLfloat aspect = 0;
-            GLfloat fov = 0;
+            GLfloat aspect = 1280.f / 720.0f;
+            GLfloat fov = 70.0f;
             bool perspective { true };
             bool active { true };
             glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, -1.0f);;

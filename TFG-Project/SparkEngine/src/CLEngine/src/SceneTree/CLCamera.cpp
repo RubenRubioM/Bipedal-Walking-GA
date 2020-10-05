@@ -19,14 +19,6 @@
 using namespace CLE;
 
 CLCamera::CLCamera(unsigned int idEntity) : CLEntity(idEntity) {
-    left = 0.0f;
-    right = 1280.0f;
-    top = 0.0f;
-    bottom = 720.0f;
-    m_near= 0.1f;
-    m_far = 5000.0f;
-    fov = 70.0f;
-    aspect = 1280.f / 720.0f; // 2,05
 
 }
 
