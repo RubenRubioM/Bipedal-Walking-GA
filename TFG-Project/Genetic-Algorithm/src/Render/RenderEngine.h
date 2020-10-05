@@ -15,6 +15,9 @@ class RenderEngine{
 		~RenderEngine();
 	
 	private:
+		/// <summary>
+		/// CLEngine pointer.
+		/// </summary>
 		CLE::CLEngine* device{ nullptr };
 };
 
