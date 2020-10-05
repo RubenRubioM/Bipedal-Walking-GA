@@ -1,6 +1,10 @@
 #include <iostream>
 
+#include <Game.h>
+#include <NUMCPP/NumCpp.hpp>
 int main() {
-	std::cout << "Hola Genetic Algorithm\n";
+	Game* game = Game::GetInstance();
+	nc::NdArray<int> a = { {1, 2}, {3, 4}, {5, 6} };
+	std::cout << a << std::endl;
 	return 0;
 }
