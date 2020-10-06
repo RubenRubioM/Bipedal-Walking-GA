@@ -35,7 +35,7 @@ static void error(int error, const char* description) {
  * @param h - Altura en pixeles de la ventana.
  * @param title - Titulo de la ventana.
  */
-CLEngine::CLEngine (const unsigned int w, const unsigned int h, const string& title) : width(w), height(h) {
+CLEngine::CLEngine (const unsigned int w, const unsigned int h, const string title) : width(w), height(h) {
     CreateGlfwWindow(w, h, title);
     glewInit();
     ImGuiInit();
@@ -160,8 +160,6 @@ void CLEngine::DrawDepthMap(const glm::mat4& lightSpaceMatrix){
 
 }
 
-
-
 void CLEngine::DrawObjects(){
     glm::mat4 lightSpaceMatrix;
     if(shadowMapping && shadowsActivate){
@@ -179,6 +177,7 @@ void CLEngine::DrawObjects(){
     CalculateLights();
     glm::mat4 VPmatrix = projection*view;
     smgr->DFSTree(glm::mat4(1.0f),GetActiveCamera(), VPmatrix);
+    RenderImgui();
 }
 
 /**
@@ -279,8 +278,6 @@ void CLEngine::RenderDepthMap(CLShadowMapping& shadowMap, CLResourceShader* dept
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
-
-
 
 //Methods
 void CLEngine::AddShader(const string vertex, const string fragment){
@@ -441,7 +438,6 @@ CLNode* CLEngine::AddParticleSystem(CLNode* parent,unsigned int id,unsigned int 
     return node.get();
 }
 
-
 void CLEngine::AddSkybox(string right, string left, string top, string bottom, string front, string back){
     if(!skyboxShader){
         auto rm = CLResourceManager::GetResourceManager();
@@ -499,7 +495,6 @@ CLNode* CLEngine::GetNodeByID(unsigned int id){
     return node;
 }
 
-
 CLNode* CLEngine::GetNodeByIDAux(unsigned int id, CLNode* node, CLNode* root){
  
     if(node!=nullptr) return node; //Caso base, ha encontrado ya al nodo que busca
@@ -520,14 +515,15 @@ CLNode* CLEngine::GetNodeByIDAux(unsigned int id, CLNode* node, CLNode* root){
     return node;
 }
 
-
 // devolver datos de la camara
 float CLEngine::GetFovActualCamera(){
     return static_cast<CLCamera*>(GetActiveCamera())->GetCameraFov();
 }
+
 glm::vec3 CLEngine::GetTargetActualCamera(){
     return static_cast<CLCamera*>(GetActiveCamera())->GetCameraTarget();
 }
+
 glm::vec3 CLEngine::GetPositionActualCamera(){
     return GetActiveCameraNode()->GetGlobalTranslation();
 }
@@ -556,7 +552,6 @@ bool CLEngine::DeleteNode(CLNode* node){
     father->RemoveChild(node);
     return true;
 }
-
 
 void CLEngine::DrawSkybox(){
     if(skybox.get()){
@@ -589,7 +584,6 @@ CLNode* CLEngine::GetActiveCameraNode(){
     }
     return nullptr;
 }
-
 
 const void CLEngine::Draw3DLine(float x1, float y1, float z1, float x2, float y2, float z2) const{
     Draw3DLine(x1,y1,z1,x1,y2,z1,CLColor(255.0,0.0,0.0,255.0));

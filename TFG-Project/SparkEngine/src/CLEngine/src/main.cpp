@@ -195,7 +195,7 @@ int main() {
 
             device->DrawObjects();
             device->PollEvents();
-            device->RenderImgui();
+            //device->RenderImgui();
             device->EndScene();
             index += 0.2;
         }

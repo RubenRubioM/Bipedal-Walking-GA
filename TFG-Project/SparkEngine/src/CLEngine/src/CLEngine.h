@@ -47,7 +47,7 @@ namespace CLE {
 class CLEngine {
     public:
         CLEngine() = default;
-        CLEngine(const unsigned int, const unsigned int, const string&);
+        CLEngine(const unsigned int, const unsigned int, const string);
         ~CLEngine();
         //! Activa o desactiva el test de profundidad.
         //! @param e Segun el bool lo activa o desactiva.
@@ -55,7 +55,6 @@ class CLEngine {
         //! Devuelve la ventana 
         //! @returns window La ventana de la aplicación
         GLFWwindow* GetWindow() const { return window; }
-        //bool Loop();
         //! Devuelve si la aplicación sigue corriendo 
         //! @returns bool del estado de la aplicación
         bool Run();

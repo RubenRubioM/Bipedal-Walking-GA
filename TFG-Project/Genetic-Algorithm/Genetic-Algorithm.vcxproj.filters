@@ -7,6 +7,8 @@
     <ClCompile Include="src\Entities\EMesh.cpp" />
     <ClCompile Include="src\Entities\ECamera.cpp" />
     <ClCompile Include="src\Render\RenderEngine.cpp" />
+    <ClCompile Include="src\State\State.cpp" />
+    <ClCompile Include="src\State\StateExecution.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Program.h" />
@@ -15,5 +17,7 @@
     <ClInclude Include="src\Utils\Shaders.h" />
     <ClInclude Include="src\Entities\ECamera.h" />
     <ClInclude Include="src\Render\RenderEngine.h" />
+    <ClInclude Include="src\State\State.h" />
+    <ClInclude Include="src\State\StateExecution.h" />
   </ItemGroup>
 </Project>

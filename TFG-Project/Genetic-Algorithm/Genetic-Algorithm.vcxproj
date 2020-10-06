@@ -33,6 +33,8 @@
     <ClCompile Include="src\Entities\Entity.cpp" />
     <ClCompile Include="src\Program.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\State\State.cpp" />
+    <ClCompile Include="src\State\StateExecution.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Render\RenderEngine.h" />
@@ -40,7 +42,9 @@
     <ClInclude Include="src\Entities\EMesh.h" />
     <ClInclude Include="src\Entities\Entity.h" />
     <ClInclude Include="src\Program.h" />
+    <ClInclude Include="src\State\State.h" />
     <ClInclude Include="src\Utils\Shaders.h" />
+    <ClInclude Include="src\State\StateExecution.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SparkEngine\SparkEngine.vcxproj">

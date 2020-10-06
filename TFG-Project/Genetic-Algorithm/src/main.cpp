@@ -4,6 +4,9 @@
 #include <Entities/EMesh.h>
 #include <Entities/ECamera.h>
 #include <Utils/Shaders.h>
+#include <Render/RenderEngine.h>
+#include <State/State.h>
+
 #include <GLM/glm.hpp>
 
 #include <memory>
@@ -14,9 +17,9 @@ int main() {
 	std::unique_ptr<Entity> mesh1 = std::make_unique<EMesh>("path2.jpg",5);
 	std::unique_ptr<Entity> mesh2 = std::make_unique<EMesh>("path3.jpg");
 	std::unique_ptr<Entity> camera = std::make_unique<ECamera>(glm::vec3(10,10,10));
-	mesh1->SetPosition(glm::vec3(10, 20, 30));
-
-	std::cout << "Pos: " << static_cast<ECamera*>(camera.get())->GetTarget().x << std::endl;
+	
+	program->SetState(State::States::EXECUTION);
+	program->Start();
 
 	return EXIT_SUCCESS;
 }
