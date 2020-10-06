@@ -1,5 +1,7 @@
 #include "RenderEngine.h"
 
+#include <Entities/ECamera.h>
+
 /// <summary>
 /// Creates or returns a RenderEngine instance.
 /// </summary>
@@ -24,6 +26,25 @@ RenderEngine::RenderEngine(){
 /// RenderEngine destructor.
 /// </summary>
 RenderEngine::~RenderEngine(){
+}
+
+/// <summary>
+/// Add camera to the scene
+/// </summary>
+/// <param name="camera"> Camera. </param>
+void RenderEngine::AddCamera(ECamera* camera) {
+	CLE::CLNode* node = nullptr;
+	CLE::CLNode* father = smgr;
+
+	if (camera->GetParentId()) {
+		father = device->GetNodeByID(camera->GetParentId());
+	}
+
+	node = device->AddCamera(father, camera->GetId());
+	node->SetTranslation(camera->GetPosition());
+	node->SetRotation(camera->GetRotation());
+	node->SetScalation(camera->GetScalation());
+	static_cast<CLE::CLCamera*>(node->GetEntity())->SetCameraTarget(camera->GetTarget());
 }
 
 // <summary>

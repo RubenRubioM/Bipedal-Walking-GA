@@ -9,6 +9,7 @@
     <ClCompile Include="src\Render\RenderEngine.cpp" />
     <ClCompile Include="src\State\State.cpp" />
     <ClCompile Include="src\State\StateExecution.cpp" />
+    <ClCompile Include="src\DataTypes\Transformable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Program.h" />
@@ -19,5 +20,6 @@
     <ClInclude Include="src\Render\RenderEngine.h" />
     <ClInclude Include="src\State\State.h" />
     <ClInclude Include="src\State\StateExecution.h" />
+    <ClInclude Include="src\DataTypes\Transformable.h" />
   </ItemGroup>
 </Project>

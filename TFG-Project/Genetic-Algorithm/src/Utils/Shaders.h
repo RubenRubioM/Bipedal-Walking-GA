@@ -47,10 +47,10 @@ class Shaders {
 		/// <summary>
 		/// Basic shader without lights.
 		/// </summary>
-		inline static const Shader BasicShader{ "src/CLEngine/src/Shaders/basicShader.vert","src/CLEngine/src/Shaders/basicShader.frag" };
+		inline static const Shader BasicShader{ "../Shaders/basicShader.vert","../Shaders/basicShader.frag" };
 
 		/// <summary>
 		/// Cartoon shader with lights.
 		/// </summary>
-		inline static const Shader CartoonShader{ "src/CLEngine/src/Shaders/cartoonShader.vert","src/CLEngine/src/Shaders/cartoonShader.frag" };
+		inline static const Shader CartoonShader{ "../Shaders/cartoonShader.vert","../Shaders/cartoonShader.frag" };
 };

@@ -59,7 +59,7 @@ int main() {
     try {
         //-------------------Resource manager-------------------
         CLResourceManager* resourceManager = CLResourceManager::GetResourceManager();
-        auto resourceShaderCartoon = resourceManager->GetResourceShader("src/CLEngine/src/Shaders/cartoonShader.vert", "src/CLEngine/src/Shaders/cartoonShader.frag");
+        auto resourceShaderCartoon = resourceManager->GetResourceShader("../Shaders/cartoonShader.vert", "../Shaders/cartoonShader.frag");
         auto resourceMeshGround = resourceManager->GetResourceMesh("media/training_ground.obj", true);
         auto resourceMesh = resourceManager->GetResourceMesh("media/sharky_wheel2.obj", true);
         //------------------------------------------------------------------------- ARBOLITO
@@ -195,7 +195,7 @@ int main() {
 
             device->DrawObjects();
             device->PollEvents();
-            //device->RenderImgui();
+            device->RenderImgui();
             device->EndScene();
             index += 0.2;
         }

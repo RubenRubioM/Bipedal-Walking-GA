@@ -3,6 +3,7 @@
 #include <GLM/vec3.hpp>
 
 #include <Utils/Shaders.h>
+#include <DataTypes/Transformable.h>
 
 /// <summary>
 /// Generic entity class.
@@ -18,7 +19,14 @@ class Entity{
 		/// Entity constructor with parent.
 		/// </summary>
 		/// <param name="parentId"> Parent Id. </param>
-		Entity(uint32_t parentId);
+		Entity(const uint32_t parentId);
+
+		/// <summary>
+		/// Entity constructor with parent.
+		/// </summary>
+		/// <param name="parentId"> Parent Id. </param>
+		/// <param name="transform"> Transformable </param>
+		Entity(const Transformable transform, const uint32_t parentId);
 
 		/// <summary>
 		/// Entity destructor.
@@ -36,6 +44,12 @@ class Entity{
 		/// </summary>
 		/// <returns> Parent identifier. </returns>
 		const uint32_t GetParentId() { return parentId; }
+
+		/// <summary>
+		/// Returns the entity transformable.
+		/// </summary>
+		/// <returns> Entity transformable. </returns>
+		const Transformable GetTransformable() { return transformable; }
 
 		/// <summary>
 		/// Returns the entity position.
@@ -60,6 +74,12 @@ class Entity{
 		/// </summary>
 		/// <returns> Entity shader. </returns>
 		const Shader GetShader() { return shader; }
+
+		/// <summary>
+		/// Sets the entity transformable.
+		/// </summary>
+		/// <param name="transformable"> Entity transformable. </param>
+		void SetTransformable(const Transformable transformable);
 
 		/// <summary>
 		/// Sets the entity position.
@@ -95,6 +115,11 @@ class Entity{
 		/// Parent Id.
 		/// </summary>
 		uint32_t parentId{ 0 };
+
+		/// <summary>
+		/// Entity transformable.
+		/// </summary>
+		Transformable transformable;
 
 		/// <summary>
 		/// Entity position.

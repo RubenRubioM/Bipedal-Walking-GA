@@ -46,10 +46,10 @@ CLEngine::CLEngine (const unsigned int w, const unsigned int h, const string tit
     //Vamos a leer todos los shaders al iniciar
     CLResourceManager* resourceManager = CLResourceManager::GetResourceManager();
 
-    shaders.emplace_back(resourceManager->GetResourceShader("src/CLEngine/src/Shaders/shadowMappingShader.vert", "src/CLEngine/src/Shaders/shadowMappingShader.frag")->GetProgramID());
-    shaders.emplace_back(resourceManager->GetResourceShader("src/CLEngine/src/Shaders/cartoonShader.vert", "src/CLEngine/src/Shaders/cartoonShader.frag")->GetProgramID());
-    shaders.emplace_back(resourceManager->GetResourceShader("src/CLEngine/src/Shaders/lightMapping.vert", "src/CLEngine/src/Shaders/lightMapping.frag")->GetProgramID());
-    shaders.emplace_back(resourceManager->GetResourceShader("src/CLEngine/src/Shaders/basicShader.vert", "src/CLEngine/src/Shaders/basicShader.frag")->GetProgramID());
+    shaders.emplace_back(resourceManager->GetResourceShader("../Shaders/shadowMappingShader.vert", "../Shaders/shadowMappingShader.frag")->GetProgramID());
+    shaders.emplace_back(resourceManager->GetResourceShader("../Shaders/cartoonShader.vert", "../Shaders/cartoonShader.frag")->GetProgramID());
+    shaders.emplace_back(resourceManager->GetResourceShader("../Shaders/lightMapping.vert", "../Shaders/lightMapping.frag")->GetProgramID());
+    shaders.emplace_back(resourceManager->GetResourceShader("../Shaders/basicShader.vert", "../Shaders/basicShader.frag")->GetProgramID());
 
 }
 
@@ -177,7 +177,6 @@ void CLEngine::DrawObjects(){
     CalculateLights();
     glm::mat4 VPmatrix = projection*view;
     smgr->DFSTree(glm::mat4(1.0f),GetActiveCamera(), VPmatrix);
-    RenderImgui();
 }
 
 /**
@@ -304,7 +303,7 @@ CLNode* CLEngine::AddMesh(CLNode* parent,unsigned int id){
     parent->AddChild(node);
 
     // Por defecto asignamos un shader basico.
-    node->SetShaderProgramID(CLResourceManager::GetResourceManager()->GetResourceShader("src/CLEngine/src/Shaders/basicShader.vert", "src/CLEngine/src/Shaders/basicShader.frag")->GetProgramID());
+    node->SetShaderProgramID(CLResourceManager::GetResourceManager()->GetResourceShader("../Shaders/basicShader.vert", "../Shaders/basicShader.frag")->GetProgramID());
     return node.get();
 }
 
@@ -339,7 +338,7 @@ CLNode* CLEngine::AddCamera(CLNode* parent,unsigned int id){
     cameras.push_back(node.get());
 
     // Por defecto asignamos un shader basico.
-    node->SetShaderProgramID(CLResourceManager::GetResourceManager()->GetResourceShader("src/CLEngine/src/Shaders/basicShader.vert", "src/CLEngine/src/Shaders/basicShader.frag")->GetProgramID());
+    node->SetShaderProgramID(CLResourceManager::GetResourceManager()->GetResourceShader("../Shaders/basicShader.vert", "../Shaders/basicShader.frag")->GetProgramID());
 
     return node.get(); 
 }
@@ -347,7 +346,7 @@ CLNode* CLEngine::AddCamera(CLNode* parent,unsigned int id){
 CLNode* CLEngine::AddParticleSystem(CLNode* parent,unsigned int id, unsigned int nParticles,glm::vec3 velocity,vector<string> textures,int width,int height,int spawnDelay,int particlesToSpawn,int lifeSpan, std::uint_fast8_t flags){
     if(particleSystemShader == 0){
         auto rm = CLResourceManager::GetResourceManager();
-        auto resourceShader = rm->GetResourceShader("src/CLEngine/src/Shaders/particleSystem.vert", "src/CLEngine/src/Shaders/particleSystem.frag","src/CLEngine/src/Shaders/particleSystem.geom");
+        auto resourceShader = rm->GetResourceShader("../Shaders/particleSystem.vert", "../Shaders/particleSystem.frag","../Shaders/particleSystem.geom");
         particleSystemShader = resourceShader->GetProgramID();
         shaders.push_back(particleSystemShader);
     }
@@ -369,7 +368,7 @@ CLNode* CLEngine::AddParticleSystem(CLNode* parent,unsigned int id, unsigned int
 CLNode* CLEngine::AddParticleSystem(CLNode* parent,unsigned int id,unsigned int nParticles,glm::vec3 velocity,vector<string> textures,int width,int height,int spawnDelay,int particlesToSpawn,int lifeSpan,glm::vec3 offset, glm::vec3 orientation, std::uint_fast8_t flags){
     if(particleSystemShader == 0){
         auto rm = CLResourceManager::GetResourceManager();
-        auto resourceShader = rm->GetResourceShader("src/CLEngine/src/Shaders/particleSystem.vert", "src/CLEngine/src/Shaders/particleSystem.frag","src/CLEngine/src/Shaders/particleSystem.geom");
+        auto resourceShader = rm->GetResourceShader("../Shaders/particleSystem.vert", "../Shaders/particleSystem.frag","../Shaders/particleSystem.geom");
         particleSystemShader = resourceShader->GetProgramID();
         shaders.push_back(particleSystemShader);
 
@@ -392,7 +391,7 @@ CLNode* CLEngine::AddParticleSystem(CLNode* parent,unsigned int id,unsigned int 
 CLNode* CLEngine::AddParticleSystem(CLNode* parent,unsigned int id,unsigned int nParticles,glm::vec3 velocity,vector<string> textures,int width,int height,int spawnDelay,int particlesToSpawn,int lifeSpan,float radious, std::uint_fast8_t flags){
     if(particleSystemShader == 0){
         auto rm = CLResourceManager::GetResourceManager();
-        auto resourceShader = rm->GetResourceShader("src/CLEngine/src/Shaders/particleSystem.vert", "src/CLEngine/src/Shaders/particleSystem.frag","src/CLEngine/src/Shaders/particleSystem.geom");
+        auto resourceShader = rm->GetResourceShader("../Shaders/particleSystem.vert", "../Shaders/particleSystem.frag","../Shaders/particleSystem.geom");
         particleSystemShader = resourceShader->GetProgramID();
         shaders.push_back(particleSystemShader);
 
@@ -417,7 +416,7 @@ CLNode* CLEngine::AddParticleSystem(CLNode* parent,unsigned int id,unsigned int 
 CLNode* CLEngine::AddParticleSystem(CLNode* parent,unsigned int id,unsigned int nParticles,glm::vec3 velocity,vector<string> textures,int width,int height,int spawnDelay,int particlesToSpawn,int lifeSpan,float radious,glm::vec3 orientation, std::uint_fast8_t flags){
     if(particleSystemShader == 0){
         auto rm = CLResourceManager::GetResourceManager();
-        auto resourceShader = rm->GetResourceShader("src/CLEngine/src/Shaders/particleSystem.vert", "src/CLEngine/src/Shaders/particleSystem.frag","src/CLEngine/src/Shaders/particleSystem.geom");
+        auto resourceShader = rm->GetResourceShader("../Shaders/particleSystem.vert", "../Shaders/particleSystem.frag","../Shaders/particleSystem.geom");
         particleSystemShader = resourceShader->GetProgramID();
         shaders.push_back(particleSystemShader);
 
@@ -441,7 +440,7 @@ CLNode* CLEngine::AddParticleSystem(CLNode* parent,unsigned int id,unsigned int 
 void CLEngine::AddSkybox(string right, string left, string top, string bottom, string front, string back){
     if(!skyboxShader){
         auto rm = CLResourceManager::GetResourceManager();
-        auto resourceShader = rm->GetResourceShader("src/CLEngine/src/Shaders/skybox.vert", "src/CLEngine/src/Shaders/skybox.frag");
+        auto resourceShader = rm->GetResourceShader("../Shaders/skybox.vert", "../Shaders/skybox.frag");
         skyboxShader = resourceShader->GetProgramID();
         shaders.push_back(skyboxShader);
 
@@ -453,7 +452,7 @@ void CLEngine::AddSkybox(string right, string left, string top, string bottom, s
 void CLEngine::AddShadowMapping(GLuint lightId){
     if(!simpleDepthShader){
         auto rm = CLResourceManager::GetResourceManager();
-        depthShadder = rm->GetResourceShader("src/CLEngine/src/Shaders/simpleDepthShader.vert", "src/CLEngine/src/Shaders/simpleDepthShader.frag");
+        depthShadder = rm->GetResourceShader("../Shaders/simpleDepthShader.vert", "../Shaders/simpleDepthShader.frag");
         simpleDepthShader = depthShadder->GetProgramID();
         shaders.push_back(simpleDepthShader);
         
@@ -464,7 +463,7 @@ void CLEngine::AddShadowMapping(GLuint lightId){
 CLNode* CLEngine::AddBillBoard(CLNode* parent,unsigned int id,string& file, bool vertically, float width_, float height_){
     auto rm = CLResourceManager::GetResourceManager();
     if(!billboardShader){
-        auto resourceShader = rm->GetResourceShader("src/CLEngine/src/Shaders/billboard.vert", "src/CLEngine/src/Shaders/billboard.frag", "src/CLEngine/src/Shaders/billboard.geom");
+        auto resourceShader = rm->GetResourceShader("../Shaders/billboard.vert", "../Shaders/billboard.frag", "../Shaders/billboard.geom");
         billboardShader = resourceShader->GetProgramID();
         shaders.push_back(billboardShader);
         
@@ -593,7 +592,7 @@ const void CLEngine::Draw3DLine(float x1, float y1, float z1, float x2, float y2
 
     if(!debugShader){
         auto rm = CLResourceManager::GetResourceManager();
-        auto resourceShader = rm->GetResourceShader("src/CLEngine/src/Shaders/debugShader.vert", "src/CLEngine/src/Shaders/debugShader.frag");
+        auto resourceShader = rm->GetResourceShader("../Shaders/debugShader.vert", "../Shaders/debugShader.frag");
         debugShader = resourceShader->GetProgramID();
     }
     float line[] = {

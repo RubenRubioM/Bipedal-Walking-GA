@@ -2,6 +2,11 @@
 
 #include <CLEngine.h>
 
+class ECamera;
+
+/// <summary>
+/// RenderEngine to use the CLEngine library.
+/// </summary>
 class RenderEngine{
 	public:
 		/// <summary>
@@ -14,6 +19,12 @@ class RenderEngine{
 		/// RenderEngine destructor.
 		/// </summary>
 		~RenderEngine();
+
+		/// <summary>
+		/// Add camera to the scene
+		/// </summary>
+		/// <param name="camera"> Camera. </param>
+		void AddCamera(ECamera* camera);
 
 		/// <summary>
 		/// Returns true if the windows stills open.

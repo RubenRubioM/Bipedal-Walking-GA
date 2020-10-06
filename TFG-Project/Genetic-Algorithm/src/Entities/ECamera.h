@@ -2,6 +2,11 @@
 
 #include "Entity.h"
 
+class Transformable; 
+
+/// <summary>
+/// Camera class
+/// </summary>
 class ECamera : public Entity{
 	public:
 		/// <summary>
@@ -9,7 +14,15 @@ class ECamera : public Entity{
 		/// </summary>
 		/// <param name="target"> Camera target. </param>
 		/// <param name="parentId"> Parent Id.</param>
-		ECamera(glm::vec3 target, uint32_t parentId = 0);
+		ECamera(const glm::vec3 target, const uint32_t parentId = 0);
+
+		/// <summary>
+		/// ECamera constructor
+		/// </summary>
+		/// <param name="transform"> Transformable. </param>
+		/// <param name="target"> Camera target. </param>
+		/// <param name="parentId"> Parent Id. </param>
+		ECamera(const Transformable transform, const glm::vec3 target, const uint32_t parentId = 0);
 
 		/// <summary>
 		/// ECamera destructor.
