@@ -13,6 +13,10 @@ StateExecution::StateExecution(){
 	renderEngine = RenderEngine::GetInstance();
 
 	camera = make_unique<ECamera>(Transformable(glm::vec3(50.0f),glm::vec3(0.0f),glm::vec3(1.0f)),glm::vec3(0, 0, 0));
+
+	// Entities creation.
+	entities.push_back(make_unique<EMesh>(Transformable(glm::vec3(0), glm::vec3(0.0f), glm::vec3(5.0f)), "media/kart_physics.obj"));
+	entities.push_back(make_unique<EMesh>(Transformable(glm::vec3(30.0f,10.0f,0.0f), glm::vec3(0.0f), glm::vec3(5.0f)), "media/telebanana.obj"));
 	AddEntities();
 }
 
@@ -49,4 +53,7 @@ void StateExecution::Render(){
 /// </summary>
 void StateExecution::AddEntities() {
 	renderEngine->AddCamera(camera.get());
+	for (const auto& entity : entities) {
+		renderEngine->AddMesh(entity.get());
+	}
 }

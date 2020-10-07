@@ -1,6 +1,7 @@
 #include "RenderEngine.h"
 
 #include <Entities/ECamera.h>
+#include <Entities/EMesh.h>
 
 /// <summary>
 /// Creates or returns a RenderEngine instance.
@@ -26,6 +27,27 @@ RenderEngine::RenderEngine(){
 /// RenderEngine destructor.
 /// </summary>
 RenderEngine::~RenderEngine(){
+}
+
+/// <summary>
+/// Add mesh to the scene.
+/// </summary>
+/// <param name="mesh"> Mesh. </param>
+void RenderEngine::AddMesh(EMesh* mesh) {
+	CLE::CLNode* node = nullptr;
+	CLE::CLNode* father = smgr;
+
+	if (mesh->GetParentId()) {
+		father = device->GetNodeByID(mesh->GetParentId());
+	}
+
+	node = device->AddMesh(father, mesh->GetId());
+	const auto& resourceMesh = resourceManager->GetResourceMesh(mesh->GetMeshPath(), true);
+	static_cast<CLE::CLMesh*>(node->GetEntity())->SetMesh(resourceMesh);
+
+	node->SetTranslation(mesh->GetPosition());
+	node->SetRotation(mesh->GetRotation());
+	node->SetScalation(mesh->GetScalation());
 }
 
 /// <summary>

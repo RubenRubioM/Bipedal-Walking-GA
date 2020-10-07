@@ -145,5 +145,5 @@ class Entity{
 		/// <summary>
 		/// Entity next Id.
 		/// </summary>
-		inline static uint32_t nextId{ 0 };
+		inline static uint32_t nextId{ 1 };
 };

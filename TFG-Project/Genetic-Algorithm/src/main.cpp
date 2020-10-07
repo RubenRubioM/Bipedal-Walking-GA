@@ -19,12 +19,8 @@ int main() {
 	std::unique_ptr<Entity> mesh2 = std::make_unique<EMesh>(Transformable(glm::vec3(10.0f), glm::vec3(0.0f), glm::vec3(20.0f)),"path3.jpg");
 	std::unique_ptr<Entity> camera = std::make_unique<ECamera>(Transformable(glm::vec3(10.0f),glm::vec3(0.0f),glm::vec3(20.0f)), glm::vec3(10.0, 10.0, 10.0));
 	
-	std::cout << mesh2->GetPosition().x << std::endl;
-	mesh2->SetTransformable(Transformable(glm::vec3(700), glm::vec3(180), glm::vec3(100)));
-	std::cout << mesh2->GetTransformable() << std::endl;
-	std::cout << mesh2->GetPosition().x << std::endl;
-	//program->SetState(State::States::EXECUTION);
-	//program->Start();
+	program->SetState(State::States::EXECUTION);
+	program->Start();
 
 	return EXIT_SUCCESS;
 }

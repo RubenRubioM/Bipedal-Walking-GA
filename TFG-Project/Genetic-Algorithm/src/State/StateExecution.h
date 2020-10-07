@@ -3,9 +3,12 @@
 #include "State.h"
 
 #include <memory>
+#include <vector>
 
 class RenderEngine;
 class ECamera;
+class EMesh;
+class Entity;
 
 class StateExecution : public State {
 	public:
@@ -49,5 +52,7 @@ class StateExecution : public State {
 		/// Scene main camera.
 		/// </summary>
 		std::unique_ptr<ECamera> camera{ nullptr };
+
+		std::vector<std::unique_ptr<EMesh>> entities;
 };
 

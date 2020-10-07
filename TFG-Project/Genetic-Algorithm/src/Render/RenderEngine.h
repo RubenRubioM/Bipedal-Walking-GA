@@ -3,6 +3,7 @@
 #include <CLEngine.h>
 
 class ECamera;
+class EMesh;
 
 /// <summary>
 /// RenderEngine to use the CLEngine library.
@@ -21,7 +22,13 @@ class RenderEngine{
 		~RenderEngine();
 
 		/// <summary>
-		/// Add camera to the scene
+		/// Add mesh to the scene.
+		/// </summary>
+		/// <param name="mesh"> Mesh. </param>
+		void AddMesh(EMesh* mesh);
+
+		/// <summary>
+		/// Add camera to the scene.
 		/// </summary>
 		/// <param name="camera"> Camera. </param>
 		void AddCamera(ECamera* camera);
