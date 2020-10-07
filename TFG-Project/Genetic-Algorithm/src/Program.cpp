@@ -43,6 +43,7 @@ void Program::SetState(State::States newState) {
 /// </summary>
 void Program::Start(){
 	while (renderEngine->IsOpen()) {
+		state->InitFrame();
 		state->Update();
 		state->Render();
 	}

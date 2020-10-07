@@ -28,6 +28,11 @@ class StateExecution : public State {
 		void InitState() override;
 
 		/// <summary>
+		/// Called at the start of every frame.
+		/// </summary>
+		void InitFrame() override;
+
+		/// <summary>
 		/// StateExecution update.
 		/// </summary>
 		void Update() override;
@@ -53,6 +58,10 @@ class StateExecution : public State {
 		/// </summary>
 		std::unique_ptr<ECamera> camera{ nullptr };
 
-		std::vector<std::unique_ptr<EMesh>> entities;
-};
+		/// <summary>
+		/// Vector for all the meshes.
+		/// </summary>
+		std::vector<std::unique_ptr<EMesh>> meshes;
 
+		bool check = false;
+};

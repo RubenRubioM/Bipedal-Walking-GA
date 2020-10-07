@@ -38,7 +38,6 @@ static void error(int error, const char* description) {
 CLEngine::CLEngine (const unsigned int w, const unsigned int h, const string title) : width(w), height(h) {
     CreateGlfwWindow(w, h, title);
     glewInit();
-    ImGuiInit();
     const std::string f = "fonts/Plump.ttf";
 
     smgr = make_unique<CLNode>();
@@ -57,7 +56,6 @@ CLEngine::CLEngine (const unsigned int w, const unsigned int h, const string tit
  * Destruye la ventana de GLFW y libera la informacion.
  */
 CLEngine::~CLEngine() {
-    TerminateImGui();
     glfwDestroyWindow(window);
     glfwTerminate();
     //cout << ">>>>> GLFW OFF" << endl;

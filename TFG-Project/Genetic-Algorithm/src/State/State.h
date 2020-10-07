@@ -26,6 +26,11 @@ class State{
 		virtual void InitState() = 0;
 
 		/// <summary>
+		/// Called at the start of every frame.
+		/// </summary>
+		virtual void InitFrame() = 0;
+
+		/// <summary>
 		/// State update.
 		/// </summary>
 		virtual void Update() = 0;

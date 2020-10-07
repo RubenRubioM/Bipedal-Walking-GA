@@ -137,6 +137,20 @@ int main() {
 
         double previousTime = glfwGetTime();
         int frameCount = 0;
+        //device->ImGuiInit();
+
+        ImGui::CreateContext();
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+        ImGui_ImplGlfw_InitForOpenGL(device->GetWindow(), true);
+        ImGui_ImplOpenGL3_Init("#version 450");
+        ImGui::StyleColorsDark();
+
+        bool show_demo_window = true;
+        bool show_another_window = false;
+        ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
 
         while (device->Run()) {
             //Apartir de aqui hacemos cosas, de momento en el main para testear
@@ -152,6 +166,16 @@ int main() {
             ImGui::SliderFloat3("LightPos", auxLightPos, -1000, 1000);
             ImGui::SliderFloat3("LightPos2", auxLightPos2, -1000, 1000);
             ImGui::End();
+
+            ImGui::Begin("Ventana 1");
+            ImGui::Text("Esta es la ventana 1");
+            ImGui::Button("Boton 1");
+            ImGui::End();
+
+            ImGui::Begin("Ventana 2");
+            ImGui::Text("Esta es la ventana 2");
+            ImGui::End();
+           
 
             device->Draw3DLine(0,0,0,100,100,100);
             glm::vec3 cameraPos(auxCameraPos[0], auxCameraPos[1], auxCameraPos[2]);
@@ -199,7 +223,7 @@ int main() {
             device->EndScene();
             index += 0.2;
         }
-
+        device->TerminateImGui();
         delete device;
 
     } catch (std::exception& ex) {

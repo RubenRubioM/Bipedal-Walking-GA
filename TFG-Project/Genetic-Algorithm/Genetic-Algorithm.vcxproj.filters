@@ -10,6 +10,13 @@
     <ClCompile Include="src\State\State.cpp" />
     <ClCompile Include="src\State\StateExecution.cpp" />
     <ClCompile Include="src\DataTypes\Transformable.cpp" />
+    <ClCompile Include="src\IMGUI\imgui.cpp" />
+    <ClCompile Include="src\IMGUI\imgui_demo.cpp" />
+    <ClCompile Include="src\IMGUI\imgui_draw.cpp" />
+    <ClCompile Include="src\IMGUI\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\IMGUI\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\IMGUI\imgui_widgets.cpp" />
+    <ClCompile Include="src\Render\ImGuiManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Program.h" />
@@ -21,5 +28,14 @@
     <ClInclude Include="src\State\State.h" />
     <ClInclude Include="src\State\StateExecution.h" />
     <ClInclude Include="src\DataTypes\Transformable.h" />
+    <ClInclude Include="src\IMGUI\imconfig.h" />
+    <ClInclude Include="src\IMGUI\imgui.h" />
+    <ClInclude Include="src\IMGUI\imgui_impl_glfw.h" />
+    <ClInclude Include="src\IMGUI\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\IMGUI\imgui_internal.h" />
+    <ClInclude Include="src\IMGUI\imstb_rectpack.h" />
+    <ClInclude Include="src\IMGUI\imstb_textedit.h" />
+    <ClInclude Include="src\IMGUI\imstb_truetype.h" />
+    <ClInclude Include="src\Render\ImGuiManager.h" />
   </ItemGroup>
 </Project>

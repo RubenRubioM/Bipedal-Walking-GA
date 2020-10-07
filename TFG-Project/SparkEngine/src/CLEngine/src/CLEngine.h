@@ -321,11 +321,11 @@ class CLEngine {
         //! @param mode Booleano para cambiar el modo
         void SetGrassActivate(bool mode) { grassActivate = mode; };
         void SetShadowsActivate(bool mode) { shadowsActivate = mode; };
+        void ImGuiInit();
+        void TerminateImGui();
     private:
         void CreateGlfwWindow(const unsigned int, const unsigned int, const string&);
         CLNode* GetNodeByIDAux(unsigned int id, CLNode* node, CLNode* root);
-        void ImGuiInit();
-        void TerminateImGui();
         //! Calcula las matriecs view y projection
         void CalculateViewProjMatrix(const glm::mat4& lightSpaceMatrix);
         //! Calcula las luces de la escena

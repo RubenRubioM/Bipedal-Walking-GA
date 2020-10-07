@@ -2,6 +2,7 @@
 
 #include <Entities/ECamera.h>
 #include <Entities/EMesh.h>
+#include <Render/ImGuiManager.h>
 
 /// <summary>
 /// Creates or returns a RenderEngine instance.
@@ -21,6 +22,8 @@ RenderEngine::RenderEngine(){
 	device = new CLE::CLEngine(1280, 720, "Genethic Algorithm");
 	smgr = device->GetSceneManager();
 	resourceManager = device->GetResourceManager();
+	
+	ImGuiManager::GetInstance()->SetContext(device->GetWindow());
 }
 
 /// <summary>
@@ -88,6 +91,7 @@ void RenderEngine::Terminate() const {
 /// Clean the screen and buffers.
 /// </summary>
 void RenderEngine::BeginScene() const {
+	device->UpdateViewport();
 	device->BeginScene();
 }
 
