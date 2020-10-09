@@ -2,6 +2,7 @@
 
 #include <Render/RenderEngine.h>
 #include <Entities/Entity.h>
+#include <Entities/ECamera.h>
 #include <Render/ImGuiManager.h>
 
 /// <summary>
@@ -34,10 +35,30 @@ PhysicsEngine::~PhysicsEngine() {
 /// </summary>
 /// <param name="entity"> Entity. </param>
 void PhysicsEngine::UpdateEntity(Entity* entity){
-	imGuiManager->EntityTransformable(entity, std::string("Entity " + to_string(entity->GetId())).c_str(), -200, 200);
+	//imGuiManager->EntityTransformable(entity, std::string(entity->GetName() + " (" + to_string(entity->GetId()) + ")").c_str(), -200, 200);
+	imGuiManager->EntityTransformable(entity, std::string(to_string(entity->GetId()) + ". " + entity->GetName()).c_str(), -200, 200);
 
 	const auto& node = device->GetNodeByID(entity->GetId());
 	node->SetTranslation(entity->GetPosition());
 	node->SetRotation(entity->GetRotation());
 	node->SetScalation(entity->GetScalation());
+}
+
+
+/// <summary>
+/// Updates entity camera.
+/// </summary>
+/// <param name="camera"> Camera entity. </param>
+/// <param name="target"> Target entity. </param>
+void PhysicsEngine::UpdateCamera(Entity* camera, Entity* target) {
+	imGuiManager->EntityTransformable(camera, std::string(camera->GetName()).c_str(), -200, 200);
+
+	const auto& cam = device->GetActiveCamera();
+	const auto& camNode = device->GetActiveCameraNode();
+
+	camNode->SetTranslation(camera->GetPosition());
+	camNode->SetRotation(camera->GetRotation());
+	camNode->SetScalation(camera->GetScalation());
+
+	cam->SetCameraTarget(target->GetPosition());
 }

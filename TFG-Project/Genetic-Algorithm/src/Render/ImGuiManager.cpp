@@ -75,9 +75,11 @@ void ImGuiManager::End(){
 /// <param name="min"> Slider min value. </param>
 /// <param name="max"> Slider max value. </param>
 void ImGuiManager::EntityTransformable(Entity* entity, std::string name, const int min, const int max){
-	ImGui::SliderFloat3(std::string(name + " position").c_str(), reinterpret_cast<float*>(entity->GetPositionPtr()), min, max);
-	ImGui::SliderFloat3(std::string(name + " rotation").c_str(), reinterpret_cast<float*>(entity->GetRotationPtr()), glm::degrees(-glm::pi<float>()), glm::degrees(glm::pi<float>()));
-	ImGui::SliderFloat3(std::string(name + " scalation").c_str(), reinterpret_cast<float*>(entity->GetScalationPtr()), min, max);
+	if (ImGui::CollapsingHeader(name.c_str(), ImGuiTreeNodeFlags_None)) {
+		ImGui::SliderFloat3(std::string(name + " position").c_str(), reinterpret_cast<float*>(entity->GetPositionPtr()), min, max);
+		ImGui::SliderFloat3(std::string(name + " rotation").c_str(), reinterpret_cast<float*>(entity->GetRotationPtr()), glm::degrees(-glm::pi<float>()), glm::degrees(glm::pi<float>()));
+		ImGui::SliderFloat3(std::string(name + " scalation").c_str(), reinterpret_cast<float*>(entity->GetScalationPtr()), min, max);
+	}
 }
 
 /// <summary>

@@ -27,6 +27,13 @@ class PhysicsEngine{
 		/// <param name="entity"> Entity. </param>
 		void UpdateEntity(Entity* entity);
 
+		/// <summary>
+		/// Updates entity camera.
+		/// </summary>
+		/// <param name="camera"> Camera entity. </param>
+		/// <param name="target"> Target entity. </param>
+		void UpdateCamera(Entity* camera, Entity* target);
+
 	private:
 		/// <summary>
 		/// Private constructor.

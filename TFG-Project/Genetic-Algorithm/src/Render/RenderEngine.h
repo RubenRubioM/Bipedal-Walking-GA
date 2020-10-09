@@ -36,6 +36,17 @@ class RenderEngine{
 		void AddCamera(ECamera* camera);
 
 		/// <summary>
+		/// Add a skybox to the scene
+		/// </summary>
+		/// <param name="right"> Right image path. </param>
+		/// <param name="left"> Left image path. </param>
+		/// <param name="top"> Top image path. </param>
+		/// <param name="bottom"> Bottom image path. </param>
+		/// <param name="front"> Front image path. </param>
+		/// <param name="back"> Back image path. </param>
+		void AddSkybox(const std::string right, const std::string left, const std::string top, const std::string bottom, const std::string front, const std::string back) const;
+
+		/// <summary>
 		/// Returns true if the windows stills open.
 		/// </summary>
 		/// <returns> True if windows stills open. </returns>

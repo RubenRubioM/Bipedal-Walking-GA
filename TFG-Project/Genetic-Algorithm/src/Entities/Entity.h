@@ -88,6 +88,12 @@ class Entity{
 		glm::vec3* GetScalationPtr() { return &scalation; }
 
 		/// <summary>
+		/// Returns the entity name.
+		/// </summary>
+		/// <returns> Entity name. </returns>
+		const std::string GetName() { return name; }
+
+		/// <summary>
 		/// Returns the entity shader.
 		/// </summary>
 		/// <returns> Entity shader. </returns>
@@ -116,6 +122,12 @@ class Entity{
 		/// </summary>
 		/// <param name="scalation"> Entity scalation. </param>
 		void SetScalation(glm::vec3 scalation) { this->scalation = scalation; }
+
+		/// <summary>
+		/// Sets the entity name.
+		/// </summary>
+		/// <param name="name"> Entity name. </param>
+		void SetName(const std::string name) { this->name = name; }
 
 		/// <summary>
 		/// Sets the entity shader.
@@ -153,6 +165,11 @@ class Entity{
 		/// Entity scalation.
 		/// </summary>
 		glm::vec3 scalation{ 1.0f };
+
+		/// <summary>
+		/// Entity name.
+		/// </summary>
+		std::string name{ "Entity" };
 
 		/// <summary>
 		/// Entity shader.

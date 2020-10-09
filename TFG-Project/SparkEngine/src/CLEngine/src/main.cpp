@@ -151,7 +151,7 @@ int main() {
         bool show_another_window = false;
         ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-
+        bool open = true;
         while (device->Run()) {
             //Apartir de aqui hacemos cosas, de momento en el main para testear
             device->UpdateViewport();  //Por si reescalamos la ventana
@@ -161,21 +161,29 @@ int main() {
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
-            ImGui::Begin("Modifica ilumnacion");
+            /*ImGui::Begin("1");
             ImGui::SliderFloat3("CameraPos", auxCameraPos, -600, 600);
             ImGui::SliderFloat3("LightPos", auxLightPos, -1000, 1000);
             ImGui::SliderFloat3("LightPos2", auxLightPos2, -1000, 1000);
+
+            ImGui::End();*/
+            
+            ImGui::Begin("Begin");
+            if (ImGui::TreeNode("Translations"))
+            {
+                if (ImGui::CollapsingHeader("Transformables", ImGuiTreeNodeFlags_None))
+                {
+                    ImGui::SliderFloat3("CameraPos", auxCameraPos, -600, 600);
+                    ImGui::SliderFloat3("LightPos", auxLightPos, -1000, 1000);
+                    ImGui::SliderFloat3("LightPos2", auxLightPos2, -1000, 1000);
+                }
+               
+                ImGui::TreePop();
+                
+            }
             ImGui::End();
 
-            ImGui::Begin("Ventana 1");
-            ImGui::Text("Esta es la ventana 1");
-            ImGui::Button("Boton 1");
-            ImGui::End();
-
-            ImGui::Begin("Ventana 2");
-            ImGui::Text("Esta es la ventana 2");
-            ImGui::End();
-           
+            //ImGui::ShowDemoWindow();
 
             device->Draw3DLine(0,0,0,100,100,100);
             glm::vec3 cameraPos(auxCameraPos[0], auxCameraPos[1], auxCameraPos[2]);

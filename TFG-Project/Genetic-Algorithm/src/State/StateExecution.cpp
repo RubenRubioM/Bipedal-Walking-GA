@@ -19,10 +19,19 @@ StateExecution::StateExecution(){
 	physicsEngine = PhysicsEngine::GetInstance();
 	imGuiManager = ImGuiManager::GetInstance();
 	camera = make_unique<ECamera>(Transformable(glm::vec3(50.0f),glm::vec3(0.0f),glm::vec3(1.0f)),glm::vec3(0, 0, 0));
+	camera->SetName("Camera");
+	renderEngine->AddSkybox("media/skybox/right.jpg"
+		, "media/skybox/left.jpg"
+		, "media/skybox/top.jpg"
+		, "media/skybox/bottom.jpg"
+		, "media/skybox/front.jpg"
+		, "media/skybox/back.jpg");
 
 	// Entities creation.
 	meshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0), glm::vec3(0.0f), glm::vec3(5.0f)), "media/kart_physics.obj"));
+	meshes[0]->SetName("Coche");
 	meshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(30.0f,10.0f,30.0f), glm::vec3(0.0f), glm::vec3(2.0f)), "media/telebanana.obj"));
+	meshes[1]->SetName("Platano");
 	AddEntities();
 }
 
@@ -53,6 +62,7 @@ void StateExecution::Update(){
 	for (const auto& mesh : meshes) {
 		physicsEngine->UpdateEntity(mesh.get());
 	}
+	physicsEngine->UpdateCamera(camera.get(), meshes[0].get());
 	imGuiManager->End();
 }
 
