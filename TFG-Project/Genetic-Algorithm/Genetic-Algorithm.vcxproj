@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Physics\PhysicsEngine.cpp" />
     <ClCompile Include="src\Render\ImGuiManager.cpp" />
     <ClCompile Include="src\DataTypes\Transformable.cpp" />
     <ClCompile Include="src\IMGUI\imgui.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="src\State\StateExecution.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Physics\PhysicsEngine.h" />
     <ClInclude Include="src\Render\ImGuiManager.h" />
     <ClInclude Include="src\DataTypes\Transformable.h" />
     <ClInclude Include="src\IMGUI\imconfig.h" />

@@ -21,6 +21,8 @@ class RenderEngine{
 		/// </summary>
 		~RenderEngine();
 
+		CLE::CLEngine* GetDevice() { return device; }
+
 		/// <summary>
 		/// Add mesh to the scene.
 		/// </summary>

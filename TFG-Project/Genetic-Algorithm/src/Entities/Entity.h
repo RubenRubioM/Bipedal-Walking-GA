@@ -58,16 +58,34 @@ class Entity{
 		const glm::vec3 GetPosition() { return position; }
 
 		/// <summary>
+		/// Returns the entity position adress.
+		/// </summary>
+		/// <returns> Entity position adress. </returns>
+		glm::vec3* GetPositionPtr() { return &position; }
+
+		/// <summary>
 		/// Returns the entity rotation.
 		/// </summary>
 		/// <returns> Entity rotation. </returns>
 		const glm::vec3 GetRotation() { return rotation; }
 
 		/// <summary>
+		/// Returns the entity rotation adress.
+		/// </summary>
+		/// <returns> Entity rotation adress. </returns>
+		glm::vec3* GetRotationPtr() { return &rotation; }
+
+		/// <summary>
 		/// Returns the entity scalation.
 		/// </summary>
 		/// <returns> Entity scalation. </returns>
 		const glm::vec3 GetScalation() { return scalation; }
+
+		/// <summary>
+		/// Returns the entity scalation adress.
+		/// </summary>
+		/// <returns> Entity scalation adress. </returns>
+		glm::vec3* GetScalationPtr() { return &scalation; }
 
 		/// <summary>
 		/// Returns the entity shader.

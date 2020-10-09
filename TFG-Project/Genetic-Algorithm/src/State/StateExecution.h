@@ -6,6 +6,8 @@
 #include <vector>
 
 class RenderEngine;
+class PhysicsEngine;
+class ImGuiManager;
 class ECamera;
 class EMesh;
 class Entity;
@@ -52,6 +54,16 @@ class StateExecution : public State {
 		/// RenderEngine pointer.
 		/// </summary>
 		RenderEngine* renderEngine{ nullptr };
+
+		/// <summary>
+		/// PhysicsEngine pointer.
+		/// </summary>
+		PhysicsEngine* physicsEngine{ nullptr };
+
+		/// <summary>
+		/// ImGuiManager pointer. 
+		/// </summary>
+		ImGuiManager* imGuiManager{ nullptr };
 
 		/// <summary>
 		/// Scene main camera.

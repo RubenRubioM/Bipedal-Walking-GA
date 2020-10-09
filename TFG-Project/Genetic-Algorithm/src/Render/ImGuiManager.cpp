@@ -1,6 +1,9 @@
 #include "ImGuiManager.h"
 
-//#include <Render/RenderEngine.h>
+#include <Entities/Entity.h>
+#include <GLM/glm.hpp>
+#include <GLM/gtc/constants.hpp>
+
 
 /// <summary>
 /// Creates or returns a ImGuiManager instance.
@@ -47,6 +50,34 @@ void ImGuiManager::FrameInit() {
 void ImGuiManager::Render() {
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+/// <summary>
+/// Calls ImGui::Begin.
+/// </summary>
+/// <param name="title"> Window title. </param>		
+void ImGuiManager::Begin(const std::string title){
+	ImGui::Begin(title.c_str());
+}
+
+/// <summary>
+/// Calls ImGui::End.
+/// </summary>
+void ImGuiManager::End(){
+	ImGui::End();
+}
+
+/// <summary>
+/// Creates an entity transformable fields.
+/// </summary>
+/// <param name="entity"> Entity pointer. </param>
+/// <param name="name"> Entity name. </param>
+/// <param name="min"> Slider min value. </param>
+/// <param name="max"> Slider max value. </param>
+void ImGuiManager::EntityTransformable(Entity* entity, std::string name, const int min, const int max){
+	ImGui::SliderFloat3(std::string(name + " position").c_str(), reinterpret_cast<float*>(entity->GetPositionPtr()), min, max);
+	ImGui::SliderFloat3(std::string(name + " rotation").c_str(), reinterpret_cast<float*>(entity->GetRotationPtr()), glm::degrees(-glm::pi<float>()), glm::degrees(glm::pi<float>()));
+	ImGui::SliderFloat3(std::string(name + " scalation").c_str(), reinterpret_cast<float*>(entity->GetScalationPtr()), min, max);
 }
 
 /// <summary>

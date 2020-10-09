@@ -4,7 +4,10 @@
 #include <IMGUI/imgui_impl_glfw.h>
 #include <IMGUI/imgui_impl_opengl3.h>
 
+#include <string>
+
 struct GLFWwindow;
+class Entity;
 
 /// <summary>
 /// Class to manage ImGui.
@@ -37,6 +40,26 @@ class ImGuiManager{
 		/// Render all the ImGui stuff.
 		/// </summary>
 		void Render();
+
+		/// <summary>
+		/// Calls ImGui::Begin.
+		/// </summary>
+		/// <param name="title"> Window title. </param>
+		void Begin(const std::string title);
+
+		/// <summary>
+		/// Calls ImGui::End.
+		/// </summary>
+		void End();
+
+		/// <summary>
+		/// Creates an entity transformable fields.
+		/// </summary>
+		/// <param name="entity"> Entity pointer. </param>
+		/// <param name="name"> Entity name. </param>
+		/// /// <param name="min"> Slider min value. </param>
+		/// <param name="max"> Slider max value. </param>
+		void EntityTransformable(Entity* entity, const std::string name, const int min, const int max);
 
 	private:
 		/// <summary>

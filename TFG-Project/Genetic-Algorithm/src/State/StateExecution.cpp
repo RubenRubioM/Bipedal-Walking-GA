@@ -1,6 +1,7 @@
 #include "StateExecution.h"
 
 #include <Render/RenderEngine.h>
+#include <Physics/PhysicsEngine.h>
 #include <Render/ImGuiManager.h>
 #include <Entities/ECamera.h>
 #include <Entities/EMesh.h>
@@ -8,18 +9,20 @@
 #include <DataTypes/Transformable.h>
 
 #include <IMGUI/imgui.h>
+#include <GLM/gtc/type_ptr.hpp>
 
 /// <summary>
 /// StateExecution constructor.
 /// </summary>
 StateExecution::StateExecution(){
 	renderEngine = RenderEngine::GetInstance();
-
+	physicsEngine = PhysicsEngine::GetInstance();
+	imGuiManager = ImGuiManager::GetInstance();
 	camera = make_unique<ECamera>(Transformable(glm::vec3(50.0f),glm::vec3(0.0f),glm::vec3(1.0f)),glm::vec3(0, 0, 0));
 
 	// Entities creation.
 	meshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0), glm::vec3(0.0f), glm::vec3(5.0f)), "media/kart_physics.obj"));
-	meshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(30.0f,10.0f,0.0f), glm::vec3(0.0f), glm::vec3(5.0f)), "media/telebanana.obj"));
+	meshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(30.0f,10.0f,30.0f), glm::vec3(0.0f), glm::vec3(2.0f)), "media/telebanana.obj"));
 	AddEntities();
 }
 
@@ -39,22 +42,18 @@ void StateExecution::InitState(){
 /// Called at the start of every frame.
 /// </summary>
 void StateExecution::InitFrame() {
-	ImGuiManager::GetInstance()->FrameInit();
+	imGuiManager->FrameInit();
 }
 
 /// <summary>
 /// StateExecution update.
 /// </summary>
 void StateExecution::Update(){
-	ImGui::Begin("Ventana 1");
-	ImGui::Checkbox("Checkbox", &check);
-	ImGui::Text("Esta es la ventana 1");
-	ImGui::Button("Boton 1");
-	ImGui::End();
-
-	ImGui::Begin("Ventana 2");
-	ImGui::Text("Esta es la ventana 2");
-	ImGui::End();
+	imGuiManager->Begin("Entities transformables");
+	for (const auto& mesh : meshes) {
+		physicsEngine->UpdateEntity(mesh.get());
+	}
+	imGuiManager->End();
 }
 
 /// <summary>
@@ -63,7 +62,7 @@ void StateExecution::Update(){
 void StateExecution::Render(){
 	renderEngine->BeginScene();
 	renderEngine->DrawAll();
-	ImGuiManager::GetInstance()->Render();
+	imGuiManager->Render();
 	renderEngine->EndScene();
 }
 
