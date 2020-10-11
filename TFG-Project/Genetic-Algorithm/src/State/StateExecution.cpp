@@ -28,10 +28,10 @@ StateExecution::StateExecution(){
 		, "media/skybox/back.jpg");
 
 	// Entities creation.
-	meshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0), glm::vec3(0.0f), glm::vec3(5.0f)), "media/kart_physics.obj"));
-	meshes[0]->SetName("Coche");
-	meshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(30.0f,10.0f,30.0f), glm::vec3(0.0f), glm::vec3(2.0f)), "media/telebanana.obj"));
-	meshes[1]->SetName("Platano");
+	meshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0), glm::vec3(0.0f), glm::vec3(5.0f,2.0f,5.0f)), "media/lathi.obj"));
+	meshes[0]->SetName("Stick padre");
+	meshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0), glm::vec3(90.0f,0.0f,0.0f), glm::vec3(1.0f)), "media/lathi.obj", meshes[0]->GetId()));
+	meshes[1]->SetName("Stick hijo");
 	AddEntities();
 }
 
@@ -62,7 +62,7 @@ void StateExecution::Update(){
 	for (const auto& mesh : meshes) {
 		physicsEngine->UpdateEntity(mesh.get());
 	}
-	physicsEngine->UpdateCamera(camera.get(), meshes[0].get());
+	physicsEngine->UpdateCamera(camera.get(), glm::vec3(0));
 	imGuiManager->End();
 }
 

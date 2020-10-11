@@ -68,6 +68,26 @@ void ImGuiManager::End(){
 }
 
 /// <summary>
+/// Creates a collapsable header.
+/// </summary>
+/// <param name="title"> Header title. </param>
+/// <returns> Bool. </returns>
+bool ImGuiManager::Header(const std::string title){
+	return ImGui::CollapsingHeader(title.c_str(), ImGuiTreeNodeFlags_None);
+}
+
+/// <summary>
+/// Creates a vec3 slider.
+/// </summary>
+/// <param name="vec3"> Vec3 value. </param>
+/// <param name="name"> Field name. </param>
+/// <param name="min"> Min value. </param>
+/// <param name="max"> Max value. </param>
+void ImGuiManager::Vec3Slider(glm::vec3* vec3, const std::string name, const int min, const int max){
+	ImGui::SliderFloat3(name.c_str(), reinterpret_cast<float*>(vec3), min, max);
+}
+
+/// <summary>
 /// Creates an entity transformable fields.
 /// </summary>
 /// <param name="entity"> Entity pointer. </param>
@@ -75,11 +95,9 @@ void ImGuiManager::End(){
 /// <param name="min"> Slider min value. </param>
 /// <param name="max"> Slider max value. </param>
 void ImGuiManager::EntityTransformable(Entity* entity, std::string name, const int min, const int max){
-	if (ImGui::CollapsingHeader(name.c_str(), ImGuiTreeNodeFlags_None)) {
-		ImGui::SliderFloat3(std::string(name + " position").c_str(), reinterpret_cast<float*>(entity->GetPositionPtr()), min, max);
-		ImGui::SliderFloat3(std::string(name + " rotation").c_str(), reinterpret_cast<float*>(entity->GetRotationPtr()), glm::degrees(-glm::pi<float>()), glm::degrees(glm::pi<float>()));
-		ImGui::SliderFloat3(std::string(name + " scalation").c_str(), reinterpret_cast<float*>(entity->GetScalationPtr()), min, max);
-	}
+	Vec3Slider(entity->GetPositionPtr(), std::string(name + " position"), min, max);
+	Vec3Slider(entity->GetRotationPtr(), std::string(name + " rotation"), glm::degrees(-glm::pi<float>()), glm::degrees(glm::pi<float>()));
+	Vec3Slider(entity->GetScalationPtr(), std::string(name + " scalation"), min, max);
 }
 
 /// <summary>

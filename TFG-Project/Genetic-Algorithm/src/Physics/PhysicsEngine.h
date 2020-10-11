@@ -4,6 +4,7 @@
 
 class Entity;
 class ImGuiManager;
+class Transformable;
 
 /// <summary>
 /// Physics engine class.
@@ -33,6 +34,13 @@ class PhysicsEngine{
 		/// <param name="camera"> Camera entity. </param>
 		/// <param name="target"> Target entity. </param>
 		void UpdateCamera(Entity* camera, Entity* target);
+
+		/// <summary>
+		/// Updates entity camera.
+		/// </summary>
+		/// <param name="camera"> Camera entity. </param>
+		/// <param name="target"> Target position. </param>
+		void UpdateCamera(Entity* camera, glm::vec3 target);
 
 	private:
 		/// <summary>

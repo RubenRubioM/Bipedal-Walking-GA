@@ -3,6 +3,7 @@
 #include <IMGUI/imgui.h>
 #include <IMGUI/imgui_impl_glfw.h>
 #include <IMGUI/imgui_impl_opengl3.h>
+#include <GLM/vec3.hpp>
 
 #include <string>
 
@@ -51,6 +52,22 @@ class ImGuiManager{
 		/// Calls ImGui::End.
 		/// </summary>
 		void End();
+
+		/// <summary>
+		/// Creates a collapsable header.
+		/// </summary>
+		/// <param name="title"> Header title. </param>
+		/// <returns> Bool. </returns>
+		bool Header(const std::string title);
+
+		/// <summary>
+		/// Creates a vec3 slider.
+		/// </summary>
+		/// <param name="vec3"> Vec3 value. </param>
+		/// <param name="name"> Field name. </param>
+		/// <param name="min"> Min value. </param>
+		/// <param name="max"> Max value. </param>
+		void Vec3Slider(glm::vec3* vec3, const std::string name, const int min, const int max);
 
 		/// <summary>
 		/// Creates an entity transformable fields.
