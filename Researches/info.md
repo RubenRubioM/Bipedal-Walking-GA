@@ -1,5 +1,10 @@
+# Usefull videos
+
 ## Forward kinematic
-[Youtube coding video](https://www.youtube.com/watch?v=xXjRlEr7AGk)
+[Coding video](https://www.youtube.com/watch?v=xXjRlEr7AGk)
 
 ## Inverse kinematic
-[Youtube coding video](https://www.youtube.com/watch?v=hbgDqyy8bIw)
+[Coding video](https://www.youtube.com/watch?v=hbgDqyy8bIw)
+
+## OpenAI biped walking video
+[Video demostration](https://www.youtube.com/watch?v=uwz8JzrEwWY)

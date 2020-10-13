@@ -18,15 +18,15 @@ class Entity{
 		/// <summary>
 		/// Entity constructor with parent.
 		/// </summary>
-		/// <param name="parentId"> Parent Id. </param>
-		Entity(const uint32_t parentId);
+		/// <param name="parent"> Parent. </param>
+		Entity(Entity* parent);
 
 		/// <summary>
 		/// Entity constructor with parent.
 		/// </summary>
-		/// <param name="parentId"> Parent Id. </param>
 		/// <param name="transform"> Transformable </param>
-		Entity(const Transformable transform, const uint32_t parentId);
+		/// <param name="parent"> Parent. </param>
+		Entity(const Transformable transform, Entity* parent);
 
 		/// <summary>
 		/// Entity destructor.
@@ -40,10 +40,16 @@ class Entity{
 		const uint32_t GetId() { return id; }
 
 		/// <summary>
+		/// Returns parent pointer.
+		/// </summary>
+		/// <returns> Parent poiner. </returns>
+		const Entity* GetParent() { return parent; }
+
+		/// <summary>
 		/// Returns the entity parent id.
 		/// </summary>
 		/// <returns> Parent identifier. </returns>
-		const uint32_t GetParentId() { return parentId; }
+		const uint32_t GetParentId() { return parent ? parent->GetId() : 0; }
 
 		/// <summary>
 		/// Returns the entity transformable.
@@ -142,9 +148,9 @@ class Entity{
 		uint32_t id{ 0 };
 
 		/// <summary>
-		/// Parent Id.
+		/// Parent.
 		/// </summary>
-		uint32_t parentId{ 0 };
+		Entity* parent{ nullptr };
 
 		/// <summary>
 		/// Entity transformable.

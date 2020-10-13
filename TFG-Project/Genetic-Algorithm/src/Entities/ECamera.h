@@ -13,8 +13,8 @@ class ECamera : public Entity{
 		/// ECamera constructor.
 		/// </summary>
 		/// <param name="target"> Camera target. </param>
-		/// <param name="parentId"> Parent Id.</param>
-		ECamera(const glm::vec3 target, const uint32_t parentId = 0);
+		/// <param name="parent"> Parent. </param>
+		ECamera(const glm::vec3 target, Entity* parent = nullptr);
 
 		/// <summary>
 		/// ECamera constructor
@@ -22,7 +22,7 @@ class ECamera : public Entity{
 		/// <param name="transform"> Transformable. </param>
 		/// <param name="target"> Camera target. </param>
 		/// <param name="parentId"> Parent Id. </param>
-		ECamera(const Transformable transform, const glm::vec3 target, const uint32_t parentId = 0);
+		ECamera(const Transformable transform, const glm::vec3 target, Entity* parent = nullptr);
 
 		/// <summary>
 		/// ECamera destructor.

@@ -13,7 +13,7 @@ class Entity;
 /// <summary>
 /// Class to manage ImGui.
 /// </summary>
-class ImGuiManager{
+class ImGuiManager {
 	public:
 		/// <summary>
 		/// Creates or returns a Program instance.
@@ -89,4 +89,3 @@ class ImGuiManager{
 		/// </summary>
 		inline static ImGuiManager* instance{ nullptr };
 };
-

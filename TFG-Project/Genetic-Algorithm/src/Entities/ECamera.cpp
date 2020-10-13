@@ -6,10 +6,10 @@
 /// ECamera constructor.
 /// </summary>
 /// <param name="target"> Camera target. </param>
-/// <param name="parentId"> Parent Id.</param>
-ECamera::ECamera(const glm::vec3 target, const uint32_t parentId) :
-	Entity(parentId), 
-	target(target) 
+/// <param name="parent"> Parent. </param>
+ECamera::ECamera(const glm::vec3 target, Entity* parent) :
+	Entity(parent),
+	target(target)
 {
 }
 
@@ -18,9 +18,9 @@ ECamera::ECamera(const glm::vec3 target, const uint32_t parentId) :
 /// </summary>
 /// <param name="transform"> Transformable. </param>
 /// <param name="target"> Camera target. </param>
-/// <param name="parentId"> Parent Id. </param>
-ECamera::ECamera(const Transformable transform, const glm::vec3 target, const uint32_t parentId) :
-	Entity(transform,parentId),
+/// <param name="parent"> Parent. </param>
+ECamera::ECamera(const Transformable transform, const glm::vec3 target, Entity* parent) :
+	Entity(transform, parent),
 	target(target)
 {
 }
@@ -28,5 +28,5 @@ ECamera::ECamera(const Transformable transform, const glm::vec3 target, const ui
 /// <summary>
 /// ECamera destructor.
 /// </summary>
-ECamera::~ECamera(){
+ECamera::~ECamera() {
 }

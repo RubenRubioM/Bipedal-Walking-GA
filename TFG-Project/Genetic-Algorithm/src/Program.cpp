@@ -19,7 +19,7 @@ Program* Program::GetInstance() {
 /// <summary>
 /// Private constructor.
 /// </summary>
-Program::Program(){
+Program::Program() {
 	renderEngine = RenderEngine::GetInstance();
 }
 
@@ -41,7 +41,7 @@ void Program::SetState(State::States newState) {
 /// <summary>
 /// Start the program.
 /// </summary>
-void Program::Start(){
+void Program::Start() {
 	while (renderEngine->IsOpen()) {
 		state->InitFrame();
 		state->Update();

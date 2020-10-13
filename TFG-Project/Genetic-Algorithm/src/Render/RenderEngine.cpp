@@ -18,18 +18,18 @@ RenderEngine* RenderEngine::GetInstance() {
 /// <summary>
 /// Private constructor.
 /// </summary>
-RenderEngine::RenderEngine(){
+RenderEngine::RenderEngine() {
 	device = new CLE::CLEngine(1280, 720, "Genethic Algorithm");
 	smgr = device->GetSceneManager();
 	resourceManager = device->GetResourceManager();
-	
+
 	ImGuiManager::GetInstance()->SetContext(device->GetWindow());
 }
 
 /// <summary>
 /// RenderEngine destructor.
 /// </summary>
-RenderEngine::~RenderEngine(){
+RenderEngine::~RenderEngine() {
 }
 
 /// <summary>

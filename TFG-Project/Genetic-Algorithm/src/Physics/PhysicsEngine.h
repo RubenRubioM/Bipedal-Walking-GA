@@ -3,6 +3,7 @@
 #include <CLEngine.h>
 
 class Entity;
+class EMesh;
 class ImGuiManager;
 class Transformable;
 
@@ -29,11 +30,10 @@ class PhysicsEngine{
 		void UpdateEntity(Entity* entity);
 
 		/// <summary>
-		/// Updates entity camera.
+		/// Updates entities physics values.
 		/// </summary>
-		/// <param name="camera"> Camera entity. </param>
-		/// <param name="target"> Target entity. </param>
-		void UpdateCamera(Entity* camera, Entity* target);
+		/// <param name="entities"> Entities. </param>
+		void UpdateEntities(std::vector<std::unique_ptr<EMesh>> entities);
 
 		/// <summary>
 		/// Updates entity camera.

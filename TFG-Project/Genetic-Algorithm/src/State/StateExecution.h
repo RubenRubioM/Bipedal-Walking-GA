@@ -73,7 +73,7 @@ class StateExecution : public State {
 		/// <summary>
 		/// Vector for all the meshes.
 		/// </summary>
-		std::vector<std::unique_ptr<EMesh>> meshes;
+		std::vector<std::unique_ptr<EMesh>> skeleton;
 
 		bool check = false;
 };

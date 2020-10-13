@@ -6,10 +6,10 @@
 /// EMesh constructor.
 /// </summary>
 /// <param name="meshPath"> Mesh path.</param>
-/// <param name="parentId"> Parent Id.</param>
-EMesh::EMesh(const std::string meshPath, const uint32_t parentId) : 
-	Entity(parentId), 
-	meshPath(meshPath){
+/// <param name="parent"> Parent.</param>
+EMesh::EMesh(const std::string meshPath, Entity* parent) :
+	Entity(parent),
+	meshPath(meshPath) {
 }
 
 /// <summary>
@@ -17,9 +17,9 @@ EMesh::EMesh(const std::string meshPath, const uint32_t parentId) :
 /// </summary>
 /// <param name="transform"> Transformable. </param>
 /// <param name="meshPath"> Mesh path. </param>
-/// <param name="parentId"> Parent Id. </param>
-EMesh::EMesh(const Transformable transform, const std::string meshPath, const uint32_t parentId) :
-	Entity(transform, parentId),
+/// <param name="parent"> Parent. </param>
+EMesh::EMesh(const Transformable transform, const std::string meshPath, Entity* parent) :
+	Entity(transform, parent),
 	meshPath(meshPath)
 {
 }
@@ -27,5 +27,5 @@ EMesh::EMesh(const Transformable transform, const std::string meshPath, const ui
 /// <summary>
 /// EMesh destructor.
 /// </summary>
-EMesh::~EMesh(){
+EMesh::~EMesh() {
 }

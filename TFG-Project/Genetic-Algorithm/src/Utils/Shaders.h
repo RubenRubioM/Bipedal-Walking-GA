@@ -11,7 +11,7 @@ struct Shader {
 	/// Assign operator overload.
 	/// </summary>
 	/// <param name="in"> Shader to assign. </param>
-	void operator=(const Shader &in) {
+	void operator=(const Shader& in) {
 		vertex = in.vertex;
 		fragment = in.fragment;
 	}
@@ -22,7 +22,7 @@ struct Shader {
 	/// <param name="out"> Output. </param>
 	/// <param name="in"> Shader to output. </param>
 	/// <returns> Output. </returns>
-	friend std::ostream& operator<<(std::ostream& out, const Shader& in){
+	friend std::ostream& operator<<(std::ostream& out, const Shader& in) {
 		out << in.vertex << std::endl << in.fragment << std::endl;
 		return out;
 	}

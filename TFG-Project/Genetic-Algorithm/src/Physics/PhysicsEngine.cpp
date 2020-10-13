@@ -3,6 +3,7 @@
 #include <Render/RenderEngine.h>
 #include <Entities/Entity.h>
 #include <Entities/ECamera.h>
+#include <Entities/EMesh.h>
 #include <Render/ImGuiManager.h>
 #include <DataTypes/Transformable.h>
 
@@ -35,9 +36,9 @@ PhysicsEngine::~PhysicsEngine() {
 /// Updates entity physics values.
 /// </summary>
 /// <param name="entity"> Entity. </param>
-void PhysicsEngine::UpdateEntity(Entity* entity){
-	if (imGuiManager->Header(entity->GetName())) {
-		imGuiManager->EntityTransformable(entity, std::string(to_string(entity->GetId()) + ". " + entity->GetName()).c_str(), -200, 200);
+void PhysicsEngine::UpdateEntity(Entity* entity) {
+	if (imGuiManager->Header(std::string(std::to_string(entity->GetId()) + ". " + entity->GetName()))) {
+		imGuiManager->EntityTransformable(entity, std::string(entity->GetName()), -200, 200);
 	}
 
 	const auto& node = device->GetNodeByID(entity->GetId());
@@ -47,24 +48,12 @@ void PhysicsEngine::UpdateEntity(Entity* entity){
 }
 
 /// <summary>
-/// Updates entity camera.
+/// Updates entities physics values.
 /// </summary>
-/// <param name="camera"> Camera entity. </param>
-/// <param name="target"> Target entity. </param>
-void PhysicsEngine::UpdateCamera(Entity* camera, Entity* target) {
-	if (imGuiManager->Header(camera->GetName())) {
-		imGuiManager->Vec3Slider(camera->GetPositionPtr(), std::string(camera->GetName() + " position"), -200, 200);
-	}
-	const auto& cam = device->GetActiveCamera();
-	const auto& camNode = device->GetActiveCameraNode();
-
-	camNode->SetTranslation(camera->GetPosition());
-	camNode->SetRotation(camera->GetRotation());
-	camNode->SetScalation(camera->GetScalation());
-
-	cam->SetCameraTarget(target->GetPosition());
+/// <param name="entities"> Entities. </param>
+void PhysicsEngine::UpdateEntities(std::vector<std::unique_ptr<EMesh>> entities){
+	
 }
-
 
 /// <summary>
 /// Updates entity camera.
@@ -72,9 +61,10 @@ void PhysicsEngine::UpdateCamera(Entity* camera, Entity* target) {
 /// <param name="camera"> Camera entity. </param>
 /// <param name="target"> Target position. </param>
 void PhysicsEngine::UpdateCamera(Entity* camera, glm::vec3 target) {
-	if (imGuiManager->Header(camera->GetName())) {
+	if (imGuiManager->Header(std::string(std::to_string(camera->GetId()) + ". " + camera->GetName()))) {
 		imGuiManager->Vec3Slider(camera->GetPositionPtr(), std::string(camera->GetName() + " position"), -200, 200);
 	}
+
 	const auto& cam = device->GetActiveCamera();
 	const auto& camNode = device->GetActiveCameraNode();
 

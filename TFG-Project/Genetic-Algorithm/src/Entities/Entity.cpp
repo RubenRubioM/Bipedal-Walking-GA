@@ -5,7 +5,7 @@
 /// <summary>
 /// Entity constructor. Increments the static ID field everytime an entity is created.
 /// </summary>
-Entity::Entity(){
+Entity::Entity() {
 	id = nextId;
 	nextId++;
 }
@@ -14,8 +14,8 @@ Entity::Entity(){
 /// Entity constructor with parent.
 /// </summary>
 /// <param name="parentId"> Parent Id. </param>
-Entity::Entity(const uint32_t parentId) : Entity(){
-	this->parentId = parentId;
+Entity::Entity(Entity* parent) : Entity() {
+	this->parent = parent;
 }
 
 /// <summary>
@@ -23,7 +23,7 @@ Entity::Entity(const uint32_t parentId) : Entity(){
 /// </summary>
 /// <param name="parentId"> Parent Id. </param>
 /// <param name="transform"> Transformable </param>
-Entity::Entity(const Transformable transform, const uint32_t parentId) : Entity(parentId) {
+Entity::Entity(const Transformable transform, Entity* parent) : Entity(parent) {
 	transformable = transform;
 	position = transform.position;
 	rotation = transform.rotation;
@@ -33,7 +33,7 @@ Entity::Entity(const Transformable transform, const uint32_t parentId) : Entity(
 /// <summary>
 /// Entity destructor.
 /// </summary>
-Entity::~Entity(){
+Entity::~Entity() {
 }
 
 /// <summary>
