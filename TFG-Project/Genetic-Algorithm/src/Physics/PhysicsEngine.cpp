@@ -38,7 +38,7 @@ PhysicsEngine::~PhysicsEngine() {
 /// <param name="entity"> Entity. </param>
 void PhysicsEngine::UpdateEntity(Entity* entity) {
 	if (imGuiManager->Header(std::string(std::to_string(entity->GetId()) + ". " + entity->GetName()))) {
-		imGuiManager->EntityTransformable(entity, std::string(entity->GetName()), -200, 200);
+		imGuiManager->EntityTransformable(entity, std::string(entity->GetName()));
 	}
 
 	const auto& node = device->GetNodeByID(entity->GetId());
@@ -62,7 +62,10 @@ void PhysicsEngine::UpdateEntities(std::vector<std::unique_ptr<EMesh>> entities)
 /// <param name="target"> Target position. </param>
 void PhysicsEngine::UpdateCamera(Entity* camera, glm::vec3 target) {
 	if (imGuiManager->Header(std::string(std::to_string(camera->GetId()) + ". " + camera->GetName()))) {
-		imGuiManager->Vec3Slider(camera->GetPositionPtr(), std::string(camera->GetName() + " position"), -200, 200);
+		imGuiManager->Vec3Slider(camera->GetPositionPtr()
+			, std::string(camera->GetName() + " position")
+			, camera->GetPositionBoundaries().first
+			, camera->GetPositionBoundaries().second);
 	}
 
 	const auto& cam = device->GetActiveCamera();

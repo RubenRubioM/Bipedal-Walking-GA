@@ -74,9 +74,7 @@ class ImGuiManager {
 		/// </summary>
 		/// <param name="entity"> Entity pointer. </param>
 		/// <param name="name"> Entity name. </param>
-		/// /// <param name="min"> Slider min value. </param>
-		/// <param name="max"> Slider max value. </param>
-		void EntityTransformable(Entity* entity, const std::string name, const int min, const int max);
+		void EntityTransformable(Entity* entity, const std::string name);
 
 	private:
 		/// <summary>

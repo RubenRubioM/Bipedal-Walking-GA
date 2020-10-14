@@ -142,7 +142,8 @@ class CLNode{
         glm::mat4 CalculateTransformationMatrix();
         //! Calcula la bounding box del objeto
         float CalculateBoundingBox();
-        void CalculateBoundingBoxOBB();
+        //! Calculate boundbox OBB
+        glm::vec3 CalculateBoundingBoxOBB();
         //! Dibuja la escena
         void DFSTree(glm::mat4,CLCamera* cam, const glm::mat4& VPmatrix);
         void DFSTree(glm::mat4 mA,  CLCamera* cam, GLuint shaderID, const glm::mat4& lightSpaceMatrix);

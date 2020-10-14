@@ -93,12 +93,10 @@ void ImGuiManager::Vec3Slider(glm::vec3* vec3, const std::string name, const int
 /// </summary>
 /// <param name="entity"> Entity pointer. </param>
 /// <param name="name"> Entity name. </param>
-/// <param name="min"> Slider min value. </param>
-/// <param name="max"> Slider max value. </param>
-void ImGuiManager::EntityTransformable(Entity* entity, std::string name, const int min, const int max) {
-	Vec3Slider(entity->GetPositionPtr(), std::string(name + " position"), min, max);
-	Vec3Slider(entity->GetRotationPtr(), std::string(name + " rotation"), glm::degrees(-glm::pi<float>()), glm::degrees(glm::pi<float>()));
-	Vec3Slider(entity->GetScalationPtr(), std::string(name + " scalation"), min, max);
+void ImGuiManager::EntityTransformable(Entity* entity, std::string name) {
+	Vec3Slider(entity->GetPositionPtr(), std::string(name + " position"), entity->GetPositionBoundaries().first, entity->GetPositionBoundaries().second);
+	Vec3Slider(entity->GetRotationPtr(), std::string(name + " rotation"), entity->GetRotationBoundaries().first, entity->GetRotationBoundaries().second);
+	Vec3Slider(entity->GetScalationPtr(), std::string(name + " scalation"), entity->GetScalationBoundaries().first, entity->GetScalationBoundaries().second);
 }
 
 /// <summary>

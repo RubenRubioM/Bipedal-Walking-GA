@@ -262,8 +262,7 @@ float CLNode::CalculateBoundingBox(){
     return dimGeneral;
 }
 
-
-void CLNode::CalculateBoundingBoxOBB(){
+glm::vec3 CLNode::CalculateBoundingBoxOBB(){
     extremeMinMesh = glm::vec3(0.0,0.0,0.0); 
     extremeMaxMesh = glm::vec3(0.0,0.0,0.0);
     auto resource = static_cast<CLMesh*>(this->GetEntity())->GetMesh();
@@ -300,9 +299,11 @@ void CLNode::CalculateBoundingBoxOBB(){
     extremeMinMesh.x *= -1;
     extremeMaxMesh.x *= -1;
 
-    dimensionsBoundingBox.x = (glm::distance(extremeMaxMesh.x, extremeMinMesh.x) *GetScalation().x)/2;
-    dimensionsBoundingBox.y = (glm::distance(extremeMaxMesh.y, extremeMinMesh.y) *GetScalation().y)/2;
-    dimensionsBoundingBox.z = (glm::distance(extremeMaxMesh.z, extremeMinMesh.z) *GetScalation().z)/2;
+    dimensionsBoundingBox.x = (glm::distance(extremeMaxMesh.x, extremeMinMesh.x) *GetGlobalScalation().x)/2;
+    dimensionsBoundingBox.y = (glm::distance(extremeMaxMesh.y, extremeMinMesh.y) *GetGlobalScalation().y)/2;
+    dimensionsBoundingBox.z = (glm::distance(extremeMaxMesh.z, extremeMinMesh.z) *GetGlobalScalation().z)/2;
 
     frustum_ = typeFrustum::OBB;
+    
+    return dimensionsBoundingBox;
 }

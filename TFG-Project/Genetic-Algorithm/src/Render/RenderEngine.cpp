@@ -51,6 +51,9 @@ void RenderEngine::AddMesh(EMesh* mesh) {
 	node->SetTranslation(mesh->GetPosition());
 	node->SetRotation(mesh->GetRotation());
 	node->SetScalation(mesh->GetScalation());
+
+	mesh->SetDimensions(node->CalculateBoundingBoxOBB());
+
 }
 
 /// <summary>

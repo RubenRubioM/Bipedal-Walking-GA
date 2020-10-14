@@ -75,5 +75,9 @@ class StateExecution : public State {
 		/// </summary>
 		std::vector<std::unique_ptr<EMesh>> skeleton;
 
-		bool check = false;
+		/// <summary>
+		/// Vector for all the meshes.
+		/// </summary>
+		std::vector<std::unique_ptr<EMesh>> terrain;
+
 };

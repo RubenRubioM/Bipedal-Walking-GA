@@ -18,7 +18,7 @@ StateExecution::StateExecution() {
 	renderEngine = RenderEngine::GetInstance();
 	physicsEngine = PhysicsEngine::GetInstance();
 	imGuiManager = ImGuiManager::GetInstance();
-	camera = make_unique<ECamera>(Transformable(glm::vec3(40.0f, 10.0f, 30.0f), glm::vec3(0.0f), glm::vec3(1.0f)), glm::vec3(0, 0, 0));
+	camera = make_unique<ECamera>(Transformable(glm::vec3(-40.0f, 20.0f, 30.0f), glm::vec3(0.0f), glm::vec3(1.0f)), glm::vec3(0, 0, 0));
 	camera->SetName("Camera");
 	renderEngine->AddSkybox("media/skybox/right.jpg"
 		, "media/skybox/left.jpg"
@@ -26,6 +26,10 @@ StateExecution::StateExecution() {
 		, "media/skybox/bottom.jpg"
 		, "media/skybox/front.jpg"
 		, "media/skybox/back.jpg");
+
+	// Field
+	terrain.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.0f, -60.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(200.0f, 10.0f, 200.0f)), "media/Grass_Block.obj"));
+	terrain[0]->SetName("Field");
 
 	// Entities creation.
 	skeleton.push_back(make_unique<EMesh>(Transformable(glm::vec3(0), glm::vec3(0.0f, 0.0f, 0), glm::vec3(7.0f)), "media/Body.obj"));
@@ -64,8 +68,15 @@ void StateExecution::Update() {
 	for (const auto& mesh : skeleton) {
 		physicsEngine->UpdateEntity(mesh.get());
 	}
+
+	for (const auto& mesh : terrain) {
+		physicsEngine->UpdateEntity(mesh.get());
+	}
+
 	physicsEngine->UpdateCamera(camera.get(), glm::vec3(0.0f));
 	imGuiManager->End();
+
+
 }
 
 /// <summary>
@@ -84,6 +95,10 @@ void StateExecution::Render() {
 void StateExecution::AddEntities() {
 	renderEngine->AddCamera(camera.get());
 	for (const auto& mesh : skeleton) {
+		renderEngine->AddMesh(mesh.get());
+	}
+
+	for (const auto& mesh : terrain) {
 		renderEngine->AddMesh(mesh.get());
 	}
 }
