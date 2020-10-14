@@ -18,7 +18,7 @@ StateExecution::StateExecution() {
 	renderEngine = RenderEngine::GetInstance();
 	physicsEngine = PhysicsEngine::GetInstance();
 	imGuiManager = ImGuiManager::GetInstance();
-	camera = make_unique<ECamera>(Transformable(glm::vec3(-40.0f, 20.0f, 30.0f), glm::vec3(0.0f), glm::vec3(1.0f)), glm::vec3(0, 0, 0));
+	camera = make_unique<ECamera>(Transformable(glm::vec3(30.0f, 20.0f, 50.0f), glm::vec3(0.0f), glm::vec3(1.0f)), glm::vec3(0, 0, 0));
 	camera->SetName("Camera");
 	renderEngine->AddSkybox("media/skybox/right.jpg"
 		, "media/skybox/left.jpg"
@@ -84,6 +84,16 @@ void StateExecution::Update() {
 /// </summary>
 void StateExecution::Render() {
 	renderEngine->BeginScene();
+
+	imGuiManager->Begin("Debug");
+	ImGui::Checkbox("Show bounding boxes", &showBoundingBoxes);
+	if (showBoundingBoxes) {
+		for (const auto& mesh : skeleton) {
+			renderEngine->DrawBoundingBox(mesh.get());
+		}
+	}
+	imGuiManager->End();
+
 	renderEngine->DrawAll();
 	imGuiManager->Render();
 	renderEngine->EndScene();

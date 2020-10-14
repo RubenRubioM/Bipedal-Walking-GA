@@ -6,9 +6,5 @@ uniform vec4 clcolor;
 in vec3 Color;
 void main()
 {
-    FragColor = vec4(clcolor);
-
-    
+    FragColor = vec4(clcolor);    
 }
-
-

@@ -80,4 +80,9 @@ class StateExecution : public State {
 		/// </summary>
 		std::vector<std::unique_ptr<EMesh>> terrain;
 
+		/// <summary>
+		/// Boolean to activate the bounding boxes render.
+		/// </summary>
+		bool showBoundingBoxes = true;
+
 };

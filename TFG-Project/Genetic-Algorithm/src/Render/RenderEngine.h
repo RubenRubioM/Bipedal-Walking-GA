@@ -44,7 +44,18 @@ class RenderEngine{
 		/// <param name="bottom"> Bottom image path. </param>
 		/// <param name="front"> Front image path. </param>
 		/// <param name="back"> Back image path. </param>
-		void AddSkybox(const std::string right, const std::string left, const std::string top, const std::string bottom, const std::string front, const std::string back) const;
+		void AddSkybox(const std::string right
+			, const std::string left
+			, const std::string top
+			, const std::string bottom
+			, const std::string front
+			, const std::string back) const;
+
+		/// <summary>
+		/// Draw mesh bounding box
+		/// </summary>
+		/// <param name="entity"> Entity to draw the bounding box. </param>
+		void DrawBoundingBox(EMesh* entity);
 
 		/// <summary>
 		/// Returns true if the windows stills open.
@@ -77,6 +88,32 @@ class RenderEngine{
 		/// Private constructor.
 		/// </summary>
 		RenderEngine();
+
+		/// <summary>
+		/// Draw 3D line.
+		/// </summary>
+		/// <param name="pos1"> Initial position. </param>
+		/// <param name="pos2"> End position. </param>
+		void Draw3DLine(const glm::vec3 pos1, const glm::vec3 pos2) const;
+
+		/// <summary>
+		/// Draw 3D line.
+		/// </summary>
+		/// <param name="pos1"> Initial position. </param>
+		/// <param name="pos2"> End position. </param>
+		/// <param name="r"> Red value. </param>
+		/// <param name="g"> Green value. </param>
+		/// <param name="b"> Blue value. </param>
+		/// <param name="a"> Alpha value. </param>
+		void Draw3DLine(const glm::vec3 pos1, const glm::vec3 pos2, const uint16_t r, const uint16_t g, const uint16_t b, const uint16_t a) const;
+
+		/// <summary>
+		/// Draw 3D line.
+		/// </summary>
+		/// <param name="pos1"> Initial position. </param>
+		/// <param name="pos2"> End position. </param>
+		/// <param name="color"> Color value. </param>
+		void Draw3DLine(const glm::vec3 pos1, const glm::vec3 pos2,const CLE::CLColor color) const;
 
 		/// <summary>
 		/// Static RenderEngine instance pointer for the singleton <see href="https://en.wikipedia.org/wiki/Singleton_pattern" />

@@ -299,9 +299,9 @@ glm::vec3 CLNode::CalculateBoundingBoxOBB(){
     extremeMinMesh.x *= -1;
     extremeMaxMesh.x *= -1;
 
-    dimensionsBoundingBox.x = (glm::distance(extremeMaxMesh.x, extremeMinMesh.x) *GetGlobalScalation().x)/2;
-    dimensionsBoundingBox.y = (glm::distance(extremeMaxMesh.y, extremeMinMesh.y) *GetGlobalScalation().y)/2;
-    dimensionsBoundingBox.z = (glm::distance(extremeMaxMesh.z, extremeMinMesh.z) *GetGlobalScalation().z)/2;
+    dimensionsBoundingBox.x = (glm::distance(extremeMaxMesh.x, extremeMinMesh.x) *GetGlobalScalation().x);
+    dimensionsBoundingBox.y = (glm::distance(extremeMaxMesh.y, extremeMinMesh.y) *GetGlobalScalation().y);
+    dimensionsBoundingBox.z = (glm::distance(extremeMaxMesh.z, extremeMinMesh.z) *GetGlobalScalation().z);
 
     frustum_ = typeFrustum::OBB;
     

@@ -30,6 +30,7 @@ PhysicsEngine::PhysicsEngine() {
 /// PhysicsEngine destructor.
 /// </summary>
 PhysicsEngine::~PhysicsEngine() {
+	delete instance;
 }
 
 /// <summary>

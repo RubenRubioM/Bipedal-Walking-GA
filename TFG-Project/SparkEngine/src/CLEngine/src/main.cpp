@@ -165,7 +165,8 @@ int main() {
             }
             ImGui::End();
 
-            device->Draw3DLine(0,0,0,100,100,100);
+            device->SetDrawLineWidth(6);
+            device->Draw3DLine(0,0,0,0,100,0, CLColor(255,0,0,1));
             glm::vec3 cameraPos(auxCameraPos[0], auxCameraPos[1], auxCameraPos[2]);
             glm::vec3 lightPos(auxLightPos[0], auxLightPos[1], auxLightPos[2]);
             glm::vec3 lightPos2(auxLightPos2[0], auxLightPos2[1], auxLightPos2[2]);

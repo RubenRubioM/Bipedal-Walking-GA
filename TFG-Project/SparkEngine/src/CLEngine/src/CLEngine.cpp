@@ -583,7 +583,7 @@ CLNode* CLEngine::GetActiveCameraNode(){
 }
 
 const void CLEngine::Draw3DLine(float x1, float y1, float z1, float x2, float y2, float z2) const{
-    Draw3DLine(x1,y1,z1,x1,y2,z1,CLColor(255.0,0.0,0.0,255.0));
+    Draw3DLine(x1,y1,z1,x2,y2,z2,CLColor(255.0,0.0,0.0,255.0));
 }
 
 const void CLEngine::Draw3DLine(float x1, float y1, float z1, float x2, float y2, float z2,CLColor color) const{
@@ -598,9 +598,9 @@ const void CLEngine::Draw3DLine(float x1, float y1, float z1, float x2, float y2
         x2, y2, z2
     };
     
-    //glEnable(GL_LINE_SMOOTH);
+    glEnable(GL_LINE_SMOOTH);
     glLineWidth(lineWidth);
-    //glHint(GL_LINE_SMOOTH_HINT,  GL_NICEST);
+    glHint(GL_LINE_SMOOTH_HINT,  GL_NICEST);
 
     unsigned int VBOLine, VAOLine;
     glGenBuffers(1, &VBOLine);
