@@ -1,8 +1,13 @@
 #include "RenderEngine.h"
 
 #include <Entities/ECamera.h>
+#include <Entities/Entity.h>
 #include <Entities/EMesh.h>
 #include <Render/ImGuiManager.h>
+
+#include <GLM/gtx/string_cast.hpp>
+
+#include <cmath>
 
 /// <summary>
 /// Creates or returns a RenderEngine instance.
@@ -101,6 +106,9 @@ void RenderEngine::AddSkybox(const std::string right
 /// <param name="entity"> Entity to draw the bounding box. </param>
 void RenderEngine::DrawBoundingBox(EMesh* entity) {
 	/*
+	    IMPORTANT: All pivots are in the center down of the mesh.
+		We have to change every measure to LOCAL space. (EMesh dimensions are in WORLD space)
+
 		^  +height
 		|    
 		|   / -depth
@@ -130,36 +138,38 @@ void RenderEngine::DrawBoundingBox(EMesh* entity) {
 		a12 = 6->7
 	*/
 
-	auto center = device->GetNodeByID(entity->GetId())->GetGlobalTranslation();
-	auto width = entity->GetDimensions().x;
-	auto height = entity->GetDimensions().y;
-	auto depth = entity->GetDimensions().z;
+	auto node = device->GetNodeByID(entity->GetId());
+	auto pivot = node->GetGlobalTranslation();
+	auto rotation = glm::radians(node->GetGlobalRotation());
+	auto width = entity->GetDimensions().x / node->GetGlobalScalation().x;
+	auto height = entity->GetDimensions().y / node->GetGlobalScalation().y;
+	auto depth = entity->GetDimensions().z / node->GetGlobalScalation().z;
 
-	glm::vec3 p0 = glm::vec3(center.x - width / 2, center.y - height / 2, center.z + depth / 2);
-	glm::vec3 p1 = glm::vec3(center.x - width / 2, center.y + height / 2, center.z + depth / 2);
-	glm::vec3 p2 = glm::vec3(center.x - width / 2, center.y - height / 2, center.z - depth / 2);
-	glm::vec3 p3 = glm::vec3(center.x - width / 2, center.y + height / 2, center.z - depth / 2);
-	glm::vec3 p4 = glm::vec3(center.x + width / 2, center.y - height / 2, center.z + depth / 2);
-	glm::vec3 p5 = glm::vec3(center.x + width / 2, center.y + height / 2, center.z + depth / 2);
-	glm::vec3 p6 = glm::vec3(center.x + width / 2, center.y - height / 2, center.z - depth / 2);
-	glm::vec3 p7 = glm::vec3(center.x + width / 2, center.y + height / 2, center.z - depth / 2);
+	glm::vec3 p0 = glm::vec3(- (width / 2), 0,  + (depth / 2));
+	glm::vec3 p1 = glm::vec3(- (width / 2), 0 + height,  + (depth / 2));
+	glm::vec3 p2 = glm::vec3(- (width / 2), 0,  - (depth / 2));
+	glm::vec3 p3 = glm::vec3(- (width / 2), 0 + height,  - (depth / 2));
+	glm::vec3 p4 = glm::vec3(+ (width / 2), 0,  + (depth / 2));
+	glm::vec3 p5 = glm::vec3(+ (width / 2), 0 + height,  + (depth / 2));
+	glm::vec3 p6 = glm::vec3(+ (width / 2), 0,  - (depth / 2));
+	glm::vec3 p7 = glm::vec3(+ (width / 2), 0 + height,  - (depth / 2));
 
 	device->SetDrawLineWidth(2);
 
-	Draw3DLine(p0, p1);
-	Draw3DLine(p0, p2);
-	Draw3DLine(p0, p4);
-	Draw3DLine(p1, p3);
-	Draw3DLine(p1, p5);
-	Draw3DLine(p2, p3);
-	Draw3DLine(p2, p6);
-	Draw3DLine(p3, p7);
-	Draw3DLine(p4, p5);
-	Draw3DLine(p4, p6);
-	Draw3DLine(p5, p7);
-	Draw3DLine(p6, p7);
+	Draw3DLineLocal(node, p0, p1);
+	Draw3DLineLocal(node, p0, p2);
+	Draw3DLineLocal(node, p0, p4);
+	Draw3DLineLocal(node, p1, p3);
+	Draw3DLineLocal(node, p1, p5);
+	Draw3DLineLocal(node, p2, p3);
+	Draw3DLineLocal(node, p2, p6);
+	Draw3DLineLocal(node, p3, p7);
+	Draw3DLineLocal(node, p4, p5);
+	Draw3DLineLocal(node, p4, p6);
+	Draw3DLineLocal(node, p5, p7);
+	Draw3DLineLocal(node, p6, p7);
 
-	Draw3DLine(center, glm::vec3(200, center.y, center.z));
+	//Draw3DLine(pivot, glm::vec3(200, pivot.y, pivot.z), CLE::CLColor(0,200,0,255));
 }
 
 // <summary>
@@ -230,4 +240,39 @@ void RenderEngine::Draw3DLine(const glm::vec3 pos1, const glm::vec3 pos2, const 
 /// <param name="color"> Color value. </param>
 void RenderEngine::Draw3DLine(const glm::vec3 pos1, const glm::vec3 pos2, const CLE::CLColor color) const {
 	device->Draw3DLine(pos1.x, pos1.y, pos1.z, pos2.x, pos2.y, pos2.z, color);
+}
+
+/// <summary>
+/// Draw 3D line local.
+/// </summary>
+/// <param name="node"> Node of reference. </param>
+/// <param name="pos1"> Initial position. </param>
+/// <param name="pos2"> End position. </param>
+void RenderEngine::Draw3DLineLocal(CLE::CLNode* node, const glm::vec3 pos1, const glm::vec3 pos2) const {
+	Draw3DLineLocal(node, pos1, pos2, 255.0, 0.0, 0.0, 255.0);
+}
+
+/// <summary>
+/// Draw 3D line local.
+/// </summary>
+/// <param name="node"> Node of reference. </param>
+/// <param name="pos1"> Initial position. </param>
+/// <param name="pos2"> End position. </param>
+/// <param name="r"> Red value. </param>
+/// <param name="g"> Green value. </param>
+/// <param name="b"> Blue value. </param>
+/// <param name="a"> Alpha value. </param>
+void RenderEngine::Draw3DLineLocal(CLE::CLNode* node, const glm::vec3 pos1, const glm::vec3 pos2, const uint16_t r, const uint16_t g, const uint16_t b, const uint16_t a) const {
+	Draw3DLineLocal(node, pos1, pos2, CLE::CLColor(r, g, b, a));
+}
+
+/// <summary>
+/// Draw 3D line local.
+/// </summary>
+/// <param name="node"> Node of reference. </param>
+/// <param name="pos1"> Initial position. </param>
+/// <param name="pos2"> End position. </param>
+/// <param name="color"> Color value. </param>
+void RenderEngine::Draw3DLineLocal(CLE::CLNode* node, const glm::vec3 pos1, const glm::vec3 pos2, const CLE::CLColor color) const {
+	device->Draw3DLineLocal(node, pos1.x, pos1.y, pos1.z, pos2.x, pos2.y, pos2.z, color);
 }

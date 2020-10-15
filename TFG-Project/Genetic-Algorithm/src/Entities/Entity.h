@@ -34,7 +34,7 @@ class Entity{
 		/// <summary>
 		/// Entity destructor.
 		/// </summary>
-		~Entity();
+		virtual ~Entity() = default;
 
 		/// <summary>
 		/// Returns the entity Id.

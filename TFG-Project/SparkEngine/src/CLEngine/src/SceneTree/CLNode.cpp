@@ -108,6 +108,9 @@ void CLNode::SetRotation(glm::vec3 r) {
 void CLNode::SetScalation(glm::vec3 s) {
     scalation = s; 
     ActivateFlag();
+    if (dynamic_cast<CLMesh*>(entity.get())) {
+        CalculateBoundingBoxOBB();
+    }
 }
 
 void CLNode::ActivateFlag() {
@@ -271,6 +274,8 @@ glm::vec3 CLNode::CalculateBoundingBoxOBB(){
     int i = 0;
     for(auto currentVecMesh = vecMesh.begin(); currentVecMesh != vecMesh.end(); ++currentVecMesh){
         auto vertexs = currentVecMesh->vertices;
+
+
         for(long unsigned int j=0; j< vertexs.size(); j++){
             if( i== 0 && j== 0){
                 // es el primer vertice, por lo que sera tanto el mayor como el menor

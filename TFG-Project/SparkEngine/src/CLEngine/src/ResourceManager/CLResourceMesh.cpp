@@ -95,7 +95,7 @@ Mesh CLResourceMesh::processMesh(aiMesh *mesh, const aiScene *scene) {
     vector<unsigned int> indices;
     vector<Texture> textures;
     //vector<Material> materials;
-
+    
     for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
         Vertex vertex;
         glm::vec3 vecAux;  // we declare a placeholder vecAux since assimp uses its own vecAux class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.

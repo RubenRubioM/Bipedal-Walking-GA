@@ -367,6 +367,11 @@ class CLEngine {
         //! @param y2 Y final
         //! @param z2 Z final
         const void Draw3DLine(float x1, float y1, float z1, float x2, float y2, float z2) const;
+
+        const void Draw3DLineLocal(CLNode* node, float x1, float y1, float z1, float x2, float y2, float z2) const;
+
+        const void Draw3DLineLocal(CLNode* node, float x1, float y1, float z1, float x2, float y2, float z2, CLColor color) const;
+        //const void DrawBoundingBoxOBB(CLEntity* entity, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, glm::vec3 p4, glm::vec3 p5, glm::vec3 p6, glm::vec3 p7) const;
         
         //! Asigna la anchura de la linea
         void SetDrawLineWidth(int w) {lineWidth = w;};

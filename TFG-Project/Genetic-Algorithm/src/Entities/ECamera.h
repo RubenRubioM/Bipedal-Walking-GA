@@ -27,7 +27,7 @@ class ECamera : public Entity{
 		/// <summary>
 		/// ECamera destructor.
 		/// </summary>
-		~ECamera();
+		~ECamera() override;
 
 		/// <summary>
 		/// Returns camera target.

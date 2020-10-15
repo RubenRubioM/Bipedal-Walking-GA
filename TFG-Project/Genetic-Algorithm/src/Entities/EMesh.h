@@ -29,7 +29,7 @@ class EMesh : public Entity {
 		/// <summary>
 		/// EMesh destructor.
 		/// </summary>
-		~EMesh();
+		~EMesh() override;
 
 		/// <summary>
 		/// Returns mesh path.

@@ -31,12 +31,6 @@ Entity::Entity(const Transformable transform, Entity* parent) : Entity(parent) {
 }
 
 /// <summary>
-/// Entity destructor.
-/// </summary>
-Entity::~Entity() {
-}
-
-/// <summary>
 /// Sets the entity transformable.
 /// </summary>
 /// <param name="transformable"> Entity transformable. </param>

@@ -619,6 +619,7 @@ const void CLEngine::Draw3DLine(float x1, float y1, float z1, float x2, float y2
     glUniformMatrix4fv(glGetUniformLocation(debugShader, "view"), 1, GL_FALSE, glm::value_ptr(view));
     glUniformMatrix4fv(glGetUniformLocation(debugShader, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
     glUniform4fv(glGetUniformLocation(debugShader, "clcolor"),1, glm::value_ptr(clcolor));
+    glUniform1i(glGetUniformLocation(debugShader, "localMode"), 0);
 
     glBindVertexArray(VAOLine);
     glDrawArrays(GL_LINE_LOOP, 0,2); 
@@ -629,6 +630,60 @@ const void CLEngine::Draw3DLine(float x1, float y1, float z1, float x2, float y2
     glDeleteBuffers(1, &VBOLine);
 
 } 
+
+
+const void CLEngine::Draw3DLineLocal(CLNode* node, float x1, float y1, float z1, float x2, float y2, float z2) const {
+    Draw3DLineLocal(node, x1, y1, z1, x2, y2, z2, CLColor(255.0, 0.0, 0.0, 255.0));
+}
+
+const void CLEngine::Draw3DLineLocal(CLNode* node, float x1, float y1, float z1, float x2, float y2, float z2, CLColor color) const {
+
+    if (!debugShader) {
+        auto rm = CLResourceManager::GetResourceManager();
+        auto resourceShader = rm->GetResourceShader("../Shaders/debugShader.vert", "../Shaders/debugShader.frag");
+        debugShader = resourceShader->GetProgramID();
+    }
+    float line[] = {
+        x1, y1, z1,
+        x2, y2, z2
+    };
+
+    glEnable(GL_LINE_SMOOTH);
+    glLineWidth(lineWidth);
+    glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
+
+    unsigned int VBOLine, VAOLine;
+    glGenBuffers(1, &VBOLine);
+    glGenVertexArrays(1, &VAOLine);
+    glBindVertexArray(VAOLine);
+    glBindBuffer(GL_ARRAY_BUFFER, VBOLine);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(line), line, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), 0);
+    glBindVertexArray(0);
+
+
+    glUseProgram(debugShader);
+
+    glm::vec4 clcolor(color.GetRedNormalized(), color.GetGreenNormalized(), color.GetBlueNormalized(), color.GetAlphaNormalized());
+    glUniformMatrix4fv(glGetUniformLocation(debugShader, "view"), 1, GL_FALSE, glm::value_ptr(view));
+    glUniformMatrix4fv(glGetUniformLocation(debugShader, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+    glUniformMatrix4fv(glGetUniformLocation(debugShader, "model"), 1, GL_FALSE, glm::value_ptr(node->GetTransformationMat()));
+    glUniform4fv(glGetUniformLocation(debugShader, "clcolor"), 1, glm::value_ptr(clcolor));
+    glUniform1i(glGetUniformLocation(debugShader, "localMode"), 1);
+
+    glBindVertexArray(VAOLine);
+    glDrawArrays(GL_LINE_LOOP, 0, 2);
+    glUseProgram(0);
+    glBindVertexArray(0);
+
+    glDeleteVertexArrays(1, &VAOLine);
+    glDeleteBuffers(1, &VBOLine);
+
+}
+//const void CLEngine::DrawBoundingBoxOBB(CLEntity* entity, glm::vec3 p0, glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, glm::vec3 p4, glm::vec3 p5, glm::vec3 p6, glm::vec3 p7) const {
+//
+//}
 
 // Mi idea ahora es pasarle todas las luces a todos los shaders que las vayan a usar
 void CLEngine::CalculateLights(){

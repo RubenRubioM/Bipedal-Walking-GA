@@ -46,6 +46,11 @@ void PhysicsEngine::UpdateEntity(Entity* entity) {
 	node->SetTranslation(entity->GetPosition());
 	node->SetRotation(entity->GetRotation());
 	node->SetScalation(entity->GetScalation());
+	
+	// Update boundingBox in case the scalation has changed.
+	if (auto mesh = dynamic_cast<EMesh*>(entity)) {
+		mesh->SetDimensions(node->GetBoundingBoxOBB());
+	}
 }
 
 /// <summary>
@@ -53,7 +58,7 @@ void PhysicsEngine::UpdateEntity(Entity* entity) {
 /// </summary>
 /// <param name="entities"> Entities. </param>
 void PhysicsEngine::UpdateEntities(std::vector<std::unique_ptr<EMesh>> entities){
-	
+	// https://gamedev.stackexchange.com/questions/49041/oriented-bounding-box-how-to
 }
 
 /// <summary>
