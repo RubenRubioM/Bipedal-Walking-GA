@@ -49,7 +49,7 @@ void PhysicsEngine::UpdateEntity(Entity* entity) {
 	
 	// Update boundingBox in case the scalation has changed.
 	if (auto mesh = dynamic_cast<EMesh*>(entity)) {
-		mesh->SetDimensions(node->GetBoundingBoxOBB());
+		mesh->SetDimensions(node->CalculateBoundingBoxOBB());
 	}
 }
 

@@ -6,15 +6,15 @@ uniform mat4 view;
 uniform mat4 model;
 uniform mat4 projection;
 
-uniform int localMode;
+uniform bool localMode;
 
 out vec3 Color;
 
 void main()
 {
-//    if(localMode){
+    if(localMode){
         gl_Position = projection * view  * model * vec4(aPos, 1.0);
-//    }else{
-//        gl_Position = projection * view  * vec4(aPos, 1.0);
-//    }
+    }else{
+        gl_Position = projection * view  * vec4(aPos, 1.0);
+    }
 }

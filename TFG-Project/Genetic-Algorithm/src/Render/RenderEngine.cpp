@@ -106,7 +106,7 @@ void RenderEngine::AddSkybox(const std::string right
 /// <param name="entity"> Entity to draw the bounding box. </param>
 void RenderEngine::DrawBoundingBox(EMesh* entity) {
 	/*
-	    IMPORTANT: All pivots are in the center down of the mesh.
+	    IMPORTANT: All pivots are in the bottom center of the mesh.
 		We have to change every measure to LOCAL space. (EMesh dimensions are in WORLD space)
 
 		^  +height
@@ -139,37 +139,37 @@ void RenderEngine::DrawBoundingBox(EMesh* entity) {
 	*/
 
 	auto node = device->GetNodeByID(entity->GetId());
+	glm::mat4 model = node->GetTransformationMat();
 	auto pivot = node->GetGlobalTranslation();
 	auto rotation = glm::radians(node->GetGlobalRotation());
 	auto width = entity->GetDimensions().x / node->GetGlobalScalation().x;
 	auto height = entity->GetDimensions().y / node->GetGlobalScalation().y;
 	auto depth = entity->GetDimensions().z / node->GetGlobalScalation().z;
 
-	glm::vec3 p0 = glm::vec3(- (width / 2), 0,  + (depth / 2));
-	glm::vec3 p1 = glm::vec3(- (width / 2), 0 + height,  + (depth / 2));
-	glm::vec3 p2 = glm::vec3(- (width / 2), 0,  - (depth / 2));
-	glm::vec3 p3 = glm::vec3(- (width / 2), 0 + height,  - (depth / 2));
-	glm::vec3 p4 = glm::vec3(+ (width / 2), 0,  + (depth / 2));
-	glm::vec3 p5 = glm::vec3(+ (width / 2), 0 + height,  + (depth / 2));
-	glm::vec3 p6 = glm::vec3(+ (width / 2), 0,  - (depth / 2));
-	glm::vec3 p7 = glm::vec3(+ (width / 2), 0 + height,  - (depth / 2));
+	glm::vec3 p0 = model * glm::vec4(-(width / 2), 0,		+(depth / 2), 1);
+	glm::vec3 p1 = model * glm::vec4(-(width / 2), height,	+(depth / 2), 1);
+	glm::vec3 p2 = model * glm::vec4(-(width / 2), 0,		-(depth / 2), 1);
+	glm::vec3 p3 = model * glm::vec4(-(width / 2), height,	-(depth / 2), 1);
+	glm::vec3 p4 = model * glm::vec4(+(width / 2), 0,		+(depth / 2), 1);
+	glm::vec3 p5 = model * glm::vec4(+(width / 2),height,	+(depth / 2), 1);
+	glm::vec3 p6 = model * glm::vec4(+(width / 2), 0,		-(depth / 2), 1);
+	glm::vec3 p7 = model * glm::vec4(+(width / 2), height,	-(depth / 2), 1); 
 
 	device->SetDrawLineWidth(2);
 
-	Draw3DLineLocal(node, p0, p1);
-	Draw3DLineLocal(node, p0, p2);
-	Draw3DLineLocal(node, p0, p4);
-	Draw3DLineLocal(node, p1, p3);
-	Draw3DLineLocal(node, p1, p5);
-	Draw3DLineLocal(node, p2, p3);
-	Draw3DLineLocal(node, p2, p6);
-	Draw3DLineLocal(node, p3, p7);
-	Draw3DLineLocal(node, p4, p5);
-	Draw3DLineLocal(node, p4, p6);
-	Draw3DLineLocal(node, p5, p7);
-	Draw3DLineLocal(node, p6, p7);
-
-	//Draw3DLine(pivot, glm::vec3(200, pivot.y, pivot.z), CLE::CLColor(0,200,0,255));
+	Draw3DLine(p0, p1, CLE::CLColor(0, 200, 0, 255));
+	Draw3DLine(p0, p2);
+	Draw3DLine(p0, p4);
+	Draw3DLine(p1, p3);
+	Draw3DLine(p1, p5);
+	Draw3DLine(p2, p3);
+	Draw3DLine(p2, p6);
+	Draw3DLine(p3, p7);
+	Draw3DLine(p4, p5);
+	Draw3DLine(p4, p6);
+	Draw3DLine(p5, p7);
+	Draw3DLine(p6, p7);
+	Draw3DLine(pivot, glm::vec3(200, pivot.y, pivot.z), CLE::CLColor(0,200,0,255));
 }
 
 // <summary>

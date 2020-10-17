@@ -8,3 +8,6 @@
 
 ## OpenAI biped walking video
 [Video demostration](https://www.youtube.com/watch?v=uwz8JzrEwWY)
+
+## LaTeX TFG thesis template
+[Github documentation](https://github.com/jmrplens/TFG-TFM_EPS)

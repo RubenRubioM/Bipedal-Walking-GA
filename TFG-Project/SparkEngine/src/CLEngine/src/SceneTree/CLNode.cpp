@@ -108,9 +108,6 @@ void CLNode::SetRotation(glm::vec3 r) {
 void CLNode::SetScalation(glm::vec3 s) {
     scalation = s; 
     ActivateFlag();
-    if (dynamic_cast<CLMesh*>(entity.get())) {
-        CalculateBoundingBoxOBB();
-    }
 }
 
 void CLNode::ActivateFlag() {
