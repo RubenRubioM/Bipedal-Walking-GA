@@ -8,6 +8,9 @@
 #include <Render/ImGuiManager.h>
 #include <DataTypes/Transformable.h>
 #include <DataTypes/OBBCollider.h>
+#include <Utils/Utils.h>
+
+#include <limits>       // std::numeric_limits
 
 /// <summary>
 /// Creates or returns a PhysicsEngine instance.
@@ -60,20 +63,64 @@ void PhysicsEngine::UpdateEntity(Entity* entity) {
 /// </summary>
 /// <param name="skeleton"> skeleton. </param>
 void PhysicsEngine::UpdateSkeleton(ESkeleton* skeleton) {
+	auto eSkeleton = skeleton->GetSkeleton();
+
+	for (auto joint : eSkeleton) {
+		UpdateEntity(static_cast<EMesh*>(joint));
+	}
+
+	if(gravityActivated)
+		ApplyGravity(skeleton);
+
+}
+
+/// <summary>
+/// Returns whether to apply gravity or not
+/// </summary>
+/// <param name="skeleton"> Skeleton to apply gravity. </param>
+/// <returns> True if gravity applied, false if not. </returns>
+bool PhysicsEngine::ApplyGravity(ESkeleton* skeleton) const {
 	auto core = skeleton->GetCore();
-	auto leg1 = skeleton->GetLeg1();
-	auto leg2 = skeleton->GetLeg2();
+	auto leg1 = skeleton->GetLeg1()[1];
+	auto leg2 = skeleton->GetLeg2()[1];
 
-	core->SetPosition(glm::vec3(core->GetPosition().x, core->GetPosition().y + gravity, core->GetPosition().z));
-	UpdateEntity(static_cast<EMesh*>(core));
-
-	for (auto joint : leg1) {
-		UpdateEntity(static_cast<EMesh*>(joint));
+	// We look for the lowest leg OBB "y" coordinate in order to know the lowest point in the legs.
+	float skeletonMinY = std::numeric_limits<float>::max();
+	auto leg1Vertexs = leg1->GetCollider()->GetVertexs();
+	auto leg2Vertexs = leg2->GetCollider()->GetVertexs();
+	for (uint16_t i = 0; i < 8; i++) {
+		skeletonMinY = (leg1Vertexs[i].y < skeletonMinY) ? leg1Vertexs[i].y : skeletonMinY;
+		skeletonMinY = (leg2Vertexs[i].y < skeletonMinY) ? leg2Vertexs[i].y : skeletonMinY;
 	}
 
-	for (auto joint : leg2) {
-		UpdateEntity(static_cast<EMesh*>(joint));
+	// Now we look for the highest terrain collider OBB "y" coordinate.
+	float terrainMaxY = std::numeric_limits<float>::min();
+
+	// For each loop but we only have one and it's plane
+	for (auto collider : collidingMeshes) {
+		for (auto vertex : collider->GetCollider()->GetVertexs()) {
+			terrainMaxY = (vertex.y > terrainMaxY) ? vertex.y : terrainMaxY;
+		}
 	}
+
+	if (skeletonMinY > terrainMaxY) {
+		// Apply gravity
+		float movement = gravity.y * Utils::deltaTime;
+
+		if (skeletonMinY - movement > terrainMaxY) {
+			// After the movement still above the terrain
+			core->SetPosition(core->GetPosition() + glm::vec3(0,movement,0));
+
+		} else {
+			// After the movement is below the terrain
+			float difference = (skeletonMinY - movement) + terrainMaxY;
+			core->SetPosition(core->GetPosition() + glm::vec3(0, difference, 0));
+
+		}
+		return true;
+	}
+
+	return false;
 }
 
 /// <summary>

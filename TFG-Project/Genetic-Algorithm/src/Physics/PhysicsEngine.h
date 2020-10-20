@@ -37,6 +37,13 @@ class PhysicsEngine{
 		void UpdateSkeleton(ESkeleton* skeleton);
 
 		/// <summary>
+		/// Returns whether to apply gravity or not
+		/// </summary>
+		/// <param name="skeleton"> Skeleton to apply gravity. </param>
+		/// <returns> True if gravity applied, false if not. </returns>
+		bool ApplyGravity(ESkeleton* skeleton) const;
+
+		/// <summary>
 		/// Check if a mesh is colliding with any collidingMeshes.
 		/// </summary>
 		/// <param name="Mesh"> Mesh. </param>
@@ -55,6 +62,11 @@ class PhysicsEngine{
 		/// <param name="entity"> Colliding object. </param>
 		void AddCollidingMesh(EMesh* entity) { collidingMeshes.push_back(entity); }
 
+		// DEBUG
+
+		bool& GetGravityActivated() { return gravityActivated; }
+		void SetGravity(bool state) { this->gravityActivated = state; }
+
 	private:
 		/// <summary>
 		/// Private constructor.
@@ -64,7 +76,7 @@ class PhysicsEngine{
 		/// <summary>
 		/// Constant gravity value.
 		/// </summary>
-		const float gravity = 0.01f;
+		const glm::vec3 gravity{0.0f, -50.0f, 0.0f};
 
 		/// <summary>
 		/// Calculate and assign OBB collider to the entity
@@ -97,5 +109,10 @@ class PhysicsEngine{
 		/// ImGuiManager pointer. 
 		/// </summary>
 		ImGuiManager* imGuiManager{ nullptr };
+
+		/// <summary>
+		/// Debug to toggle gravity.
+		/// </summary>
+		bool gravityActivated = true;
 };
 

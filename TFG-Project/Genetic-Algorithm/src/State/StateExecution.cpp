@@ -19,7 +19,7 @@ StateExecution::StateExecution() {
 	renderEngine = RenderEngine::GetInstance();
 	physicsEngine = PhysicsEngine::GetInstance();
 	imGuiManager = ImGuiManager::GetInstance();
-	camera = make_unique<ECamera>(Transformable(glm::vec3(-50.0f, 20.0f, 50.0f), glm::vec3(0.0f), glm::vec3(1.0f)), glm::vec3(0, 0, 0));
+	camera = make_unique<ECamera>(Transformable(glm::vec3(-50.0f, 50.0f, 50.0f), glm::vec3(0.0f), glm::vec3(1.0f)), glm::vec3(0, 0, 0));
 	camera->SetName("Camera");
 	/*renderEngine->AddSkybox("media/skybox/right.jpg"
 		, "media/skybox/left.jpg"
@@ -29,11 +29,11 @@ StateExecution::StateExecution() {
 		, "media/skybox/back.jpg");*/
 
 	// Field
-	terrain.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.0f, -60.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(200.0f, 10.0f, 200.0f)), "media/Grass_Block.obj"));
+	terrain.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(200.0f, 10.0f, 200.0f)), "media/Grass_Block.obj"));
 	terrain[0]->SetName("Field");
 
 	// Entities creation.
-	skeletonsMeshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0), glm::vec3(0.0f, 0.0f, 0), glm::vec3(7.0f)), "media/Body.obj"));
+	skeletonsMeshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.0f, 80.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0), glm::vec3(7.0f)), "media/Body.obj"));
 	skeletonsMeshes[0]->SetName("Core");
 	skeletonsMeshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(-0.5f,0.0f,0.0f), glm::vec3(0.0f,0.0f,-180.0f), glm::vec3(0.25f)), "media/lathi.obj", skeletonsMeshes[0].get()));
 	skeletonsMeshes[1]->SetName("Hip1");
@@ -43,9 +43,17 @@ StateExecution::StateExecution() {
 	skeletonsMeshes[3]->SetName("Hip2");
 	skeletonsMeshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.0f, 9.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)), "media/lathi.obj", skeletonsMeshes[3].get()));
 	skeletonsMeshes[4]->SetName("Knee2");
+	skeletonsMeshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(-0.5f, 1.5f, 0.0f), glm::vec3(0.0f, 0.0f, 90.0f), glm::vec3(0.25f)), "media/lathi.obj", skeletonsMeshes[0].get()));
+	skeletonsMeshes[5]->SetName("Shoulder1");
+	skeletonsMeshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -180.0f), glm::vec3(0.25f)), "media/lathi.obj", skeletonsMeshes[5].get()));
+	skeletonsMeshes[6]->SetName("Elbow1");
+	skeletonsMeshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.5f, 1.5f, 0.0f), glm::vec3(0.0f, 0.0f, -90.0f), glm::vec3(0.25f)), "media/lathi.obj", skeletonsMeshes[0].get()));
+	skeletonsMeshes[7]->SetName("Shoulder2");
+	skeletonsMeshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -180.0f), glm::vec3(0.25f)), "media/lathi.obj", skeletonsMeshes[7].get()));
+	skeletonsMeshes[8]->SetName("Elbow2");
 
 	// Skeleton 1.
-	skeletons.push_back(make_unique<ESkeleton>(skeletonsMeshes[0].get(), skeletonsMeshes[1].get(), skeletonsMeshes[2].get(), skeletonsMeshes[3].get(), skeletonsMeshes[4].get()));
+	skeletons.push_back(make_unique<ESkeleton>(skeletonsMeshes[0].get(), skeletonsMeshes[1].get(), skeletonsMeshes[2].get(), skeletonsMeshes[3].get(), skeletonsMeshes[4].get(), skeletonsMeshes[5].get(), skeletonsMeshes[6].get(), skeletonsMeshes[7].get(), skeletonsMeshes[8].get()));
 
 	AddEntities();
 }
@@ -79,19 +87,11 @@ void StateExecution::Update() {
 		physicsEngine->UpdateEntity(mesh.get());
 	}
 
-	//for (const auto& mesh : skeletonsMeshes) {
-	//	physicsEngine->UpdateEntity(mesh.get());
-	//	//physicsEngine->CheckCollision(mesh.get());
-	//}
-
 	for (const auto& skeleton : skeletons) {
 		physicsEngine->UpdateSkeleton(skeleton.get());
 	}
 
-	// TO TEST COLLISION REMOVE LATER
-	//physicsEngine->CheckCollision(skeleton[0].get());
-
-	physicsEngine->UpdateCamera(camera.get(), glm::vec3(0.0f));
+	physicsEngine->UpdateCamera(camera.get(), glm::vec3(0.0f,30.0f,0.0f));
 	imGuiManager->End();
 }
 
@@ -102,7 +102,7 @@ void StateExecution::Render() {
 	renderEngine->BeginScene();
 
 	imGuiManager->Begin("Debug");
-	ImGui::Checkbox("Show bounding boxes", &showBoundingBoxes);
+	imGuiManager->Checkbox("Show bounding boxes", &showBoundingBoxes);
 	if (showBoundingBoxes) {
 		for (const auto& mesh : skeletonsMeshes) {
 			renderEngine->DrawBoundingBox(mesh.get());
@@ -112,6 +112,7 @@ void StateExecution::Render() {
 			renderEngine->DrawBoundingBox(mesh.get());
 		}
 	}
+	imGuiManager->Checkbox("Gravity", &physicsEngine->GetGravityActivated());
 	imGuiManager->End();
 
 	renderEngine->DrawAll();

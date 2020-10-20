@@ -76,6 +76,13 @@ class ImGuiManager {
 		/// <param name="name"> Entity name. </param>
 		void EntityTransformable(Entity* entity, const std::string name);
 
+		/// <summary>
+		/// Creates a checkbox.
+		/// </summary>
+		/// <param name="title"> Field name. </param>
+		/// <param name="value"> Value. </param>
+		void Checkbox(const std::string title, bool* value);
+
 	private:
 		/// <summary>
 		/// Private constructor

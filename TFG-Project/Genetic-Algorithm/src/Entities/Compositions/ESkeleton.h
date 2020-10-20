@@ -17,7 +17,11 @@ class ESkeleton{
 		/// <param name="knee1">Skeleton leg1Joints[1]. </param>
 		/// <param name="hip2"> Skeleton leg1Joints[0]. </param>
 		/// <param name="knee2"> Skeleton leg1Joints[1]. </param>
-		ESkeleton(EMesh* core, EMesh* hip1, EMesh* knee1, EMesh* hip2, EMesh* knee2);
+		/// <param name="shoulder1"> Skeleton arm1Joints[0]. </param>
+		/// <param name="elbow1"> Skeleton arm1Joints[1]. </param>
+		/// <param name="shoulder2"> Skeleton arm2Joints[0]. </param>
+		/// <param name="elbow2"> Skeleton arm2Joints[1]. </param>
+		ESkeleton(EMesh* core, EMesh* hip1, EMesh* knee1, EMesh* hip2, EMesh* knee2, EMesh* shoulder1, EMesh* elbow1, EMesh* shoulder2, EMesh* elbow2);
 
 		/// <summary>
 		/// ESkeleton destructor.
@@ -29,6 +33,17 @@ class ESkeleton{
 		/// </summary>
 		/// <returns> NumOfJoints. </returns>
 		const int GetJointsNum() { return numOfJoints; }
+
+		/// <summary>
+		/// Returns all the skeleton parts.
+		/// [0] = core
+		/// [1] [2] = leg1
+		/// [3] [4] = leg2
+		/// [5] [6] = arm1
+		/// [7] [8] = arm2
+		/// </summary>
+		/// <returns> All the skeleton parts. </returns>
+		std::vector<EMesh*> GetSkeleton();
 
 		/// <summary>
 		/// Returns the core of the skeleton.
@@ -47,6 +62,18 @@ class ESkeleton{
 		/// </summary>
 		/// <returns> Skeleton leg2. </returns>
 		std::vector<EMesh*> GetLeg2() { return leg2Joints; };
+
+		/// <summary>
+		/// Returns arm1 of the skeleton.
+		/// </summary>
+		/// <returns> Skeleton arm1. </returns>
+		std::vector<EMesh*> GetArm1() { return arm1Joints; };
+
+		/// <summary>
+		/// Returns arm2 of the skeleton.
+		/// </summary>
+		/// <returns> Skeleton arm2. </returns>
+		std::vector<EMesh*> GetArm2() { return arm2Joints; };
 
 	private:
 		/// <summary>
@@ -72,5 +99,19 @@ class ESkeleton{
 		/// leg1Joints[2] = Knee.
 		/// </summary>
 		std::vector<EMesh*> leg2Joints = { nullptr,nullptr };
+
+		/// <summary>
+		/// Array for the 2 joints of arm 1.
+		/// arm1Joints[1] = shoulder.
+		/// arm1Joints[2] = elbow.
+		/// </summary>
+		std::vector<EMesh*> arm1Joints = { nullptr,nullptr };
+
+		/// <summary>
+		/// Array for the 2 joints of arm 2.
+		/// arm2Joints[1] = shoulder.
+		/// arm2Joints[2] = elbow.
+		/// </summary>
+		std::vector<EMesh*> arm2Joints = { nullptr,nullptr };
 };
 
