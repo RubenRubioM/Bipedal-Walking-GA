@@ -19,6 +19,7 @@
     <ClCompile Include="src\Render\ImGuiManager.cpp" />
     <ClCompile Include="src\Physics\PhysicsEngine.cpp" />
     <ClCompile Include="src\DataTypes\OBBCollider.cpp" />
+    <ClCompile Include="src\Entities\Compositions\ESkeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Program.h" />
@@ -41,6 +42,8 @@
     <ClInclude Include="src\Render\ImGuiManager.h" />
     <ClInclude Include="src\Physics\PhysicsEngine.h" />
     <ClInclude Include="src\DataTypes\OBBCollider.h" />
+    <ClInclude Include="src\Entities\Compositions\ESkeleton.h" />
+    <ClInclude Include="src\Utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\CMakeLists.txt" />

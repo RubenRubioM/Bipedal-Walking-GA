@@ -25,7 +25,7 @@ RenderEngine* RenderEngine::GetInstance() {
 /// Private constructor.
 /// </summary>
 RenderEngine::RenderEngine() {
-	device = new CLE::CLEngine(1280, 720, "Genethic Algorithm");
+	device = new CLE::CLEngine(1280, 720, title);
 	smgr = device->GetSceneManager();
 	resourceManager = device->GetResourceManager();
 
@@ -147,12 +147,28 @@ void RenderEngine::DrawBoundingBox(EMesh* entity) {
 	//Draw3DLine(center, glm::vec3(200, 10, -200), CLE::CLColor(0,200,0,255));
 }
 
-// <summary>
+/// <summary>
 /// Returns true if the windows stills open.
 /// </summary>
 /// <returns> True if windows stills open. </returns>
 bool RenderEngine::IsOpen() const {
 	return device->Run();
+}
+
+/// <summary>
+/// Returns time.
+/// </summary>
+/// <returns> Time. </returns>
+uint32_t RenderEngine::GetTime() const {
+	return device->GetTime();
+}
+
+/// <summary>
+/// Set the title.
+/// </summary>
+/// <param name="title"> Window title. </param>
+void RenderEngine::SetTitle(std::string& title) {
+	device->SetTitle(title);
 }
 
 /// <summary>

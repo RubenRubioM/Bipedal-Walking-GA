@@ -5,6 +5,7 @@
 #include <Render/ImGuiManager.h>
 #include <Entities/ECamera.h>
 #include <Entities/EMesh.h>
+#include <Entities/Compositions/ESkeleton.h>
 #include <Entities/Entity.h>
 #include <DataTypes/Transformable.h>
 
@@ -18,7 +19,7 @@ StateExecution::StateExecution() {
 	renderEngine = RenderEngine::GetInstance();
 	physicsEngine = PhysicsEngine::GetInstance();
 	imGuiManager = ImGuiManager::GetInstance();
-	camera = make_unique<ECamera>(Transformable(glm::vec3(-20.0f, 50.0f, 40.0f), glm::vec3(0.0f), glm::vec3(1.0f)), glm::vec3(0, 0, 0));
+	camera = make_unique<ECamera>(Transformable(glm::vec3(-50.0f, 20.0f, 50.0f), glm::vec3(0.0f), glm::vec3(1.0f)), glm::vec3(0, 0, 0));
 	camera->SetName("Camera");
 	/*renderEngine->AddSkybox("media/skybox/right.jpg"
 		, "media/skybox/left.jpg"
@@ -28,18 +29,23 @@ StateExecution::StateExecution() {
 		, "media/skybox/back.jpg");*/
 
 	// Field
-	/*terrain.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.0f, -60.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(200.0f, 10.0f, 200.0f)), "media/Grass_Block.obj"));
-	terrain[0]->SetName("Field");*/
-	terrain.push_back(make_unique<EMesh>(Transformable(glm::vec3(30.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(4.0f, 10.0f, 7.0f)), "media/Grass_Block.obj"));
-	terrain[0]->SetName("Colliding object");
+	terrain.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.0f, -60.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(200.0f, 10.0f, 200.0f)), "media/Grass_Block.obj"));
+	terrain[0]->SetName("Field");
 
 	// Entities creation.
-	skeleton.push_back(make_unique<EMesh>(Transformable(glm::vec3(0), glm::vec3(0.0f, 0.0f, 0), glm::vec3(7.0f)), "media/Body.obj"));
-	skeleton[0]->SetName("Torso");
-	skeleton.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.0f), glm::vec3(0.0f,0.0f,-180.0f), glm::vec3(0.25f)), "media/lathi.obj", skeleton[0].get()));
-	skeleton[1]->SetName("Muslo");
-	skeleton.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.0f,9.0f,0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)), "media/lathi.obj", skeleton[1].get()));
-	skeleton[2]->SetName("Rodilla");
+	skeletonsMeshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0), glm::vec3(0.0f, 0.0f, 0), glm::vec3(7.0f)), "media/Body.obj"));
+	skeletonsMeshes[0]->SetName("Core");
+	skeletonsMeshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(-0.5f,0.0f,0.0f), glm::vec3(0.0f,0.0f,-180.0f), glm::vec3(0.25f)), "media/lathi.obj", skeletonsMeshes[0].get()));
+	skeletonsMeshes[1]->SetName("Hip1");
+	skeletonsMeshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.0f,9.0f,0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)), "media/lathi.obj", skeletonsMeshes[1].get()));
+	skeletonsMeshes[2]->SetName("Knee1");
+	skeletonsMeshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.5f,0.0f,0.0f), glm::vec3(0.0f, 0.0f, -180.0f), glm::vec3(0.25f)), "media/lathi.obj", skeletonsMeshes[0].get()));
+	skeletonsMeshes[3]->SetName("Hip2");
+	skeletonsMeshes.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.0f, 9.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)), "media/lathi.obj", skeletonsMeshes[3].get()));
+	skeletonsMeshes[4]->SetName("Knee2");
+
+	// Skeleton 1.
+	skeletons.push_back(make_unique<ESkeleton>(skeletonsMeshes[0].get(), skeletonsMeshes[1].get(), skeletonsMeshes[2].get(), skeletonsMeshes[3].get(), skeletonsMeshes[4].get()));
 
 	AddEntities();
 }
@@ -73,13 +79,17 @@ void StateExecution::Update() {
 		physicsEngine->UpdateEntity(mesh.get());
 	}
 
-	for (const auto& mesh : skeleton) {
-		physicsEngine->UpdateEntity(mesh.get());
-		//physicsEngine->CheckCollision(mesh.get());
+	//for (const auto& mesh : skeletonsMeshes) {
+	//	physicsEngine->UpdateEntity(mesh.get());
+	//	//physicsEngine->CheckCollision(mesh.get());
+	//}
+
+	for (const auto& skeleton : skeletons) {
+		physicsEngine->UpdateSkeleton(skeleton.get());
 	}
 
 	// TO TEST COLLISION REMOVE LATER
-	physicsEngine->CheckCollision(skeleton[0].get());
+	//physicsEngine->CheckCollision(skeleton[0].get());
 
 	physicsEngine->UpdateCamera(camera.get(), glm::vec3(0.0f));
 	imGuiManager->End();
@@ -94,7 +104,7 @@ void StateExecution::Render() {
 	imGuiManager->Begin("Debug");
 	ImGui::Checkbox("Show bounding boxes", &showBoundingBoxes);
 	if (showBoundingBoxes) {
-		for (const auto& mesh : skeleton) {
+		for (const auto& mesh : skeletonsMeshes) {
 			renderEngine->DrawBoundingBox(mesh.get());
 		}
 
@@ -114,7 +124,7 @@ void StateExecution::Render() {
 /// </summary>
 void StateExecution::AddEntities() {
 	renderEngine->AddCamera(camera.get());
-	for (const auto& mesh : skeleton) {
+	for (const auto& mesh : skeletonsMeshes) {
 		renderEngine->AddMesh(mesh.get());
 	}
 

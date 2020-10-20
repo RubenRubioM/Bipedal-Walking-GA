@@ -21,7 +21,17 @@ class RenderEngine{
 		/// </summary>
 		~RenderEngine();
 
+		/// <summary>
+		/// Returns the device.
+		/// </summary>
+		/// <returns> Device. </returns>
 		CLE::CLEngine* GetDevice() { return device; }
+
+		/// <summary>
+		/// Returns window title
+		/// </summary>
+		/// <returns> Title. </returns>
+		std::string GetTitle() { return title; }
 
 		/// <summary>
 		/// Add mesh to the scene.
@@ -64,6 +74,18 @@ class RenderEngine{
 		bool IsOpen() const;
 
 		/// <summary>
+		/// Returns time.
+		/// </summary>
+		/// <returns> Time. </returns>
+		uint32_t GetTime() const;
+
+		/// <summary>
+		/// Set the title.
+		/// </summary>
+		/// <param name="title"> Window title. </param>
+		void SetTitle(std::string& title);
+
+		/// <summary>
 		/// Close the window. 
 		/// </summary>
 		void Terminate() const;
@@ -88,6 +110,11 @@ class RenderEngine{
 		/// Private constructor.
 		/// </summary>
 		RenderEngine();
+
+		/// <summary>
+		/// Window title.
+		/// </summary>
+		std::string title = "Genethic-Algorithm";
 
 		/// <summary>
 		/// Draw 3D line.

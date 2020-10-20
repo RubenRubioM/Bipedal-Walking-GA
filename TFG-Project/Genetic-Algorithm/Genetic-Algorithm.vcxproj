@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\DataTypes\OBBCollider.cpp" />
+    <ClCompile Include="src\Entities\Compositions\ESkeleton.cpp" />
     <ClCompile Include="src\Physics\PhysicsEngine.cpp" />
     <ClCompile Include="src\Render\ImGuiManager.cpp" />
     <ClCompile Include="src\DataTypes\Transformable.cpp" />
@@ -48,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DataTypes\OBBCollider.h" />
+    <ClInclude Include="src\Entities\Compositions\ESkeleton.h" />
     <ClInclude Include="src\Physics\PhysicsEngine.h" />
     <ClInclude Include="src\Render\ImGuiManager.h" />
     <ClInclude Include="src\DataTypes\Transformable.h" />
@@ -67,6 +69,7 @@
     <ClInclude Include="src\State\State.h" />
     <ClInclude Include="src\Utils\Shaders.h" />
     <ClInclude Include="src\State\StateExecution.h" />
+    <ClInclude Include="src\Utils\Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SparkEngine\SparkEngine.vcxproj">

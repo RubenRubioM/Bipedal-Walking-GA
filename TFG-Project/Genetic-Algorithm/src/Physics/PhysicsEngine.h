@@ -3,6 +3,7 @@
 #include <CLEngine.h>
 
 class Entity;
+class ESkeleton;
 class EMesh;
 class ImGuiManager;
 class Transformable;
@@ -30,6 +31,12 @@ class PhysicsEngine{
 		void UpdateEntity(Entity* entity);
 
 		/// <summary>
+		/// Updates skeleton physics values.
+		/// </summary>
+		/// <param name="skeleton"> skeleton. </param>
+		void UpdateSkeleton(ESkeleton* skeleton);
+
+		/// <summary>
 		/// Check if a mesh is colliding with any collidingMeshes.
 		/// </summary>
 		/// <param name="Mesh"> Mesh. </param>
@@ -53,6 +60,11 @@ class PhysicsEngine{
 		/// Private constructor.
 		/// </summary>
 		PhysicsEngine();
+
+		/// <summary>
+		/// Constant gravity value.
+		/// </summary>
+		const float gravity = 0.01f;
 
 		/// <summary>
 		/// Calculate and assign OBB collider to the entity

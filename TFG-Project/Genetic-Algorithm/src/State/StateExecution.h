@@ -9,6 +9,7 @@ class RenderEngine;
 class PhysicsEngine;
 class ImGuiManager;
 class ECamera;
+class ESkeleton;
 class EMesh;
 class Entity;
 
@@ -73,7 +74,12 @@ class StateExecution : public State {
 		/// <summary>
 		/// Vector for all the meshes.
 		/// </summary>
-		std::vector<std::unique_ptr<EMesh>> skeleton;
+		std::vector<std::unique_ptr<EMesh>> skeletonsMeshes;
+
+		/// <summary>
+		/// Vector for all the skeletons.
+		/// </summary>
+		std::vector<std::unique_ptr<ESkeleton>> skeletons;
 
 		/// <summary>
 		/// Vector for all the meshes.
@@ -83,6 +89,6 @@ class StateExecution : public State {
 		/// <summary>
 		/// Boolean to activate the bounding boxes render.
 		/// </summary>
-		bool showBoundingBoxes = true;
+		bool showBoundingBoxes = false;
 
 };

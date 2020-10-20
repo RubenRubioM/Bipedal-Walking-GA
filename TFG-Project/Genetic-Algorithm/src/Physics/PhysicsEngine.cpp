@@ -3,6 +3,7 @@
 #include <Render/RenderEngine.h>
 #include <Entities/Entity.h>
 #include <Entities/ECamera.h>
+#include <Entities/Compositions/ESkeleton.h>
 #include <Entities/EMesh.h>
 #include <Render/ImGuiManager.h>
 #include <DataTypes/Transformable.h>
@@ -55,6 +56,27 @@ void PhysicsEngine::UpdateEntity(Entity* entity) {
 }
 
 /// <summary>
+/// Updates skeleton physics values.
+/// </summary>
+/// <param name="skeleton"> skeleton. </param>
+void PhysicsEngine::UpdateSkeleton(ESkeleton* skeleton) {
+	auto core = skeleton->GetCore();
+	auto leg1 = skeleton->GetLeg1();
+	auto leg2 = skeleton->GetLeg2();
+
+	core->SetPosition(glm::vec3(core->GetPosition().x, core->GetPosition().y + gravity, core->GetPosition().z));
+	UpdateEntity(static_cast<EMesh*>(core));
+
+	for (auto joint : leg1) {
+		UpdateEntity(static_cast<EMesh*>(joint));
+	}
+
+	for (auto joint : leg2) {
+		UpdateEntity(static_cast<EMesh*>(joint));
+	}
+}
+
+/// <summary>
 /// Check if a mesh is colliding with any collidingMeshes.
 /// </summary>
 /// <param name="Mesh"> Mesh. </param>
@@ -62,9 +84,6 @@ void PhysicsEngine::CheckCollision(EMesh* mesh) {
 	// https://gamedev.stackexchange.com/questions/49041/oriented-bounding-box-how-to
 	auto meshCollider = mesh->GetCollider();
 
-	for (auto collidingMesh : collidingMeshes) {
-		std::cout << "Colliding: " << meshCollider->IsColliding(collidingMesh->GetCollider()) << std::endl;
-	}
 }
 
 /// <summary>
