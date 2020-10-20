@@ -30,10 +30,10 @@ class PhysicsEngine{
 		void UpdateEntity(Entity* entity);
 
 		/// <summary>
-		/// Updates entities physics values.
+		/// Check if a mesh is colliding with any collidingMeshes.
 		/// </summary>
-		/// <param name="entities"> Entities. </param>
-		void UpdateEntities(std::vector<std::unique_ptr<EMesh>> entities);
+		/// <param name="Mesh"> Mesh. </param>
+		void CheckCollision(EMesh* mesh);
 
 		/// <summary>
 		/// Updates entity camera.
@@ -42,11 +42,29 @@ class PhysicsEngine{
 		/// <param name="target"> Target position. </param>
 		void UpdateCamera(Entity* camera, glm::vec3 target);
 
+		/// <summary>
+		/// Adds a colliding object to the physics engine
+		/// </summary>
+		/// <param name="entity"> Colliding object. </param>
+		void AddCollidingMesh(EMesh* entity) { collidingMeshes.push_back(entity); }
+
 	private:
 		/// <summary>
 		/// Private constructor.
 		/// </summary>
 		PhysicsEngine();
+
+		/// <summary>
+		/// Calculate and assign OBB collider to the entity
+		/// </summary>
+		/// <param name="mesh"> Mesh. </param>
+		/// <param name="node"> Node. </param>
+		void CalculateOBB(EMesh* mesh, CLE::CLNode* node);
+
+		/// <summary>
+		/// All the colliding meshes.
+		/// </summary>
+		std::vector<EMesh*> collidingMeshes;
 
 		/// <summary>
 		/// Static PhysicsEngine instance pointer for the singleton <see href="https://en.wikipedia.org/wiki/Singleton_pattern" />

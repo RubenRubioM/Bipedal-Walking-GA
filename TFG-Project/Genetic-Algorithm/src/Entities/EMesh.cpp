@@ -1,6 +1,7 @@
 #include "EMesh.h"
 
 #include <DataTypes/Transformable.h>
+#include <DataTypes/OBBCollider.h>
 
 /// <summary>
 /// EMesh constructor.
@@ -28,4 +29,19 @@ EMesh::EMesh(const Transformable transform, const std::string meshPath, Entity* 
 /// EMesh destructor.
 /// </summary>
 EMesh::~EMesh() {
+}
+
+/// <summary>
+/// Sets OBBCollider.
+/// </summary>
+/// <param name="collider"> Entity collider. </param>
+void EMesh::SetCollider(OBBCollider collider){
+	if (!this->collider) {
+		this->collider = std::make_unique<OBBCollider>(collider.GetCenter(), collider.GetVertexs(), collider.GetSize(), collider.GetAxes());
+	}else{
+		this->collider->SetCenter(collider.GetCenter());
+		this->collider->SetVertexs(collider.GetVertexs());
+		this->collider->SetSize(collider.GetSize());
+		this->collider->SetAxes(collider.GetAxes());
+	}
 }

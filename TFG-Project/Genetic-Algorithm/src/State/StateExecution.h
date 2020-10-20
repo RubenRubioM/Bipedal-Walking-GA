@@ -46,7 +46,7 @@ class StateExecution : public State {
 
 	private:
 		/// <summary>
-		/// Add all the entities to the render engine.
+		/// Add all the entities to the render and physics engine.
 		/// </summary>
 		void AddEntities();
 

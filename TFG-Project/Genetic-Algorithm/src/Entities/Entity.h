@@ -219,7 +219,7 @@ class Entity{
 		/// <summary>
 		/// Entity position boundaries
 		/// </summary>
-		std::pair<float, float> positionBoundaries{ -500.0f, 500.0f };
+		std::pair<float, float> positionBoundaries{ -150.0f, 150.0f };
 
 		/// <summary>
 		/// Entity rotation boundaries

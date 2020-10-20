@@ -18,6 +18,7 @@
     <ClCompile Include="src\IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="src\Render\ImGuiManager.cpp" />
     <ClCompile Include="src\Physics\PhysicsEngine.cpp" />
+    <ClCompile Include="src\DataTypes\OBBCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Program.h" />
@@ -39,5 +40,9 @@
     <ClInclude Include="src\IMGUI\imstb_truetype.h" />
     <ClInclude Include="src\Render\ImGuiManager.h" />
     <ClInclude Include="src\Physics\PhysicsEngine.h" />
+    <ClInclude Include="src\DataTypes\OBBCollider.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\CMakeLists.txt" />
   </ItemGroup>
 </Project>

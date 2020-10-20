@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\DataTypes\OBBCollider.cpp" />
     <ClCompile Include="src\Physics\PhysicsEngine.cpp" />
     <ClCompile Include="src\Render\ImGuiManager.cpp" />
     <ClCompile Include="src\DataTypes\Transformable.cpp" />
@@ -46,6 +47,7 @@
     <ClCompile Include="src\State\StateExecution.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\DataTypes\OBBCollider.h" />
     <ClInclude Include="src\Physics\PhysicsEngine.h" />
     <ClInclude Include="src\Render\ImGuiManager.h" />
     <ClInclude Include="src\DataTypes\Transformable.h" />
@@ -70,6 +72,9 @@
     <ProjectReference Include="..\SparkEngine\SparkEngine.vcxproj">
       <Project>{cab4c37e-80b8-4f55-8b2d-9433f10b7042}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\CMakeLists.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

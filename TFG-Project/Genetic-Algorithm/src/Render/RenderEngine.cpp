@@ -4,6 +4,7 @@
 #include <Entities/Entity.h>
 #include <Entities/EMesh.h>
 #include <Render/ImGuiManager.h>
+#include <DataTypes/OBBCollider.h>
 
 #include <GLM/gtx/string_cast.hpp>
 
@@ -106,16 +107,6 @@ void RenderEngine::AddSkybox(const std::string right
 /// <param name="entity"> Entity to draw the bounding box. </param>
 void RenderEngine::DrawBoundingBox(EMesh* entity) {
 	/*
-	    IMPORTANT: All pivots are in the bottom center of the mesh.
-		We have to change every measure to LOCAL space. (EMesh dimensions are in WORLD space)
-
-		^  +height
-		|    
-		|   / -depth
-		|  /
-		| /
-		|/------> +width
-
 		   /3-------- 7
 		  / |       / |
 		 /  |      /  |
@@ -137,39 +128,23 @@ void RenderEngine::DrawBoundingBox(EMesh* entity) {
 		a11 = 5->7
 		a12 = 6->7
 	*/
-
-	auto node = device->GetNodeByID(entity->GetId());
-	glm::mat4 model = node->GetTransformationMat();
-	auto pivot = node->GetGlobalTranslation();
-	auto rotation = glm::radians(node->GetGlobalRotation());
-	auto width = entity->GetDimensions().x / node->GetGlobalScalation().x;
-	auto height = entity->GetDimensions().y / node->GetGlobalScalation().y;
-	auto depth = entity->GetDimensions().z / node->GetGlobalScalation().z;
-
-	glm::vec3 p0 = model * glm::vec4(-(width / 2), 0,		+(depth / 2), 1);
-	glm::vec3 p1 = model * glm::vec4(-(width / 2), height,	+(depth / 2), 1);
-	glm::vec3 p2 = model * glm::vec4(-(width / 2), 0,		-(depth / 2), 1);
-	glm::vec3 p3 = model * glm::vec4(-(width / 2), height,	-(depth / 2), 1);
-	glm::vec3 p4 = model * glm::vec4(+(width / 2), 0,		+(depth / 2), 1);
-	glm::vec3 p5 = model * glm::vec4(+(width / 2),height,	+(depth / 2), 1);
-	glm::vec3 p6 = model * glm::vec4(+(width / 2), 0,		-(depth / 2), 1);
-	glm::vec3 p7 = model * glm::vec4(+(width / 2), height,	-(depth / 2), 1); 
-
+	const auto& vertexs = entity->GetCollider()->GetVertexs();
+	const auto& center = entity->GetCollider()->GetCenter();
 	device->SetDrawLineWidth(2);
 
-	Draw3DLine(p0, p1, CLE::CLColor(0, 200, 0, 255));
-	Draw3DLine(p0, p2);
-	Draw3DLine(p0, p4);
-	Draw3DLine(p1, p3);
-	Draw3DLine(p1, p5);
-	Draw3DLine(p2, p3);
-	Draw3DLine(p2, p6);
-	Draw3DLine(p3, p7);
-	Draw3DLine(p4, p5);
-	Draw3DLine(p4, p6);
-	Draw3DLine(p5, p7);
-	Draw3DLine(p6, p7);
-	Draw3DLine(pivot, glm::vec3(200, pivot.y, pivot.z), CLE::CLColor(0,200,0,255));
+	Draw3DLine(vertexs[0], vertexs[1]);
+	Draw3DLine(vertexs[0], vertexs[2]);
+	Draw3DLine(vertexs[0], vertexs[4]);
+	Draw3DLine(vertexs[1], vertexs[3]);
+	Draw3DLine(vertexs[1], vertexs[5]);
+	Draw3DLine(vertexs[2], vertexs[3]);
+	Draw3DLine(vertexs[2], vertexs[6]);
+	Draw3DLine(vertexs[3], vertexs[7]);
+	Draw3DLine(vertexs[4], vertexs[5]);
+	Draw3DLine(vertexs[4], vertexs[6]);
+	Draw3DLine(vertexs[5], vertexs[7]);
+	Draw3DLine(vertexs[6], vertexs[7]);
+	//Draw3DLine(center, glm::vec3(200, 10, -200), CLE::CLColor(0,200,0,255));
 }
 
 // <summary>
