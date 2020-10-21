@@ -1,5 +1,9 @@
 #include "ESkeleton.h"
 
+#include <Entities/EMesh.h>
+
+#include <iostream>
+
 /// <summary>
 /// ESkeleton constructor.
 /// </summary>
@@ -22,6 +26,8 @@ ESkeleton::ESkeleton(EMesh* core, EMesh* hip1, EMesh* knee1, EMesh* hip2, EMesh*
 	this->arm1Joints[1] = elbow1; numOfJoints;
 	this->arm2Joints[0] = shoulder2; numOfJoints;
 	this->arm2Joints[1] = elbow2; numOfJoints;
+
+	SetFlexibility(Flexibility::MEDIUM);
 }
 
 /// <summary>
@@ -42,4 +48,42 @@ ESkeleton::~ESkeleton(){
 /// <returns> All the skeleton parts. </returns>
 std::vector<EMesh*> ESkeleton::GetSkeleton() {
 	return std::vector<EMesh*> {core, leg1Joints[0], leg1Joints[1], leg2Joints[0], leg2Joints[1], arm1Joints[0], arm1Joints[1], arm2Joints[0], arm2Joints[1]};
+}
+
+/// <summary>
+/// Sets the skeleton flexibility.
+/// </summary>
+/// <param name="flexibility"> Flexibility. </param>
+void ESkeleton::SetFlexibility(const Flexibility flexibility) {
+	this->flexibility = flexibility;
+
+	switch (flexibility) {
+		case Flexibility::LOW: {
+			leg1Joints[0]->SetRotationBoundaries(std::pair<float, float>(-40.0f, 40.0f));
+			leg2Joints[0]->SetRotationBoundaries(std::pair<float, float>(-40.0f, 40.0f));
+			leg1Joints[1]->SetRotationBoundaries(std::pair<float, float>(-50.0f, 0.0f));
+			leg2Joints[1]->SetRotationBoundaries(std::pair<float, float>(-50.0f, 0.0f));
+
+			break;
+		}
+		case Flexibility::MEDIUM: {
+			leg1Joints[0]->SetRotationBoundaries(std::pair<float, float>(-105.0f, 105.0f));
+			leg2Joints[0]->SetRotationBoundaries(std::pair<float, float>(-105.0f, 105.0f));
+			leg1Joints[1]->SetRotationBoundaries(std::pair<float, float>(-120.0f, 0.0f));
+			leg2Joints[1]->SetRotationBoundaries(std::pair<float, float>(-120.0f, 0.0f));
+
+			break;
+		}
+		case Flexibility::HIGH: {
+			leg1Joints[0]->SetRotationBoundaries(std::pair<float, float>(-160.0f, 160.0f));
+			leg2Joints[0]->SetRotationBoundaries(std::pair<float, float>(-160.0f, 160.0f));
+			leg1Joints[1]->SetRotationBoundaries(std::pair<float, float>(-160.0f, 0.0f));
+			leg2Joints[1]->SetRotationBoundaries(std::pair<float, float>(-160.0f, 0.0f));
+
+			break;
+		}
+		
+		default:
+			std::cout << "No valid Flexibility value.\n";
+	}
 }

@@ -65,9 +65,8 @@ void PhysicsEngine::UpdateEntity(Entity* entity) {
 void PhysicsEngine::UpdateSkeleton(ESkeleton* skeleton) {
 	auto eSkeleton = skeleton->GetSkeleton();
 
-	for (auto joint : eSkeleton) {
+	for (auto joint : eSkeleton)
 		UpdateEntity(static_cast<EMesh*>(joint));
-	}
 
 	if(gravityActivated)
 		ApplyGravity(skeleton);

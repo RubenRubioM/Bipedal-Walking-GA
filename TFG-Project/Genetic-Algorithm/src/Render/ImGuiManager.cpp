@@ -78,6 +78,22 @@ bool ImGuiManager::Header(const std::string title) {
 }
 
 /// <summary>
+/// Creates a tree node.
+/// </summary>
+/// <param name="title"> Title. </param>
+/// <returns> Bool. </returns>
+bool ImGuiManager::TreeNode(const std::string title) {
+	return ImGui::TreeNode(title.c_str());
+}
+
+/// <summary>
+/// Pop the tree.
+/// </summary>
+void ImGuiManager::TreePop() {
+	ImGui::TreePop();
+}
+
+/// <summary>
 /// Creates a vec3 slider.
 /// </summary>
 /// <param name="vec3"> Vec3 value. </param>

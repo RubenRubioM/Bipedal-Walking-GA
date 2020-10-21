@@ -54,7 +54,7 @@ StateExecution::StateExecution() {
 
 	// Skeleton 1.
 	skeletons.push_back(make_unique<ESkeleton>(skeletonsMeshes[0].get(), skeletonsMeshes[1].get(), skeletonsMeshes[2].get(), skeletonsMeshes[3].get(), skeletonsMeshes[4].get(), skeletonsMeshes[5].get(), skeletonsMeshes[6].get(), skeletonsMeshes[7].get(), skeletonsMeshes[8].get()));
-
+	skeletons[0]->SetFlexibility(ESkeleton::Flexibility::HIGH);
 	AddEntities();
 }
 

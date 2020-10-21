@@ -61,6 +61,18 @@ class ImGuiManager {
 		bool Header(const std::string title);
 
 		/// <summary>
+		/// Creates a tree node.
+		/// </summary>
+		/// <param name="title"> Title. </param>
+		/// <returns> Bool. </returns>
+		bool TreeNode(const std::string title);
+
+		/// <summary>
+		/// Pop the tree.
+		/// </summary>
+		void TreePop();
+
+		/// <summary>
 		/// Creates a vec3 slider.
 		/// </summary>
 		/// <param name="vec3"> Vec3 value. </param>

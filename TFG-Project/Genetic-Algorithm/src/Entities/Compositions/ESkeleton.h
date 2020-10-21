@@ -10,6 +10,11 @@ class EMesh;
 class ESkeleton{
 	public:
 		/// <summary>
+		/// Enumeration to set body flexibility level.
+		/// </summary>
+		enum Flexibility {LOW, MEDIUM, HIGH};
+
+		/// <summary>
 		/// ESkeleton constructor.
 		/// </summary>
 		/// <param name="core"> Skeleton core. </param>
@@ -33,6 +38,12 @@ class ESkeleton{
 		/// </summary>
 		/// <returns> NumOfJoints. </returns>
 		const int GetJointsNum() { return numOfJoints; }
+
+		/// <summary>
+		/// Returns the flexibility.
+		/// </summary>
+		/// <returns> Flexibility. </returns>
+		const Flexibility GetFlexibility() { return flexibility; }
 
 		/// <summary>
 		/// Returns all the skeleton parts.
@@ -75,11 +86,22 @@ class ESkeleton{
 		/// <returns> Skeleton arm2. </returns>
 		std::vector<EMesh*> GetArm2() { return arm2Joints; };
 
+		/// <summary>
+		/// Sets the skeleton flexibility.
+		/// </summary>
+		/// <param name="flexibility"> Flexibility. </param>
+		void SetFlexibility(const Flexibility flexibility);
+
 	private:
 		/// <summary>
 		/// Num of joints.
 		/// </summary>
 		int numOfJoints = 0;
+
+		/// <summary>
+		/// Skeleton flexibility.
+		/// </summary>
+		Flexibility flexibility{ Flexibility::MEDIUM };
 
 		/// <summary>
 		/// Pointer to the core of the skeleton. The one you have to move in order to move the rest.
