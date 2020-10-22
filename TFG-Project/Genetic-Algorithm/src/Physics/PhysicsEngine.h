@@ -62,10 +62,13 @@ class PhysicsEngine{
 		/// <param name="entity"> Colliding object. </param>
 		void AddCollidingMesh(EMesh* entity) { collidingMeshes.push_back(entity); }
 
-		// DEBUG
+		//////////////////////////// DEBUG ////////////////////////////
 
+		/// <summary>
+		/// Returns a reference to gravityActivated variable.
+		/// </summary>
+		/// <returns></returns>
 		bool& GetGravityActivated() { return gravityActivated; }
-		void SetGravity(bool state) { this->gravityActivated = state; }
 
 	private:
 		/// <summary>
@@ -98,7 +101,6 @@ class PhysicsEngine{
 		/// Constant gravity value.
 		/// </summary>
 		const glm::vec3 gravity{0.0f, -50.0f, 0.0f};
-
 
 		/// <summary>
 		/// All the colliding meshes.

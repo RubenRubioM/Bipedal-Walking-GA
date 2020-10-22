@@ -87,10 +87,22 @@ class ESkeleton{
 		std::vector<EMesh*> GetArm2() { return arm2Joints; };
 
 		/// <summary>
+		/// Returns on air.
+		/// </summary>
+		/// <returns> On air. </returns>
+		bool GetOnAir() { return onAir; };
+
+		/// <summary>
 		/// Sets the skeleton flexibility.
 		/// </summary>
 		/// <param name="flexibility"> Flexibility. </param>
 		void SetFlexibility(const Flexibility flexibility);
+
+		/// <summary>
+		/// Sets the skeleton on air.
+		/// </summary>
+		/// <param name="onAir"> On air. </param>
+		void SetOnAir(const bool onAir) { this->onAir = onAir; }
 
 	private:
 		/// <summary>
@@ -135,5 +147,10 @@ class ESkeleton{
 		/// arm2Joints[2] = elbow.
 		/// </summary>
 		std::vector<EMesh*> arm2Joints = { nullptr,nullptr };
+
+		/// <summary>
+		/// To verify if the skeleton is on air.
+		/// </summary>
+		bool onAir{ true };
 };
 

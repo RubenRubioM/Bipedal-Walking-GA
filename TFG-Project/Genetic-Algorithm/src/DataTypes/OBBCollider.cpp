@@ -71,9 +71,9 @@ bool OBBCollider::GetSeparatingPlane(const glm::vec3& rpos, const glm::vec3& pla
 		return false;
 
 
-	float aMin = std::numeric_limits<float>::min();
+	float aMin = std::numeric_limits<float>::lowest();
 	float aMax = std::numeric_limits<float>::max();
-	float bMin = std::numeric_limits<float>::min();
+	float bMin = std::numeric_limits<float>::lowest();
 	float bMax = std::numeric_limits<float>::max();
 
 	for (int i = 0; i < 8; i++) {

@@ -84,11 +84,12 @@ void PhysicsEngine::UpdateSkeleton(ESkeleton* skeleton) {
 		}
 	}
 
-	// Now after all the changes have been done we fix the posible positions errors.
-	FixPosition(skeleton);
 
 	for (auto joint : eSkeleton)
 		SetEntityValues(joint);
+
+	// Now after all the changes have been done we fix the posible positions errors.
+	FixPosition(skeleton);
 }
 
 /// <summary>
@@ -198,12 +199,15 @@ OBBCollider PhysicsEngine::CalculateOBB(EMesh* mesh, CLE::CLNode* node) {
 /// <param name="skeleton"> Skeleton to apply gravity. </param>
 /// <returns> True if gravity applied, false if not. </returns>
 void PhysicsEngine::ApplyGravity(ESkeleton* skeleton) const {
-	auto core = skeleton->GetCore();
-	glm::vec3 movement = gravity * Utils::deltaTime;
-	core->SetPosition(core->GetPosition() + movement);
-	for (auto joint : skeleton->GetSkeleton()) {
-		joint->GetCollider()->TranslateOBB(movement);
+	if (skeleton->GetOnAir()) {
+		auto core = skeleton->GetCore();
+		glm::vec3 movement = gravity * Utils::deltaTime;
+		core->SetPosition(core->GetPosition() + movement);
+		for (auto joint : skeleton->GetSkeleton()) {
+			joint->GetCollider()->TranslateOBB(movement);
+		}
 	}
+	
 }
 
 /// <summary>
@@ -226,7 +230,7 @@ bool PhysicsEngine::FixPosition(ESkeleton* skeleton) const {
 	}
 
 	// Now we look for the highest terrain collider OBB "y" coordinate.
-	float terrainMaxY = std::numeric_limits<float>::min();
+	float terrainMaxY = std::numeric_limits<float>::lowest();
 
 	// For each loop but we only have one and it's plane
 	for (auto collider : collidingMeshes) {
@@ -235,33 +239,14 @@ bool PhysicsEngine::FixPosition(ESkeleton* skeleton) const {
 		}
 	}
 
-	if (skeletonMinY < terrainMaxY) {
+	if (skeletonMinY <= terrainMaxY) {
 		// Fix position to set the skeleton above the terrain
-		float difference = terrainMaxY - skeletonMinY;
-		float positionToPlace = (core->GetCollider()->GetCenter().y - skeletonMinY) + terrainMaxY - 10;
-
+		float positionToPlace = ((core->GetCollider()->GetCenter().y - skeletonMinY) + terrainMaxY) - 10;
 		core->SetPosition(glm::vec3(core->GetPosition().x, positionToPlace, core->GetPosition().z));
-		cout << "Posicion actualizada en: " << core->GetPosition().y << std::endl;
+		skeleton->SetOnAir(false);
 		return true;
+	} else {
+		skeleton->SetOnAir(true);
+		return false;
 	}
-
-	//if (skeletonMinY > terrainMaxY) {
-	//	// Apply gravity
-	//	float movement = gravity.y * Utils::deltaTime;
-
-	//	if (skeletonMinY - movement > terrainMaxY) {
-	//		// After the movement still above the terrain
-	//		core->SetPosition(core->GetPosition() + glm::vec3(0, movement, 0));
-
-	//	}
-	//	else {
-	//		// After the movement is below the terrain
-	//		float difference = (skeletonMinY - movement) + terrainMaxY;
-	//		core->SetPosition(core->GetPosition() + glm::vec3(0, difference, 0));
-
-	//	}
-	//	return true;
-	//}
-
-	return false;
 }
