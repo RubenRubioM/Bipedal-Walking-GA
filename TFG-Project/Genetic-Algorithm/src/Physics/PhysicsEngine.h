@@ -7,6 +7,7 @@ class ESkeleton;
 class EMesh;
 class ImGuiManager;
 class Transformable;
+class OBBCollider;
 
 /// <summary>
 /// Physics engine class.
@@ -25,6 +26,12 @@ class PhysicsEngine{
 		~PhysicsEngine();
 
 		/// <summary>
+		/// Set entity physics values.
+		/// </summary>
+		/// <param name="entity"> Entity. </param>
+		void SetEntityValues(Entity* entity);
+
+		/// <summary>
 		/// Updates entity physics values.
 		/// </summary>
 		/// <param name="entity"> Entity. </param>
@@ -35,13 +42,6 @@ class PhysicsEngine{
 		/// </summary>
 		/// <param name="skeleton"> skeleton. </param>
 		void UpdateSkeleton(ESkeleton* skeleton);
-
-		/// <summary>
-		/// Returns whether to apply gravity or not
-		/// </summary>
-		/// <param name="skeleton"> Skeleton to apply gravity. </param>
-		/// <returns> True if gravity applied, false if not. </returns>
-		bool ApplyGravity(ESkeleton* skeleton) const;
 
 		/// <summary>
 		/// Check if a mesh is colliding with any collidingMeshes.
@@ -74,16 +74,31 @@ class PhysicsEngine{
 		PhysicsEngine();
 
 		/// <summary>
-		/// Constant gravity value.
+		/// Returns whether to apply gravity or not
 		/// </summary>
-		const glm::vec3 gravity{0.0f, -50.0f, 0.0f};
+		/// <param name="skeleton"> Skeleton to apply gravity. </param>
+		/// <returns> True if gravity applied, false if not. </returns>
+		void ApplyGravity(ESkeleton* skeleton) const;
 
 		/// <summary>
 		/// Calculate and assign OBB collider to the entity
 		/// </summary>
 		/// <param name="mesh"> Mesh. </param>
 		/// <param name="node"> Node. </param>
-		void CalculateOBB(EMesh* mesh, CLE::CLNode* node);
+		OBBCollider CalculateOBB(EMesh* mesh, CLE::CLNode* node);
+
+		/// <summary>
+		/// Fix position.
+		/// </summary>
+		/// <param name="skeleton"> Skeleton entity to fix. </param>
+		/// <returns> If the position has been fixed. </return>
+		bool FixPosition(ESkeleton* skeleton) const;
+
+		/// <summary>
+		/// Constant gravity value.
+		/// </summary>
+		const glm::vec3 gravity{0.0f, -50.0f, 0.0f};
+
 
 		/// <summary>
 		/// All the colliding meshes.

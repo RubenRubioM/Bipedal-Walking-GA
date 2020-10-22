@@ -48,7 +48,7 @@ class EMesh : public Entity {
 		/// Returns OBBCollider.
 		/// </summary>
 		/// <returns> OBBCollider. </returns>
-		const OBBCollider* GetCollider() { return collider.get(); }
+		OBBCollider* GetCollider() { return collider.get(); }
 
 		/// <summary>
 		/// Sets dimensions

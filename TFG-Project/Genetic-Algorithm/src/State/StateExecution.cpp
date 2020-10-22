@@ -83,13 +83,14 @@ void StateExecution::InitFrame() {
 void StateExecution::Update() {
 	imGuiManager->Begin("Entities transformables");
 
+	for (const auto& skeleton : skeletons) {
+		physicsEngine->UpdateSkeleton(skeleton.get());
+	}
+
 	for (const auto& mesh : terrain) {
 		physicsEngine->UpdateEntity(mesh.get());
 	}
 
-	for (const auto& skeleton : skeletons) {
-		physicsEngine->UpdateSkeleton(skeleton.get());
-	}
 
 	physicsEngine->UpdateCamera(camera.get(), glm::vec3(0.0f,30.0f,0.0f));
 	imGuiManager->End();
@@ -127,10 +128,13 @@ void StateExecution::AddEntities() {
 	renderEngine->AddCamera(camera.get());
 	for (const auto& mesh : skeletonsMeshes) {
 		renderEngine->AddMesh(mesh.get());
+		physicsEngine->SetEntityValues(mesh.get());
 	}
 
 	for (const auto& mesh : terrain) {
 		renderEngine->AddMesh(mesh.get());
 		physicsEngine->AddCollidingMesh(mesh.get());
+		physicsEngine->SetEntityValues(mesh.get());
 	}
+
 }

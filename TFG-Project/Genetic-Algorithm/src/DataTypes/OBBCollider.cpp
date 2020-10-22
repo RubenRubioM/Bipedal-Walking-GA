@@ -29,6 +29,17 @@ OBBCollider::~OBBCollider(){
 }
 
 /// <summary>
+/// Translate the OBB vertexs and center.
+/// </summary>
+/// <param name="translation"> Translation. </param>
+void OBBCollider::TranslateOBB(const glm::vec3 translation) {
+	this->center += translation;
+	for (uint16_t i = 0; i < 8; i++) {
+		this->vertexs[i] += translation;
+	}
+}
+
+/// <summary>
 /// Returns if an OBBCollider is colliding.
 /// </summary>
 /// <param name="obb"> OBBCollider to check</param>

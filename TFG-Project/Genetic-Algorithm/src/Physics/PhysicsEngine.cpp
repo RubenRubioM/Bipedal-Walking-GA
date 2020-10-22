@@ -39,6 +39,22 @@ PhysicsEngine::~PhysicsEngine() {
 }
 
 /// <summary>
+/// Init entity physics values.
+/// </summary>
+/// <param name="entity"> Entity. </param>
+void PhysicsEngine::SetEntityValues(Entity* entity) {
+	const auto& node = device->GetNodeByID(entity->GetId());
+	node->SetTranslation(entity->GetPosition());
+	node->SetRotation(entity->GetRotation());
+	node->SetScalation(entity->GetScalation());
+
+	// Update boundingBox in case the scalation has changed.
+	if (auto mesh = dynamic_cast<EMesh*>(entity)) {
+		mesh->SetCollider(CalculateOBB(mesh, node));
+	}
+}
+
+/// <summary>
 /// Updates entity physics values.
 /// </summary>
 /// <param name="entity"> Entity. </param>
@@ -47,15 +63,7 @@ void PhysicsEngine::UpdateEntity(Entity* entity) {
 		imGuiManager->EntityTransformable(entity, std::string(entity->GetName()));
 	}
 
-	const auto& node = device->GetNodeByID(entity->GetId());
-	node->SetTranslation(entity->GetPosition());
-	node->SetRotation(entity->GetRotation());
-	node->SetScalation(entity->GetScalation());
-	
-	// Update boundingBox in case the scalation has changed.
-	if (auto mesh = dynamic_cast<EMesh*>(entity)) {
-		CalculateOBB(mesh, node);
-	}
+	SetEntityValues(entity);
 }
 
 /// <summary>
@@ -65,61 +73,22 @@ void PhysicsEngine::UpdateEntity(Entity* entity) {
 void PhysicsEngine::UpdateSkeleton(ESkeleton* skeleton) {
 	auto eSkeleton = skeleton->GetSkeleton();
 
-	for (auto joint : eSkeleton)
-		UpdateEntity(static_cast<EMesh*>(joint));
+	// We apply all the changes and before update the values we fix the posibles positions errors.
 
 	if(gravityActivated)
 		ApplyGravity(skeleton);
 
-}
-
-/// <summary>
-/// Returns whether to apply gravity or not
-/// </summary>
-/// <param name="skeleton"> Skeleton to apply gravity. </param>
-/// <returns> True if gravity applied, false if not. </returns>
-bool PhysicsEngine::ApplyGravity(ESkeleton* skeleton) const {
-	auto core = skeleton->GetCore();
-	auto leg1 = skeleton->GetLeg1()[1];
-	auto leg2 = skeleton->GetLeg2()[1];
-
-	// We look for the lowest leg OBB "y" coordinate in order to know the lowest point in the legs.
-	float skeletonMinY = std::numeric_limits<float>::max();
-	auto leg1Vertexs = leg1->GetCollider()->GetVertexs();
-	auto leg2Vertexs = leg2->GetCollider()->GetVertexs();
-	for (uint16_t i = 0; i < 8; i++) {
-		skeletonMinY = (leg1Vertexs[i].y < skeletonMinY) ? leg1Vertexs[i].y : skeletonMinY;
-		skeletonMinY = (leg2Vertexs[i].y < skeletonMinY) ? leg2Vertexs[i].y : skeletonMinY;
-	}
-
-	// Now we look for the highest terrain collider OBB "y" coordinate.
-	float terrainMaxY = std::numeric_limits<float>::min();
-
-	// For each loop but we only have one and it's plane
-	for (auto collider : collidingMeshes) {
-		for (auto vertex : collider->GetCollider()->GetVertexs()) {
-			terrainMaxY = (vertex.y > terrainMaxY) ? vertex.y : terrainMaxY;
+	for (auto joint : eSkeleton) {
+		if (imGuiManager->Header(std::string(std::to_string(joint->GetId()) + ". " + joint->GetName()))) {
+			imGuiManager->EntityTransformable(joint, std::string(joint->GetName()));
 		}
 	}
 
-	if (skeletonMinY > terrainMaxY) {
-		// Apply gravity
-		float movement = gravity.y * Utils::deltaTime;
+	// Now after all the changes have been done we fix the posible positions errors.
+	FixPosition(skeleton);
 
-		if (skeletonMinY - movement > terrainMaxY) {
-			// After the movement still above the terrain
-			core->SetPosition(core->GetPosition() + glm::vec3(0,movement,0));
-
-		} else {
-			// After the movement is below the terrain
-			float difference = (skeletonMinY - movement) + terrainMaxY;
-			core->SetPosition(core->GetPosition() + glm::vec3(0, difference, 0));
-
-		}
-		return true;
-	}
-
-	return false;
+	for (auto joint : eSkeleton)
+		SetEntityValues(joint);
 }
 
 /// <summary>
@@ -160,7 +129,7 @@ void PhysicsEngine::UpdateCamera(Entity* camera, glm::vec3 target) {
 /// </summary>
 /// <param name="mesh"> Mesh. </param>
 /// <param name="node"> Node. </param>
-void PhysicsEngine::CalculateOBB(EMesh* mesh, CLE::CLNode* node) {
+OBBCollider PhysicsEngine::CalculateOBB(EMesh* mesh, CLE::CLNode* node) {
 	mesh->SetDimensions(node->CalculateBoundingBoxOBB());
 
 	/*
@@ -219,6 +188,80 @@ void PhysicsEngine::CalculateOBB(EMesh* mesh, CLE::CLNode* node) {
 	axes[1] = glm::vec3(0, glm::distance(p0.y, p1.y) > 0 ? 1 : -1, 0);
 	axes[2] = glm::vec3(0, 0, glm::distance(p0.z, p2.z) > 0 ? 1 : -1);
 
-	mesh->SetCollider(OBBCollider(center, vertexs, mesh->GetDimensions(), axes));
+	return OBBCollider(center, vertexs, mesh->GetDimensions(), axes);
 
+}
+
+/// <summary>
+/// Returns whether to apply gravity or not
+/// </summary>
+/// <param name="skeleton"> Skeleton to apply gravity. </param>
+/// <returns> True if gravity applied, false if not. </returns>
+void PhysicsEngine::ApplyGravity(ESkeleton* skeleton) const {
+	auto core = skeleton->GetCore();
+	glm::vec3 movement = gravity * Utils::deltaTime;
+	core->SetPosition(core->GetPosition() + movement);
+	for (auto joint : skeleton->GetSkeleton()) {
+		joint->GetCollider()->TranslateOBB(movement);
+	}
+}
+
+/// <summary>
+/// Fix position.
+/// </summary>
+/// <param name="skeleton"> Skeleton entity to fix. </param>
+/// <returns> If the position has been fixed. </return>
+bool PhysicsEngine::FixPosition(ESkeleton* skeleton) const {
+	auto core = skeleton->GetCore();
+	auto leg1 = skeleton->GetLeg1()[1];
+	auto leg2 = skeleton->GetLeg2()[1];
+
+	// We look for the lowest leg OBB "y" coordinate in order to know the lowest point in the legs.
+	float skeletonMinY = std::numeric_limits<float>::max();
+	auto leg1Vertexs = leg1->GetCollider()->GetVertexs();
+	auto leg2Vertexs = leg2->GetCollider()->GetVertexs();
+	for (uint16_t i = 0; i < 8; i++) {
+		skeletonMinY = (leg1Vertexs[i].y < skeletonMinY) ? leg1Vertexs[i].y : skeletonMinY;
+		skeletonMinY = (leg2Vertexs[i].y < skeletonMinY) ? leg2Vertexs[i].y : skeletonMinY;
+	}
+
+	// Now we look for the highest terrain collider OBB "y" coordinate.
+	float terrainMaxY = std::numeric_limits<float>::min();
+
+	// For each loop but we only have one and it's plane
+	for (auto collider : collidingMeshes) {
+		for (auto vertex : collider->GetCollider()->GetVertexs()) {
+			terrainMaxY = (vertex.y > terrainMaxY) ? vertex.y : terrainMaxY;
+		}
+	}
+
+	if (skeletonMinY < terrainMaxY) {
+		// Fix position to set the skeleton above the terrain
+		float difference = terrainMaxY - skeletonMinY;
+		float positionToPlace = (core->GetCollider()->GetCenter().y - skeletonMinY) + terrainMaxY - 10;
+
+		core->SetPosition(glm::vec3(core->GetPosition().x, positionToPlace, core->GetPosition().z));
+		cout << "Posicion actualizada en: " << core->GetPosition().y << std::endl;
+		return true;
+	}
+
+	//if (skeletonMinY > terrainMaxY) {
+	//	// Apply gravity
+	//	float movement = gravity.y * Utils::deltaTime;
+
+	//	if (skeletonMinY - movement > terrainMaxY) {
+	//		// After the movement still above the terrain
+	//		core->SetPosition(core->GetPosition() + glm::vec3(0, movement, 0));
+
+	//	}
+	//	else {
+	//		// After the movement is below the terrain
+	//		float difference = (skeletonMinY - movement) + terrainMaxY;
+	//		core->SetPosition(core->GetPosition() + glm::vec3(0, difference, 0));
+
+	//	}
+	//	return true;
+	//}
+
+	return false;
 }

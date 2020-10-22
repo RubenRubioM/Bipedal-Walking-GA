@@ -58,12 +58,25 @@ class OBBCollider{
 		~OBBCollider();
 
 		/// <summary>
+		/// Translate the OBB vertexs and center.
+		/// </summary>
+		/// <param name="translation"> Translation. </param>
+		void TranslateOBB(const glm::vec3 translation);
+
+		/// <summary>
 		/// Returns if an OBBCollider is colliding.
 		/// </summary>
 		/// <param name="obb"> OBBCollider to check</param>
 		/// <returns> True if colliding, false if not. </returns>
 		bool IsColliding(const OBBCollider* obb) const;
 
+		/// <summary>
+		/// Get the plane for the SAT.
+		/// </summary>
+		/// <param name="rpos"></param>
+		/// <param name="plane"></param>
+		/// <param name="obb2"></param>
+		/// <returns></returns>
 		bool GetSeparatingPlane(const glm::vec3& rpos, const glm::vec3& plane, const OBBCollider* obb2) const;
 
 		/// <summary>
