@@ -26,6 +26,7 @@ RenderEngine* RenderEngine::GetInstance() {
 /// </summary>
 RenderEngine::RenderEngine() {
 	device = new CLE::CLEngine(1280, 720, title);
+	device->SetVSync(true);
 	smgr = device->GetSceneManager();
 	resourceManager = device->GetResourceManager();
 

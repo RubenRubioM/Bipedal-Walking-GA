@@ -84,7 +84,6 @@ void PhysicsEngine::UpdateSkeleton(ESkeleton* skeleton) {
 		}
 	}
 
-
 	for (auto joint : eSkeleton)
 		SetEntityValues(joint);
 
@@ -221,12 +220,13 @@ bool PhysicsEngine::FixPosition(ESkeleton* skeleton) const {
 	auto leg2 = skeleton->GetLeg2()[1];
 
 	// We look for the lowest leg OBB "y" coordinate in order to know the lowest point in the legs.
-	float skeletonMinY = std::numeric_limits<float>::max();
+	float skeletonMinYLeg1 = std::numeric_limits<float>::max();
+	float skeletonMinYLeg2 = std::numeric_limits<float>::max();
 	auto leg1Vertexs = leg1->GetCollider()->GetVertexs();
 	auto leg2Vertexs = leg2->GetCollider()->GetVertexs();
 	for (uint16_t i = 0; i < 8; i++) {
-		skeletonMinY = (leg1Vertexs[i].y < skeletonMinY) ? leg1Vertexs[i].y : skeletonMinY;
-		skeletonMinY = (leg2Vertexs[i].y < skeletonMinY) ? leg2Vertexs[i].y : skeletonMinY;
+		skeletonMinYLeg1 = (leg1Vertexs[i].y < skeletonMinYLeg1) ? leg1Vertexs[i].y : skeletonMinYLeg1;
+		skeletonMinYLeg2 = (leg2Vertexs[i].y < skeletonMinYLeg2) ? leg2Vertexs[i].y : skeletonMinYLeg2;
 	}
 
 	// Now we look for the highest terrain collider OBB "y" coordinate.
@@ -239,14 +239,21 @@ bool PhysicsEngine::FixPosition(ESkeleton* skeleton) const {
 		}
 	}
 
+	// Update if any leg is touching the floor or not
+	skeleton->SetLeg1OnAir((skeletonMinYLeg1 <= terrainMaxY) ? false : true);
+	skeleton->SetLeg2OnAir((skeletonMinYLeg2 <= terrainMaxY) ? false : true);
+
+	float skeletonMinY = (skeletonMinYLeg1 <= skeletonMinYLeg2) ? skeletonMinYLeg1 : skeletonMinYLeg2;
 	if (skeletonMinY <= terrainMaxY) {
 		// Fix position to set the skeleton above the terrain
 		float positionToPlace = ((core->GetCollider()->GetCenter().y - skeletonMinY) + terrainMaxY) - 10;
 		core->SetPosition(glm::vec3(core->GetPosition().x, positionToPlace, core->GetPosition().z));
 		skeleton->SetOnAir(false);
+
 		return true;
 	} else {
 		skeleton->SetOnAir(true);
+
 		return false;
 	}
 }

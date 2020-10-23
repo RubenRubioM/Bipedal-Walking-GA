@@ -52,6 +52,8 @@ class CLEngine {
 
         ~CLEngine();
 
+        void SetVSync(bool);
+
         //! Activa o desactiva el test de profundidad.
         //! @param e Segun el bool lo activa o desactiva.
         void SetEnableDepthTest( bool e);

@@ -93,6 +93,18 @@ class ESkeleton{
 		bool GetOnAir() { return onAir; };
 
 		/// <summary>
+		/// Returns leg1 on air.
+		/// </summary>
+		/// <returns> Leg1 on air. </returns>
+		bool GetLeg1OnAir() { return leg1OnAir; };
+
+		/// <summary>
+		/// Returns leg2 on air.
+		/// </summary>
+		/// <returns> Leg1 on air. </returns>
+		bool GetLeg2OnAir() { return leg2OnAir; };
+
+		/// <summary>
 		/// Sets the skeleton flexibility.
 		/// </summary>
 		/// <param name="flexibility"> Flexibility. </param>
@@ -103,6 +115,18 @@ class ESkeleton{
 		/// </summary>
 		/// <param name="onAir"> On air. </param>
 		void SetOnAir(const bool onAir) { this->onAir = onAir; }
+
+		/// <summary>
+		/// Sets the skeleton's leg1 on air.
+		/// </summary>
+		/// <param name="onAir"> On air. </param>
+		void SetLeg1OnAir(const bool onAir) { this->leg1OnAir = onAir; }
+
+		/// <summary>
+		/// Sets the skeleton's leg2 on air.
+		/// </summary>
+		/// <param name="onAir"> On air. </param>
+		void SetLeg2OnAir(const bool onAir) { this->leg2OnAir = onAir; }
 
 	private:
 		/// <summary>
@@ -152,5 +176,15 @@ class ESkeleton{
 		/// To verify if the skeleton is on air.
 		/// </summary>
 		bool onAir{ true };
+
+		/// <summary>
+		/// To verify if the skeleton's leg1 is on air.
+		/// </summary>
+		bool leg1OnAir{ true };
+
+		/// <summary>
+		/// To verify if the skeleton's leg2 is on air.
+		/// </summary>
+		bool leg2OnAir{ true };
 };
 

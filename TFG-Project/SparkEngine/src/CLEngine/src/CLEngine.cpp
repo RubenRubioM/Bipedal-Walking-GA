@@ -61,6 +61,13 @@ CLEngine::~CLEngine() {
     //cout << ">>>>> GLFW OFF" << endl;
 }
 
+// True - VSync off
+// False - VSync on
+void CLEngine::SetVSync(bool vsync) {
+    glfwSwapInterval(!vsync);
+}
+
+
 /**
  * Inicia, crea y configura  la ventana OpenGL con GLFW.
  * @param w - Anchura en pixeles de la ventana.
