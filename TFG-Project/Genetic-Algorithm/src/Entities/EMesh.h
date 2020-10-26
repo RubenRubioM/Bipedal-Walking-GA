@@ -51,6 +51,12 @@ class EMesh : public Entity {
 		OBBCollider* GetCollider() { return collider.get(); }
 
 		/// <summary>
+		/// Returns rotation velocity.
+		/// </summary>
+		/// <returns> Rotation velocity. </returns>
+		glm::vec3 GetRotationVelocity() { return rotationVelocity; }
+
+		/// <summary>
 		/// Sets dimensions
 		/// </summary>
 		/// <param name="dimensions"> Entity dimensions. </param>
@@ -61,6 +67,12 @@ class EMesh : public Entity {
 		/// </summary>
 		/// <param name="collider"> Entity collider. </param>
 		void SetCollider(OBBCollider collider);
+		
+		/// <summary>
+		/// Sets rotation velocity.
+		/// </summary>
+		/// <param name="velocity"> Velocity. </param>
+		void SetRotationVelocity(glm::vec3 velocity) { this->rotationVelocity = velocity; }
 
 	private:
 		/// <summary>
@@ -80,5 +92,10 @@ class EMesh : public Entity {
 		/// OBBCollider pointer.
 		/// </summary>
 		std::unique_ptr<OBBCollider> collider{ nullptr };
+
+		/// <summary>
+		/// Rotation velocity.
+		/// </summary>
+		glm::vec3 rotationVelocity{ 60.0f,0.0f,0.0f };
 };
 

@@ -19,7 +19,7 @@ StateExecution::StateExecution() {
 	renderEngine = RenderEngine::GetInstance();
 	physicsEngine = PhysicsEngine::GetInstance();
 	imGuiManager = ImGuiManager::GetInstance();
-	camera = make_unique<ECamera>(Transformable(glm::vec3(-50.0f, 50.0f, 50.0f), glm::vec3(0.0f), glm::vec3(1.0f)), glm::vec3(0, 0, 0));
+	camera = make_unique<ECamera>(Transformable(glm::vec3(-50.0f, 50.0f, 10.0f), glm::vec3(0.0f), glm::vec3(1.0f)), glm::vec3(0, 0, 0));
 	camera->SetName("Camera");
 	/*renderEngine->AddSkybox("media/skybox/right.jpg"
 		, "media/skybox/left.jpg"

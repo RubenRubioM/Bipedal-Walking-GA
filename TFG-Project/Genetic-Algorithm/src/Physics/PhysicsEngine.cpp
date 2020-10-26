@@ -78,27 +78,22 @@ void PhysicsEngine::UpdateSkeleton(ESkeleton* skeleton) {
 	if(gravityActivated)
 		ApplyGravity(skeleton);
 
-	for (auto joint : eSkeleton) {
-		if (imGuiManager->Header(std::string(std::to_string(joint->GetId()) + ". " + joint->GetName()))) {
-			imGuiManager->EntityTransformable(joint, std::string(joint->GetName()));
-		}
-	}
+	ApplySkeletonMovement(skeleton);
 
+	/* --------------------------------------- IMPORTANT ----------------------------------------------
+	* It's possible that the mecanism to check if the leg is on air or not based on the obb field collider
+	* will have to be done more times. For example, if I apply gravity and then rotate and move the skeleton
+	* I wont' be able due to the legsOnAir are updated at the end (FixPosition) and I can't move if both of my legs are
+	* in the field.
+	* -------------------------------------------------------------------------------------------------
+	*/
+
+	// There is a possible that when all is finished I can FixPosition before SetEntityValues.
 	for (auto joint : eSkeleton)
 		SetEntityValues(joint);
 
 	// Now after all the changes have been done we fix the posible positions errors.
 	FixPosition(skeleton);
-}
-
-/// <summary>
-/// Check if a mesh is colliding with any collidingMeshes.
-/// </summary>
-/// <param name="Mesh"> Mesh. </param>
-void PhysicsEngine::CheckCollision(EMesh* mesh) {
-	// https://gamedev.stackexchange.com/questions/49041/oriented-bounding-box-how-to
-	auto meshCollider = mesh->GetCollider();
-
 }
 
 /// <summary>
@@ -122,6 +117,120 @@ void PhysicsEngine::UpdateCamera(Entity* camera, glm::vec3 target) {
 	camNode->SetScalation(camera->GetScalation());
 
 	cam->SetCameraTarget(target);
+}
+
+/// <summary>
+/// Returns whether to apply gravity or not
+/// </summary>
+/// <param name="skeleton"> Skeleton to apply gravity. </param>
+/// <returns> True if gravity applied, false if not. </returns>
+void PhysicsEngine::ApplyGravity(ESkeleton* skeleton) const {
+	if (skeleton->GetOnAir()) {
+		auto core = skeleton->GetCore();
+		glm::vec3 movement = gravity * Utils::deltaTime;
+		core->SetPosition(core->GetPosition() + movement);
+
+		// TODO: Maybe it's not worth it update de obb just for 1 frame
+		for (auto joint : skeleton->GetSkeleton()) {
+			joint->GetCollider()->TranslateOBB(movement);
+		}
+	}
+
+}
+
+/// <summary>
+/// Apply the movement to the skeleton
+/// </summary>
+/// <param name="skeleton"> Skeleton to move. </param>
+void PhysicsEngine::ApplySkeletonMovement(ESkeleton* skeleton) const {
+	auto eSkeleton = skeleton->GetSkeleton();
+	auto core = eSkeleton[0];
+	auto hip1 = eSkeleton[1];
+	auto knee1 = eSkeleton[2];
+	auto hip2 = eSkeleton[3];
+	auto knee2 = eSkeleton[4];
+	auto applyJointRotation = [](EMesh* joint) {
+		joint->SetRotation(joint->GetRotation() + (joint->GetRotationVelocity() * Utils::deltaTime));
+
+		if (joint->GetRotation().x >= joint->GetRotationBoundaries().second) {
+			joint->SetRotation(glm::vec3(joint->GetRotationBoundaries().second,joint->GetRotation().y,joint->GetRotation().z));
+			joint->SetRotationVelocity(-joint->GetRotationVelocity());
+		}
+		if (joint->GetRotation().x <= joint->GetRotationBoundaries().first) {
+			joint->SetRotation(glm::vec3(joint->GetRotationBoundaries().first, joint->GetRotation().y, joint->GetRotation().z));
+			joint->SetRotationVelocity(-joint->GetRotationVelocity());
+		}
+
+	};
+
+	for (auto joint : eSkeleton) {
+		if (imGuiManager->Header(std::string(std::to_string(joint->GetId()) + ". " + joint->GetName()))) {
+			imGuiManager->EntityTransformable(joint, std::string(joint->GetName()));
+		}
+	}
+
+
+	applyJointRotation(hip1);
+	applyJointRotation(knee1);
+	/*applyJointRotation(hip2);
+	applyJointRotation(knee2);*/
+
+	/*
+		Si una pierna que esta por delante del cuerpo esta girando para ponerse detras del cuerpo (sentido de giro negativo). En los momentos
+		que esta tocando el suelo, movemos el core hacia delante.
+	
+		Pseudocodigo: if(centro de la pierna.z > centro del core && giro de la pierna < 0 && esta tocando el suelo) 
+	*/
+}
+
+/// <summary>
+/// Fix position.
+/// </summary>
+/// <param name="skeleton"> Skeleton entity to fix. </param>
+/// <returns> If the position has been fixed. </return>
+bool PhysicsEngine::FixPosition(ESkeleton* skeleton) const {
+	auto core = skeleton->GetCore();
+	auto leg1 = skeleton->GetLeg1()[1];
+	auto leg2 = skeleton->GetLeg2()[1];
+
+	// We look for the lowest leg OBB "y" coordinate in order to know the lowest point in the legs.
+	float skeletonMinYLeg1 = std::numeric_limits<float>::max();
+	float skeletonMinYLeg2 = std::numeric_limits<float>::max();
+	auto leg1Vertexs = leg1->GetCollider()->GetVertexs();
+	auto leg2Vertexs = leg2->GetCollider()->GetVertexs();
+	for (uint16_t i = 0; i < 8; i++) {
+		skeletonMinYLeg1 = (leg1Vertexs[i].y < skeletonMinYLeg1) ? leg1Vertexs[i].y : skeletonMinYLeg1;
+		skeletonMinYLeg2 = (leg2Vertexs[i].y < skeletonMinYLeg2) ? leg2Vertexs[i].y : skeletonMinYLeg2;
+	}
+
+	// Now we look for the highest terrain collider OBB "y" coordinate.
+	float terrainMaxY = std::numeric_limits<float>::lowest();
+
+	// For each loop but we only have one and it's plane
+	for (auto collider : collidingMeshes) {
+		for (auto vertex : collider->GetCollider()->GetVertexs()) {
+			terrainMaxY = (vertex.y > terrainMaxY) ? vertex.y : terrainMaxY;
+		}
+	}
+
+	// Update if any leg is touching the floor or not
+	skeleton->SetLeg1OnAir((skeletonMinYLeg1 <= terrainMaxY) ? false : true);
+	skeleton->SetLeg2OnAir((skeletonMinYLeg2 <= terrainMaxY) ? false : true);
+
+	float skeletonMinY = (skeletonMinYLeg1 <= skeletonMinYLeg2) ? skeletonMinYLeg1 : skeletonMinYLeg2;
+	if (skeletonMinY <= terrainMaxY) {
+		// Fix position to set the skeleton above the terrain
+		float positionToPlace = ((core->GetCollider()->GetCenter().y - skeletonMinY) + terrainMaxY) - 10;
+		core->SetPosition(glm::vec3(core->GetPosition().x, positionToPlace, core->GetPosition().z));
+		skeleton->SetOnAir(false);
+
+		return true;
+	}
+	else {
+		skeleton->SetOnAir(true);
+
+		return false;
+	}
 }
 
 /// <summary>
@@ -192,68 +301,3 @@ OBBCollider PhysicsEngine::CalculateOBB(EMesh* mesh, CLE::CLNode* node) {
 
 }
 
-/// <summary>
-/// Returns whether to apply gravity or not
-/// </summary>
-/// <param name="skeleton"> Skeleton to apply gravity. </param>
-/// <returns> True if gravity applied, false if not. </returns>
-void PhysicsEngine::ApplyGravity(ESkeleton* skeleton) const {
-	if (skeleton->GetOnAir()) {
-		auto core = skeleton->GetCore();
-		glm::vec3 movement = gravity * Utils::deltaTime;
-		core->SetPosition(core->GetPosition() + movement);
-		for (auto joint : skeleton->GetSkeleton()) {
-			joint->GetCollider()->TranslateOBB(movement);
-		}
-	}
-	
-}
-
-/// <summary>
-/// Fix position.
-/// </summary>
-/// <param name="skeleton"> Skeleton entity to fix. </param>
-/// <returns> If the position has been fixed. </return>
-bool PhysicsEngine::FixPosition(ESkeleton* skeleton) const {
-	auto core = skeleton->GetCore();
-	auto leg1 = skeleton->GetLeg1()[1];
-	auto leg2 = skeleton->GetLeg2()[1];
-
-	// We look for the lowest leg OBB "y" coordinate in order to know the lowest point in the legs.
-	float skeletonMinYLeg1 = std::numeric_limits<float>::max();
-	float skeletonMinYLeg2 = std::numeric_limits<float>::max();
-	auto leg1Vertexs = leg1->GetCollider()->GetVertexs();
-	auto leg2Vertexs = leg2->GetCollider()->GetVertexs();
-	for (uint16_t i = 0; i < 8; i++) {
-		skeletonMinYLeg1 = (leg1Vertexs[i].y < skeletonMinYLeg1) ? leg1Vertexs[i].y : skeletonMinYLeg1;
-		skeletonMinYLeg2 = (leg2Vertexs[i].y < skeletonMinYLeg2) ? leg2Vertexs[i].y : skeletonMinYLeg2;
-	}
-
-	// Now we look for the highest terrain collider OBB "y" coordinate.
-	float terrainMaxY = std::numeric_limits<float>::lowest();
-
-	// For each loop but we only have one and it's plane
-	for (auto collider : collidingMeshes) {
-		for (auto vertex : collider->GetCollider()->GetVertexs()) {
-			terrainMaxY = (vertex.y > terrainMaxY) ? vertex.y : terrainMaxY;
-		}
-	}
-
-	// Update if any leg is touching the floor or not
-	skeleton->SetLeg1OnAir((skeletonMinYLeg1 <= terrainMaxY) ? false : true);
-	skeleton->SetLeg2OnAir((skeletonMinYLeg2 <= terrainMaxY) ? false : true);
-
-	float skeletonMinY = (skeletonMinYLeg1 <= skeletonMinYLeg2) ? skeletonMinYLeg1 : skeletonMinYLeg2;
-	if (skeletonMinY <= terrainMaxY) {
-		// Fix position to set the skeleton above the terrain
-		float positionToPlace = ((core->GetCollider()->GetCenter().y - skeletonMinY) + terrainMaxY) - 10;
-		core->SetPosition(glm::vec3(core->GetPosition().x, positionToPlace, core->GetPosition().z));
-		skeleton->SetOnAir(false);
-
-		return true;
-	} else {
-		skeleton->SetOnAir(true);
-
-		return false;
-	}
-}

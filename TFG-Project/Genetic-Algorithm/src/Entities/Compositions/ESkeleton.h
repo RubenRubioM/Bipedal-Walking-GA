@@ -187,4 +187,3 @@ class ESkeleton{
 		/// </summary>
 		bool leg2OnAir{ true };
 };
-

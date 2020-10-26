@@ -44,12 +44,6 @@ class PhysicsEngine{
 		void UpdateSkeleton(ESkeleton* skeleton);
 
 		/// <summary>
-		/// Check if a mesh is colliding with any collidingMeshes.
-		/// </summary>
-		/// <param name="Mesh"> Mesh. </param>
-		void CheckCollision(EMesh* mesh);
-
-		/// <summary>
 		/// Updates entity camera.
 		/// </summary>
 		/// <param name="camera"> Camera entity. </param>
@@ -77,18 +71,16 @@ class PhysicsEngine{
 		PhysicsEngine();
 
 		/// <summary>
-		/// Returns whether to apply gravity or not
+		/// Apply gravity
 		/// </summary>
 		/// <param name="skeleton"> Skeleton to apply gravity. </param>
-		/// <returns> True if gravity applied, false if not. </returns>
 		void ApplyGravity(ESkeleton* skeleton) const;
 
 		/// <summary>
-		/// Calculate and assign OBB collider to the entity
+		/// Apply the movement to the skeleton
 		/// </summary>
-		/// <param name="mesh"> Mesh. </param>
-		/// <param name="node"> Node. </param>
-		OBBCollider CalculateOBB(EMesh* mesh, CLE::CLNode* node);
+		/// <param name="skeleton"> Skeleton to move. </param>
+		void ApplySkeletonMovement(ESkeleton* skeleton) const;
 
 		/// <summary>
 		/// Fix position.
@@ -96,6 +88,13 @@ class PhysicsEngine{
 		/// <param name="skeleton"> Skeleton entity to fix. </param>
 		/// <returns> If the position has been fixed. </return>
 		bool FixPosition(ESkeleton* skeleton) const;
+
+		/// <summary>
+		/// Calculate and assign OBB collider to the entity
+		/// </summary>
+		/// <param name="mesh"> Mesh. </param>
+		/// <param name="node"> Node. </param>
+		OBBCollider CalculateOBB(EMesh* mesh, CLE::CLNode* node);
 
 		/// <summary>
 		/// Constant gravity value.
