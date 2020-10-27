@@ -100,11 +100,14 @@ void PhysicsEngine::UpdateSkeleton(ESkeleton* skeleton) {
 /// Updates entity camera.
 /// </summary>
 /// <param name="camera"> Camera entity. </param>
-/// <param name="target"> Target position. </param>
-void PhysicsEngine::UpdateCamera(Entity* camera, glm::vec3 target) {
+void PhysicsEngine::UpdateCamera(Entity* camera) {
 	if (imGuiManager->Header(std::string(std::to_string(camera->GetId()) + ". " + camera->GetName()))) {
 		imGuiManager->Vec3Slider(camera->GetPositionPtr()
 			, std::string(camera->GetName() + " position")
+			, camera->GetPositionBoundaries().first
+			, camera->GetPositionBoundaries().second);
+		imGuiManager->Vec3Slider(static_cast<ECamera*>(camera)->GetTargetPtr()
+			, std::string(camera->GetName() + " target")
 			, camera->GetPositionBoundaries().first
 			, camera->GetPositionBoundaries().second);
 	}
@@ -116,7 +119,7 @@ void PhysicsEngine::UpdateCamera(Entity* camera, glm::vec3 target) {
 	camNode->SetRotation(camera->GetRotation());
 	camNode->SetScalation(camera->GetScalation());
 
-	cam->SetCameraTarget(target);
+	cam->SetCameraTarget(static_cast<ECamera*>(camera)->GetTarget());
 }
 
 /// <summary>
@@ -153,7 +156,7 @@ void PhysicsEngine::ApplySkeletonMovement(ESkeleton* skeleton) const {
 		joint->SetRotation(joint->GetRotation() + (joint->GetRotationVelocity() * Utils::deltaTime));
 
 		if (joint->GetRotation().x >= joint->GetRotationBoundaries().second) {
-			joint->SetRotation(glm::vec3(joint->GetRotationBoundaries().second,joint->GetRotation().y,joint->GetRotation().z));
+			joint->SetRotation(glm::vec3(joint->GetRotationBoundaries().second, joint->GetRotation().y, joint->GetRotation().z));
 			joint->SetRotationVelocity(-joint->GetRotationVelocity());
 		}
 		if (joint->GetRotation().x <= joint->GetRotationBoundaries().first) {
@@ -162,25 +165,34 @@ void PhysicsEngine::ApplySkeletonMovement(ESkeleton* skeleton) const {
 		}
 
 	};
+	// TODO: Check the speed of the core.
+	auto checkCoreMovement = [&core](EMesh* hip, EMesh* knee, bool onAir) {
+		if (((hip->GetRotationVelocity().x < 0 && hip->GetRotation().x > 0) || (knee->GetRotationVelocity().x < 0 && hip->GetRotation().x > 0)) && !onAir) {
+			auto position = core->GetPosition();
+			float newZ = position.z + ((std::abs(hip->GetRotationVelocity().x / 10) + std::abs(knee->GetRotationVelocity().x / 10)) * Utils::deltaTime);
+			core->SetPosition(glm::vec3(position.x, position.y, newZ));
 
+			return true;
+		}
+		return false;
+	};
+
+	// IMGUI debug
 	for (auto joint : eSkeleton) {
 		if (imGuiManager->Header(std::string(std::to_string(joint->GetId()) + ". " + joint->GetName()))) {
 			imGuiManager->EntityTransformable(joint, std::string(joint->GetName()));
 		}
 	}
 
-
 	applyJointRotation(hip1);
 	applyJointRotation(knee1);
 	/*applyJointRotation(hip2);
 	applyJointRotation(knee2);*/
 
-	/*
-		Si una pierna que esta por delante del cuerpo esta girando para ponerse detras del cuerpo (sentido de giro negativo). En los momentos
-		que esta tocando el suelo, movemos el core hacia delante.
-	
-		Pseudocodigo: if(centro de la pierna.z > centro del core && giro de la pierna < 0 && esta tocando el suelo) 
-	*/
+	// To just apply one leg at a time
+	if(!checkCoreMovement(hip1, knee1, skeleton->GetLeg1OnAir()))
+		checkCoreMovement(hip2, knee2, skeleton->GetLeg2OnAir());
+
 }
 
 /// <summary>

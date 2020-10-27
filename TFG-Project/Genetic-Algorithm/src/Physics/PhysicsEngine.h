@@ -47,8 +47,7 @@ class PhysicsEngine{
 		/// Updates entity camera.
 		/// </summary>
 		/// <param name="camera"> Camera entity. </param>
-		/// <param name="target"> Target position. </param>
-		void UpdateCamera(Entity* camera, glm::vec3 target);
+		void UpdateCamera(Entity* camera);
 
 		/// <summary>
 		/// Adds a colliding object to the physics engine

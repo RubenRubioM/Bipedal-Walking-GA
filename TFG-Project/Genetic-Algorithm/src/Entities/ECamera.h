@@ -36,6 +36,12 @@ class ECamera : public Entity{
 		const glm::vec3 GetTarget() { return target; }
 
 		/// <summary>
+		/// Returns the entity target adress.
+		/// </summary>
+		/// <returns> Entity target adress. </returns>
+		glm::vec3* GetTargetPtr() { return &target; }
+
+		/// <summary>
 		/// Sets camera target.
 		/// </summary>
 		/// <param name="target"> Camera target. </param>
