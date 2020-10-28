@@ -20,6 +20,7 @@
     <ClCompile Include="src\Physics\PhysicsEngine.cpp" />
     <ClCompile Include="src\DataTypes\OBBCollider.cpp" />
     <ClCompile Include="src\Entities\Compositions\ESkeleton.cpp" />
+    <ClCompile Include="src\GeneticAlgorithm\GeneticAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Program.h" />
@@ -44,6 +45,8 @@
     <ClInclude Include="src\DataTypes\OBBCollider.h" />
     <ClInclude Include="src\Entities\Compositions\ESkeleton.h" />
     <ClInclude Include="src\Utils\Utils.h" />
+    <ClInclude Include="src\GeneticAlgorithm\GeneticAlgorithm.h" />
+    <ClInclude Include="src\Utils\Config.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\CMakeLists.txt" />

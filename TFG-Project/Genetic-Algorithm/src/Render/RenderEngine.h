@@ -104,6 +104,13 @@ class RenderEngine{
 		/// Swap buffers and release glfw events.
 		/// </summary>
 		void EndScene() const;
+
+		/// <summary>
+		/// Sets entity visibility.
+		/// </summary>
+		/// <param name="entity"> Entity. </param>
+		/// <param name="visiblity"> Visibility. </param>
+		void SetVisible(EMesh* entity, bool visiblity);
 	
 	private:
 		/// <summary>

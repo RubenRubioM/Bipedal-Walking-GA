@@ -27,6 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GeneticAlgorithm\GeneticAlgorithm.cpp" />
     <ClCompile Include="src\DataTypes\OBBCollider.cpp" />
     <ClCompile Include="src\Entities\Compositions\ESkeleton.cpp" />
     <ClCompile Include="src\Physics\PhysicsEngine.cpp" />
@@ -50,6 +51,7 @@
   <ItemGroup>
     <ClInclude Include="src\DataTypes\OBBCollider.h" />
     <ClInclude Include="src\Entities\Compositions\ESkeleton.h" />
+    <ClInclude Include="src\GeneticAlgorithm\GeneticAlgorithm.h" />
     <ClInclude Include="src\Physics\PhysicsEngine.h" />
     <ClInclude Include="src\Render\ImGuiManager.h" />
     <ClInclude Include="src\DataTypes\Transformable.h" />
@@ -67,6 +69,7 @@
     <ClInclude Include="src\Entities\Entity.h" />
     <ClInclude Include="src\Program.h" />
     <ClInclude Include="src\State\State.h" />
+    <ClInclude Include="src\Utils\Config.h" />
     <ClInclude Include="src\Utils\Shaders.h" />
     <ClInclude Include="src\State\StateExecution.h" />
     <ClInclude Include="src\Utils\Utils.h" />
@@ -156,7 +159,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Genetic-Algorithm\src;$(SolutionDir)SparkEngine\src\CLEngine\src;$(SolutionDir)Dependencies\BOOST/include;$(SolutionDir)Dependencies\NUMCPP/include;$(SolutionDir)Dependencies/GLM/include;$(SolutionDir)Dependencies/GLFW/include;$(SolutionDir)Dependencies/GLEW/include;$(SolutionDir)Dependencies/SOIL2/include;$(SolutionDir)Dependencies/ASSIMP/include;$(SolutionDir)Dependencies/IMGUI/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Genetic-Algorithm\src;$(SolutionDir)SparkEngine\src\CLEngine\src;$(SolutionDir)Dependencies\BOOST/include;$(SolutionDir)Dependencies\NUMCPP/include;$(SolutionDir)Dependencies/GLM/include;$(SolutionDir)Dependencies/GLFW/include;$(SolutionDir)Dependencies/GLEW/include;$(SolutionDir)Dependencies/SOIL2/include;$(SolutionDir)Dependencies/ASSIMP/include;$(SolutionDir)Dependencies/IMGUI/include;$(SolutionDir)Dependencies/RANDOM/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4244</DisableSpecificWarnings>
     </ClCompile>
     <Link>

@@ -34,6 +34,12 @@ class ESkeleton{
 		~ESkeleton();
 
 		/// <summary>
+		/// Returns skeleton identifier.
+		/// </summary>
+		/// <returns> Skeleton Id. </returns>
+		const int GetSkeletonId() { return skeletonId; }
+
+		/// <summary>
 		/// Returns number of joints.
 		/// </summary>
 		/// <returns> NumOfJoints. </returns>
@@ -130,6 +136,11 @@ class ESkeleton{
 
 	private:
 		/// <summary>
+		/// Skeleton identifier.
+		/// </summary>
+		int skeletonId = 0;
+
+		/// <summary>
 		/// Num of joints.
 		/// </summary>
 		int numOfJoints = 0;
@@ -186,4 +197,6 @@ class ESkeleton{
 		/// To verify if the skeleton's leg2 is on air.
 		/// </summary>
 		bool leg2OnAir{ true };
+
+		inline static int skeletonNextId = 0;
 };

@@ -203,6 +203,16 @@ void RenderEngine::EndScene() const {
 }
 
 /// <summary>
+/// Sets entity visibility.
+/// </summary>
+/// <param name="entity"> Entity. </param>
+/// <param name="visiblity"> Visibility. </param>
+void RenderEngine::SetVisible(EMesh* entity, bool visiblity) {
+	auto node = device->GetNodeByID(entity->GetId());
+	node->SetVisible(visiblity);
+}
+
+/// <summary>
 /// Draw 3D line.
 /// </summary>
 /// <param name="pos1"> Initial position. </param>

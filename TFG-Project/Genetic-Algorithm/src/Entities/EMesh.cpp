@@ -3,6 +3,8 @@
 #include <DataTypes/Transformable.h>
 #include <DataTypes/OBBCollider.h>
 
+#include <iostream>
+
 /// <summary>
 /// EMesh constructor.
 /// </summary>

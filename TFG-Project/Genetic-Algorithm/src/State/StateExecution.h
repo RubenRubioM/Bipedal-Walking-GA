@@ -12,6 +12,7 @@ class ECamera;
 class ESkeleton;
 class EMesh;
 class Entity;
+class GeneticAlgorithm;
 
 class StateExecution : public State {
 	public:
@@ -67,19 +68,19 @@ class StateExecution : public State {
 		ImGuiManager* imGuiManager{ nullptr };
 
 		/// <summary>
+		/// Genetic algorithm pointer.
+		/// </summary>
+		std::unique_ptr<GeneticAlgorithm> geneticAlgorithm{ nullptr };
+
+		/// <summary>
 		/// Scene main camera.
 		/// </summary>
 		std::unique_ptr<ECamera> camera{ nullptr };
 
 		/// <summary>
-		/// Vector for all the meshes.
-		/// </summary>
-		std::vector<std::unique_ptr<EMesh>> skeletonsMeshes;
-
-		/// <summary>
 		/// Vector for all the skeletons.
 		/// </summary>
-		std::vector<std::unique_ptr<ESkeleton>> skeletons;
+		std::vector<std::shared_ptr<ESkeleton>> skeletons;
 
 		/// <summary>
 		/// Vector for all the meshes.

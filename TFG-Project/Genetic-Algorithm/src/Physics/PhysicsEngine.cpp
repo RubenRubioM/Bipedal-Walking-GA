@@ -186,8 +186,8 @@ void PhysicsEngine::ApplySkeletonMovement(ESkeleton* skeleton) const {
 
 	applyJointRotation(hip1);
 	applyJointRotation(knee1);
-	/*applyJointRotation(hip2);
-	applyJointRotation(knee2);*/
+	applyJointRotation(hip2);
+	applyJointRotation(knee2);
 
 	// To just apply one leg at a time
 	if(!checkCoreMovement(hip1, knee1, skeleton->GetLeg1OnAir()))
@@ -301,6 +301,15 @@ OBBCollider PhysicsEngine::CalculateOBB(EMesh* mesh, CLE::CLNode* node) {
 	glm::vec3 p5 = model * glm::vec4(+(localWidth / 2), localHeight, +(localDepth / 2), 1);
 	glm::vec3 p6 = model * glm::vec4(+(localWidth / 2), 0, -(localDepth / 2), 1);
 	glm::vec3 p7 = model * glm::vec4(+(localWidth / 2), localHeight, -(localDepth / 2), 1);
+
+	/*glm::vec3 p0 = glm::vec3(0);
+	glm::vec3 p1 = glm::vec3(0);
+	glm::vec3 p2 = glm::vec3(0);
+	glm::vec3 p3 = glm::vec3(0);
+	glm::vec3 p4 = glm::vec3(0);
+	glm::vec3 p5 = glm::vec3(0);
+	glm::vec3 p6 = glm::vec3(0);
+	glm::vec3 p7 = glm::vec3(0);*/
 
 	std::vector<glm::vec3> vertexs = { p0,p1,p2,p3,p4,p5,p6,p7 };
 

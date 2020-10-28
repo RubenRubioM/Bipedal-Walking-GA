@@ -28,13 +28,23 @@ ESkeleton::ESkeleton(EMesh* core, EMesh* hip1, EMesh* knee1, EMesh* hip2, EMesh*
 	this->arm2Joints[1] = elbow2; numOfJoints;
 
 	SetFlexibility(Flexibility::MEDIUM);
+
+	skeletonId = ++skeletonNextId;
 }
 
 /// <summary>
 /// ESkeleton destructor.
 /// </summary>
 ESkeleton::~ESkeleton(){
-
+	delete core;
+	delete leg1Joints[0];
+	delete leg1Joints[1];
+	delete leg2Joints[0];
+	delete leg2Joints[1];
+	delete arm1Joints[0];
+	delete arm1Joints[1];
+	delete arm2Joints[0];
+	delete arm2Joints[1];
 }
 
 /// <summary>
