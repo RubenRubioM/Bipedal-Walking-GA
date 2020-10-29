@@ -178,7 +178,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Genetic-Algorithm\src;$(SolutionDir)SparkEngine\src\CLEngine\src;$(SolutionDir)Dependencies\BOOST/include;$(SolutionDir)Dependencies\NUMCPP/include;$(SolutionDir)Dependencies/GLM/include;$(SolutionDir)Dependencies/GLFW/include;$(SolutionDir)Dependencies/GLEW/include;$(SolutionDir)Dependencies/SOIL2/include;$(SolutionDir)Dependencies/ASSIMP/include;$(SolutionDir)Dependencies/IMGUI/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Genetic-Algorithm\src;$(SolutionDir)SparkEngine\src\CLEngine\src;$(SolutionDir)Dependencies\BOOST/include;$(SolutionDir)Dependencies\NUMCPP/include;$(SolutionDir)Dependencies/GLM/include;$(SolutionDir)Dependencies/GLFW/include;$(SolutionDir)Dependencies/GLEW/include;$(SolutionDir)Dependencies/SOIL2/include;$(SolutionDir)Dependencies/ASSIMP/include;$(SolutionDir)Dependencies/IMGUI/include;$(SolutionDir)Dependencies/RANDOM/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4244</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -217,6 +217,11 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Execution|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)Genetic-Algorithm\src;$(SolutionDir)SparkEngine\src\CLEngine\src;$(SolutionDir)Dependencies\BOOST/include;$(SolutionDir)Dependencies\NUMCPP/include;$(SolutionDir)Dependencies/GLM/include;$(SolutionDir)Dependencies/GLFW/include;$(SolutionDir)Dependencies/GLEW/include;$(SolutionDir)Dependencies/SOIL2/include;$(SolutionDir)Dependencies/ASSIMP/include;$(SolutionDir)Dependencies/IMGUI/include;$(SolutionDir)Dependencies/RANDOM/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

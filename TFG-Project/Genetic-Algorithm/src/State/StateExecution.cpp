@@ -72,8 +72,9 @@ void StateExecution::Update() {
 	for (const auto& mesh : terrain) {
 		physicsEngine->UpdateEntity(mesh.get());
 	}
-
 	imGuiManager->End();
+
+	geneticAlgorithm->Update();
 }
 
 /// <summary>

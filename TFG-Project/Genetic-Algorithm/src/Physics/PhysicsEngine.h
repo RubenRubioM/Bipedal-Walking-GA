@@ -89,6 +89,13 @@ class PhysicsEngine{
 		bool FixPosition(ESkeleton* skeleton) const;
 
 		/// <summary>
+		/// Check if the skeleton has die.
+		/// </summary>
+		/// <param name="skeleton"> Skeleton to check. </param>
+		/// <returns> If is dead or not. </returns>
+		bool SkeletonDead(ESkeleton* skeleton) const;
+
+		/// <summary>
 		/// Calculate and assign OBB collider to the entity
 		/// </summary>
 		/// <param name="mesh"> Mesh. </param>

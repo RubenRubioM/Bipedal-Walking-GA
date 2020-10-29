@@ -125,6 +125,22 @@ void ImGuiManager::Checkbox(const std::string title, bool* value) {
 }
 
 /// <summary>
+/// Display text.
+/// </summary>
+/// <param name="text"> Text. </param>
+void ImGuiManager::Text(const std::string text) {
+	ImGui::Text(text.c_str());
+}
+
+/// <summary>
+/// Display bullet text.
+/// </summary>
+/// <param name="text"> Text. </param>
+void ImGuiManager::BulletText(const std::string text) {
+	ImGui::BulletText(text.c_str());
+}
+
+/// <summary>
 /// Private constructor.
 /// </summary>
 ImGuiManager::ImGuiManager() {

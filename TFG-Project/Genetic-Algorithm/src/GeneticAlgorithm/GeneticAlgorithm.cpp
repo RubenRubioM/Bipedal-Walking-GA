@@ -3,6 +3,7 @@
 #include <Utils/Config.h>
 #include <Entities/Compositions/ESkeleton.h>
 #include <Entities/EMesh.h>
+#include <Render/ImGuiManager.h>
 
 #include <GLM/glm.hpp>
 #include <RANDOM/random.hpp>
@@ -15,8 +16,10 @@ using Random = effolkronium::random_static;
 /// GeneticAlgorithm constructor.
 /// </summary>
 GeneticAlgorithm::GeneticAlgorithm() {
-	float xOffset = 0;
-	float xOffsetIncrease = 10;
+	imGuiManager = ImGuiManager::GetInstance();
+
+	float xOffset = -30;
+	float xOffsetIncrease = 20;
 	auto setLegBoundaries = [](std::vector<EMesh*> leg) {
 		auto hip = leg[0];
 		auto knee = leg[1];
@@ -77,6 +80,7 @@ GeneticAlgorithm::GeneticAlgorithm() {
 			population[i]->SetFlexibility(ESkeleton::Flexibility::HIGH);
 		}
 
+
 		// Set legs boundaries.
 		setLegBoundaries(population[i]->GetLeg1());
 		setLegBoundaries(population[i]->GetLeg2());
@@ -90,6 +94,22 @@ GeneticAlgorithm::GeneticAlgorithm() {
 /// </summary>
 GeneticAlgorithm::~GeneticAlgorithm() {
 
+}
+
+/// <summary>
+/// Updates all related to the genetic algorithm
+/// </summary>
+void GeneticAlgorithm::Update() {
+	imGuiManager->Begin("Genetic algorithm debug");
+	for (auto gene : population) {
+		gene->UpdateFitness();
+
+		std::string dead = (gene->IsDead()) ? "(dead)" : "";
+		if (imGuiManager->Header(std::string("Skeleton " + std::to_string(gene->GetSkeletonId()) + dead))) {
+			imGuiManager->BulletText(std::string("Fitness: " + std::to_string(gene->GetFitness()) + "\n"));
+		}
+	}
+	imGuiManager->End();
 }
 
 /// <summary>

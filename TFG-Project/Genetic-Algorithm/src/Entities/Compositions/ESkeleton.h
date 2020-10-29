@@ -1,5 +1,7 @@
 #pragma once
 
+#include <GLM/vec3.hpp>
+
 #include <vector>
 
 class EMesh;
@@ -111,6 +113,12 @@ class ESkeleton{
 		bool GetLeg2OnAir() { return leg2OnAir; };
 
 		/// <summary>
+		/// Returns the fitness value of the skeleton.
+		/// </summary>
+		/// <returns> Fitness value. </returns>
+		const float GetFitness() { return fitnessValue; }
+
+		/// <summary>
 		/// Sets the skeleton flexibility.
 		/// </summary>
 		/// <param name="flexibility"> Flexibility. </param>
@@ -133,6 +141,29 @@ class ESkeleton{
 		/// </summary>
 		/// <param name="onAir"> On air. </param>
 		void SetLeg2OnAir(const bool onAir) { this->leg2OnAir = onAir; }
+
+		/// <summary>
+		/// Kill the skeleton.
+		/// </summary>
+		/// <param name="dead"> Is dead </param>
+		void SetIsDead(bool dead) { isDead = dead; }
+
+		/// <summary>
+		/// Sets new fitness value.
+		/// </summary>
+		/// <param name="newFitness"> New fitness value. </param>
+		void SetFitness(const float newFitness) { fitnessValue = newFitness; }
+
+		/// <summary>
+		/// Returns if the skeleton is dead.
+		/// </summary>
+		/// <returns> IsDead. </returns>
+		bool IsDead() { return isDead; }
+
+		/// <summary>
+		/// Updates the fitness value.
+		/// </summary>
+		void UpdateFitness();
 
 	private:
 		/// <summary>
@@ -198,5 +229,24 @@ class ESkeleton{
 		/// </summary>
 		bool leg2OnAir{ true };
 
+		/// <summary>
+		/// To check if skeleton is dead.
+		/// </summary>
+		bool isDead{ false };
+
+		/// <summary>
+		/// Fitness value.
+		/// Basically the distance between te actual point and the beginning point.
+		/// </summary>
+		float fitnessValue{ 0 };
+
+		/// <summary>
+		/// Starting point.
+		/// </summary>
+		glm::vec3 startingPoint{ 0.0f };
+
+		/// <summary>
+		/// Static count for skeleton id's.
+		/// </summary>
 		inline static int skeletonNextId = 0;
 };

@@ -2,6 +2,8 @@
 
 #include <Entities/EMesh.h>
 
+#include <GLM/geometric.hpp>
+
 #include <iostream>
 
 /// <summary>
@@ -28,6 +30,8 @@ ESkeleton::ESkeleton(EMesh* core, EMesh* hip1, EMesh* knee1, EMesh* hip2, EMesh*
 	this->arm2Joints[1] = elbow2; numOfJoints;
 
 	SetFlexibility(Flexibility::MEDIUM);
+
+	startingPoint = this->core->GetPosition();
 
 	skeletonId = ++skeletonNextId;
 }
@@ -96,4 +100,11 @@ void ESkeleton::SetFlexibility(const Flexibility flexibility) {
 		default:
 			std::cout << "No valid Flexibility value.\n";
 	}
+}
+
+/// <summary>
+/// Updates the fitness value.
+/// </summary>
+void ESkeleton::UpdateFitness() {
+	fitnessValue = glm::distance(core->GetPosition(), startingPoint);
 }

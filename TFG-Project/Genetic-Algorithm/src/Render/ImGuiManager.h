@@ -95,6 +95,18 @@ class ImGuiManager {
 		/// <param name="value"> Value. </param>
 		void Checkbox(const std::string title, bool* value);
 
+		/// <summary>
+		/// Display text.
+		/// </summary>
+		/// <param name="text"> Text. </param>
+		void Text(const std::string text);
+
+		/// <summary>
+		/// Display bullet text.
+		/// </summary>
+		/// <param name="text"> Text. </param>
+		void BulletText(const std::string text);
+
 	private:
 		/// <summary>
 		/// Private constructor

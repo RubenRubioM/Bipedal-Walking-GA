@@ -4,6 +4,7 @@
 #include <vector>
 
 class ESkeleton;
+class ImGuiManager;
 
 /// <summary>
 /// Class for the genetic algorithm
@@ -21,6 +22,11 @@ class GeneticAlgorithm {
 		~GeneticAlgorithm();
 
 		/// <summary>
+		/// Updates all related to the genetic algorithm
+		/// </summary>
+		void Update();
+
+		/// <summary>
 		/// Returns the population.
 		/// </summary>
 		/// <returns> Population. </returns>
@@ -36,5 +42,10 @@ class GeneticAlgorithm {
 		/// Actual generation.
 		/// </summary>
 		int actualGeneration = 1;
+
+		/// <summary>
+		/// ImGuiManager pointer.
+		/// </summary>
+		ImGuiManager* imGuiManager{ nullptr };
 };
 

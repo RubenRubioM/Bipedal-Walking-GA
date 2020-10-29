@@ -71,9 +71,10 @@ void PhysicsEngine::UpdateEntity(Entity* entity) {
 /// </summary>
 /// <param name="skeleton"> skeleton. </param>
 void PhysicsEngine::UpdateSkeleton(ESkeleton* skeleton) {
-	auto eSkeleton = skeleton->GetSkeleton();
+	// If the skeleton is dead we do nothing.
+	if (skeleton->IsDead()) return;
 
-	// We apply all the changes and before update the values we fix the posibles positions errors.
+	auto eSkeleton = skeleton->GetSkeleton();
 
 	if(gravityActivated)
 		ApplyGravity(skeleton);
@@ -94,6 +95,9 @@ void PhysicsEngine::UpdateSkeleton(ESkeleton* skeleton) {
 
 	// Now after all the changes have been done we fix the posible positions errors.
 	FixPosition(skeleton);
+
+	// At the end we check if the skeleton has die or not.
+	skeleton->SetIsDead(SkeletonDead(skeleton));
 }
 
 /// <summary>
@@ -179,7 +183,7 @@ void PhysicsEngine::ApplySkeletonMovement(ESkeleton* skeleton) const {
 
 	// IMGUI debug
 	for (auto joint : eSkeleton) {
-		if (imGuiManager->Header(std::string(std::to_string(joint->GetId()) + ". " + joint->GetName()))) {
+		if (imGuiManager->Header(std::string("Skeleton " + std::to_string(skeleton->GetSkeletonId()) +". " + joint->GetName()))) {
 			imGuiManager->EntityTransformable(joint, std::string(joint->GetName()));
 		}
 	}
@@ -243,6 +247,42 @@ bool PhysicsEngine::FixPosition(ESkeleton* skeleton) const {
 
 		return false;
 	}
+}
+
+
+/// <summary>
+/// Check if the skeleton has die.
+/// </summary>
+/// <param name="skeleton"> Skeleton to check. </param>
+/// <returns> If is dead or not. </returns>
+bool PhysicsEngine::SkeletonDead(ESkeleton* skeleton) const {
+	auto core = skeleton->GetCore();
+	auto leg1 = skeleton->GetLeg1();
+	auto leg2 = skeleton->GetLeg2();
+	/* Cases where the skeleton is should die.
+		- Case 1: Both hips rotations are less -30º.
+		- Case 2: Both hip rotations minus knee rotation are greater 30º.
+		- Case 3: The hip in front minus knee rotation is greater than 90º and the hip behind is lower than -90º.
+			-Case 3.1: Same but with the other leg.
+	*/
+
+	// Case 1
+	if (leg1[0]->GetRotation().x < -30 && leg2[0]->GetRotation().x < -30)
+		return true;
+
+	// Case 2
+	if (leg1[0]->GetRotation().x - std::abs(leg1[1]->GetRotation().x) > 30 && leg2[0]->GetRotation().x - std::abs(leg2[1]->GetRotation().x) > 30)
+		return true;
+
+	// Case 3
+	if (leg1[0]->GetRotation().x - std::abs(leg1[1]->GetRotation().x) > 90 && leg2[0]->GetRotation().x < -90)
+		return true;
+
+	// Case 3.1
+	if (leg2[0]->GetRotation().x - std::abs(leg2[1]->GetRotation().x) > 90 && leg1[0]->GetRotation().x < -90)
+		return true;
+
+	return false;
 }
 
 /// <summary>
