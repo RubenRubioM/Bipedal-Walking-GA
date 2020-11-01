@@ -9,6 +9,7 @@
 #include <Entities/Entity.h>
 #include <DataTypes/Transformable.h>
 #include <GeneticAlgorithm/GeneticAlgorithm.h>
+#include <Utils/Config.h>
 
 #include <IMGUI/imgui.h>
 #include <GLM/gtc/type_ptr.hpp>
@@ -62,19 +63,28 @@ void StateExecution::InitFrame() {
 /// StateExecution update.
 /// </summary>
 void StateExecution::Update() {
+	auto time = duration_cast<milliseconds>(std::chrono::system_clock::now() - timeStart).count() - timeToStart.count();
+
 	imGuiManager->Begin("Entities transformables");
-
 	physicsEngine->UpdateCamera(camera.get());
-	for (const auto& skeleton : skeletons) {
-		physicsEngine->UpdateSkeleton(skeleton.get());
+	ImGuiDebug();
+
+	if (time >= std::chrono::milliseconds(0).count()) {
+		for (const auto& skeleton : skeletons) {
+			physicsEngine->UpdateSkeleton(skeleton.get());
+		}
+
+		for (const auto& mesh : terrain) {
+			physicsEngine->UpdateEntity(mesh.get());
+		}
 	}
 
-	for (const auto& mesh : terrain) {
-		physicsEngine->UpdateEntity(mesh.get());
-	}
-	imGuiManager->End();
+	geneticAlgorithm->Update(time);
 
-	geneticAlgorithm->Update();
+	if (time >= Config::generationLifeSpan.count()) {
+		timeStart = std::chrono::system_clock::now();
+		geneticAlgorithm->NewGeneration();
+	}
 }
 
 /// <summary>
@@ -122,4 +132,25 @@ void StateExecution::AddEntities() {
 		physicsEngine->SetEntityValues(mesh.get());
 	}
 
+}
+
+/// <summary>
+/// Refactor imGui debug.
+/// </summary>
+void StateExecution::ImGuiDebug() {
+	for (const auto& skeleton : skeletons) {
+		if (imGuiManager->Header(std::string("Skeleton " + std::to_string(skeleton->GetSkeletonId())))) {
+			for (auto joint : skeleton->GetSkeleton()) {
+				if (imGuiManager->Header(std::string("Skeleton " + std::to_string(skeleton->GetSkeletonId()) + ". " + joint->GetName()))) {
+					imGuiManager->EntityTransformable(joint, std::string(joint->GetName()));
+				}
+			}
+		}
+	}
+	for (const auto& mesh : terrain) {
+		if (imGuiManager->Header(std::string(std::to_string(mesh->GetId()) + ". " + mesh->GetName()))) {
+			imGuiManager->EntityTransformable(mesh.get(), std::string(mesh->GetName()));
+		}
+	}
+	imGuiManager->End();
 }

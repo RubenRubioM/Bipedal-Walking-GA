@@ -3,6 +3,7 @@
 #include <IMGUI/imgui.h>
 #include <IMGUI/imgui_impl_glfw.h>
 #include <IMGUI/imgui_impl_opengl3.h>
+#include <IMGUI/imgui_internal.h>
 #include <GLM/vec3.hpp>
 
 #include <string>
@@ -106,6 +107,28 @@ class ImGuiManager {
 		/// </summary>
 		/// <param name="text"> Text. </param>
 		void BulletText(const std::string text);
+
+		/// <summary>
+		/// Creates a tab bar.
+		/// </summary>
+		/// <param name="title"> Title. </param>
+		void BeginTabBar(const std::string title);
+
+		/// <summary>
+		/// Creates a tab.
+		/// </summary>
+		/// <param name="title"> Title. </param>
+		bool AddTab(const std::string title);
+
+		/// <summary>
+		/// Ends tab bar.
+		/// </summary>
+		void EndTabBar();
+
+		/// <summary>
+		/// Ends tab.
+		/// </summary>
+		void EndTab();
 
 	private:
 		/// <summary>

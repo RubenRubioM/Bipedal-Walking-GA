@@ -59,10 +59,6 @@ void PhysicsEngine::SetEntityValues(Entity* entity) {
 /// </summary>
 /// <param name="entity"> Entity. </param>
 void PhysicsEngine::UpdateEntity(Entity* entity) {
-	if (imGuiManager->Header(std::string(std::to_string(entity->GetId()) + ". " + entity->GetName()))) {
-		imGuiManager->EntityTransformable(entity, std::string(entity->GetName()));
-	}
-
 	SetEntityValues(entity);
 }
 
@@ -71,6 +67,7 @@ void PhysicsEngine::UpdateEntity(Entity* entity) {
 /// </summary>
 /// <param name="skeleton"> skeleton. </param>
 void PhysicsEngine::UpdateSkeleton(ESkeleton* skeleton) {
+
 	// If the skeleton is dead we do nothing.
 	if (skeleton->IsDead()) return;
 
@@ -181,12 +178,7 @@ void PhysicsEngine::ApplySkeletonMovement(ESkeleton* skeleton) const {
 		return false;
 	};
 
-	// IMGUI debug
-	for (auto joint : eSkeleton) {
-		if (imGuiManager->Header(std::string("Skeleton " + std::to_string(skeleton->GetSkeletonId()) +". " + joint->GetName()))) {
-			imGuiManager->EntityTransformable(joint, std::string(joint->GetName()));
-		}
-	}
+	
 
 	applyJointRotation(hip1);
 	applyJointRotation(knee1);

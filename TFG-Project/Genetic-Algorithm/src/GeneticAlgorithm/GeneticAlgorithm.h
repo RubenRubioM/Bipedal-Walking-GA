@@ -24,7 +24,13 @@ class GeneticAlgorithm {
 		/// <summary>
 		/// Updates all related to the genetic algorithm
 		/// </summary>
-		void Update();
+		/// <param time="time"> Life of the generation. </param>
+		void Update(long long time);
+
+		/// <summary>
+		/// Creates a new generation.
+		/// </summary>
+		void NewGeneration();
 
 		/// <summary>
 		/// Returns the population.
@@ -33,10 +39,22 @@ class GeneticAlgorithm {
 		std::vector<std::shared_ptr<ESkeleton>> GetPopulation();
 
 	private:
+
+		/// <summary>
+		/// Creates imgui stats for this gene.
+		/// </summary>
+		/// <param name="gene"> Gene. </param>
+		void GeneStats(ESkeleton* gene);
+
 		/// <summary>
 		/// Population.
 		/// </summary>
 		std::vector<std::shared_ptr<ESkeleton>> population;
+
+		/// <summary>
+		/// ImGuiManager pointer.
+		/// </summary>
+		ImGuiManager* imGuiManager{ nullptr };
 
 		/// <summary>
 		/// Actual generation.
@@ -44,8 +62,18 @@ class GeneticAlgorithm {
 		int actualGeneration = 1;
 
 		/// <summary>
-		/// ImGuiManager pointer.
+		/// Death percentage of the population.
 		/// </summary>
-		ImGuiManager* imGuiManager{ nullptr };
+		float deathPercentage = 0.0;
+
+		/// <summary>
+		/// Fitness percentage of the population.
+		/// </summary>
+		float fitnessPercentage = 0.0f;
+
+		/// <summary>
+		/// Gene with more fitness.
+		/// </summary>
+		float topFitness = 0.0f;
 };
 

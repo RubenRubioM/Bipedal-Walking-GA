@@ -4,6 +4,7 @@
 
 #include <memory>
 #include <vector>
+#include <chrono>
 
 class RenderEngine;
 class PhysicsEngine;
@@ -13,6 +14,8 @@ class ESkeleton;
 class EMesh;
 class Entity;
 class GeneticAlgorithm;
+
+using namespace std::chrono_literals;
 
 class StateExecution : public State {
 	public:
@@ -51,6 +54,11 @@ class StateExecution : public State {
 		/// Add all the entities to the render and physics engine.
 		/// </summary>
 		void AddEntities();
+
+		/// <summary>
+		/// Refactor imGui debug.
+		/// </summary>
+		void ImGuiDebug();
 
 		/// <summary>
 		/// RenderEngine pointer.
@@ -92,4 +100,13 @@ class StateExecution : public State {
 		/// </summary>
 		bool showBoundingBoxes = false;
 
+		/// <summary>
+		/// Time to start the execution.
+		/// </summary>
+		std::chrono::milliseconds timeToStart = 3 * 1000ms;
+
+		/// <summary>
+		/// Clock.
+		/// </summary>
+		std::chrono::system_clock::time_point timeStart = std::chrono::system_clock::now();
 };

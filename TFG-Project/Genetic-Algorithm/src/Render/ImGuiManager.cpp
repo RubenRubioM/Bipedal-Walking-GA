@@ -141,6 +141,36 @@ void ImGuiManager::BulletText(const std::string text) {
 }
 
 /// <summary>
+/// Creates a tab bar.
+/// </summary>
+/// <param name="title"> Title. </param>
+void ImGuiManager::BeginTabBar(const std::string title) {
+	ImGui::BeginTabBar(title.c_str());
+}
+
+/// <summary>
+/// Creates a tab.
+/// </summary>
+/// <param name="title"> Title. </param>
+bool ImGuiManager::AddTab(const std::string title) {
+	return ImGui::BeginTabItem(title.c_str());
+}
+
+/// <summary>
+/// Ends tab bar.
+/// </summary>
+void ImGuiManager::EndTabBar() {
+	ImGui::EndTabBar();
+}
+
+/// <summary>
+/// Ends tab.
+/// </summary>
+void ImGuiManager::EndTab() {
+	ImGui::EndTabItem();
+}
+
+/// <summary>
 /// Private constructor.
 /// </summary>
 ImGuiManager::ImGuiManager() {

@@ -2,6 +2,10 @@
 
 #include <GLM/vec3.hpp>
 
+#include <chrono>
+
+using namespace std::chrono_literals;
+
 /// <summary>
 /// Program configuration.
 /// </summary>
@@ -48,4 +52,9 @@ class Config {
 		/// RotationVelocity for joints boundaries.
 		/// </summary>
 		inline static std::pair<glm::vec3, glm::vec3> rotationVelocityBoundaries{ glm::vec3(30.0f,0.0f,0.0f),glm::vec3(80.0f,0.0f,0.0f) };
+
+		/// <summary>
+		/// Generation life span.
+		/// </summary>
+		inline static std::chrono::milliseconds generationLifeSpan = 10 * 1000ms;
 };
