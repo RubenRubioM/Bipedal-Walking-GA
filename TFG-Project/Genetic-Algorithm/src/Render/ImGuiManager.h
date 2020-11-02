@@ -4,6 +4,8 @@
 #include <IMGUI/imgui_impl_glfw.h>
 #include <IMGUI/imgui_impl_opengl3.h>
 #include <IMGUI/imgui_internal.h>
+//#include <IMGUI/implot.h>
+//#include <IMGUI/implot_internal.h>
 #include <GLM/vec3.hpp>
 
 #include <string>
@@ -129,6 +131,18 @@ class ImGuiManager {
 		/// Ends tab.
 		/// </summary>
 		void EndTab();
+
+		/// <summary>
+		/// Begin plot.
+		/// </summary>
+		/// <param name="title"> Title. </param>
+		/// <returns> If its open or not. </returns>
+		bool BeginPlot(const std::string title);
+
+		/// <summary>
+		/// End plot.
+		/// </summary>
+		void EndPlot();
 
 	private:
 		/// <summary>

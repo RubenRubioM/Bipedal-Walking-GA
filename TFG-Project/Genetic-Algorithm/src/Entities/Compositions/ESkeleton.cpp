@@ -105,6 +105,7 @@ void ESkeleton::SetFlexibility(const Flexibility flexibility) {
 /// <summary>
 /// Updates the fitness value.
 /// </summary>
-void ESkeleton::UpdateFitness() {
-	fitnessValue = glm::distance(core->GetPosition(), startingPoint);
+/// <return> New fitness </param>
+float ESkeleton::UpdateFitness() {
+	return fitnessValue = glm::distance(core->GetPosition(), startingPoint);
 }

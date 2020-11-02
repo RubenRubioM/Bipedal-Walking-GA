@@ -4,6 +4,7 @@
 #include <GLM/glm.hpp>
 #include <GLM/gtc/constants.hpp>
 
+#include <IMGUI/implot.h>
 
 /// <summary>
 /// Creates or returns a ImGuiManager instance.
@@ -20,6 +21,8 @@ ImGuiManager* ImGuiManager::GetInstance() {
 /// ImGuiManager destructor.
 /// </summary>
 ImGuiManager::~ImGuiManager() {
+	ImPlot::DestroyContext();
+	ImGui::DestroyContext();
 }
 
 /// <summary>
@@ -28,6 +31,7 @@ ImGuiManager::~ImGuiManager() {
 /// <param name="window"> CLE::CLEngine's glfw window. </param>
 void ImGuiManager::SetContext(GLFWwindow* window) {
 	ImGui::CreateContext();
+	ImPlot::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
@@ -168,6 +172,22 @@ void ImGuiManager::EndTabBar() {
 /// </summary>
 void ImGuiManager::EndTab() {
 	ImGui::EndTabItem();
+}
+
+/// <summary>
+/// Begin plot.
+/// </summary>
+/// <param name="title"> Title. </param>
+/// <returns> If its open or not. </returns>
+bool ImGuiManager::BeginPlot(const std::string title) {
+	return ImPlot::BeginPlot(title.c_str());
+}
+
+/// <summary>
+/// End plot.
+/// </summary>
+void ImGuiManager::EndPlot() {
+	ImPlot::EndPlot();
 }
 
 /// <summary>

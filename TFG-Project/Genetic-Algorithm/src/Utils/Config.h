@@ -19,7 +19,7 @@ class Config {
 		/// <summary>
 		/// Population size.
 		/// </summary>
-		inline static int populationSize{ 5 };
+		inline static int populationSize{ 10 };
 		
 		/// <summary>
 		/// Flexibility probability distribution.
@@ -36,7 +36,7 @@ class Config {
 		/// <summary>
 		/// Percentage of new genes in the new generation.
 		/// </summary>
-		inline static double newGenProbability{ 0.1 };
+		inline static double newGenProbability{ 0.2 };
 
 		/// <summary>
 		/// Probability to get a mutation.
@@ -47,6 +47,11 @@ class Config {
 		/// Selection function.
 		/// </summary>
 		inline static SelectionFunction selectionFunction{ SelectionFunction::ROULETTE };
+
+		/// <summary>
+		/// Roulette sections for probability.
+		/// </summary>
+		inline static int rouletteSections{ 5 };
 
 		/// <summary>
 		/// RotationVelocity for joints boundaries.

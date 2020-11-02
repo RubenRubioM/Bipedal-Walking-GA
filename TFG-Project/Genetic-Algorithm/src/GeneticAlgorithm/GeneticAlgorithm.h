@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <vector>
+#include <limits>
 
 class ESkeleton;
 class ImGuiManager;
@@ -39,12 +40,37 @@ class GeneticAlgorithm {
 		std::vector<std::shared_ptr<ESkeleton>> GetPopulation();
 
 	private:
+		/// <summary>
+		/// Auxiliar struct to storage multiple data about the generation.
+		/// </summary>
+		struct GenerationStats {
+			int generation = 0;
+			float deathPercentage = 0.0;
+			float averageFitness = 0.0;
+			float topFitness = 0.0;
+			float minFitness = std::numeric_limits<float>::max();
+		};
 
 		/// <summary>
-		/// Creates imgui stats for this gene.
+		/// Selection function.
 		/// </summary>
-		/// <param name="gene"> Gene. </param>
-		void GeneStats(ESkeleton* gene);
+		/// <returns> Vector with the genes to change with crossover. </returns>
+		std::vector<ESkeleton*> Selection();
+
+		/// <summary>
+		/// Saves the generation stats.
+		/// </summary>
+		void SaveGenerationStats();
+
+		/// <summary>
+		/// Resets all the generation values.
+		/// </summary>
+		void ResetStats();
+
+		/// <summary>
+		/// Sets default values for position and live.
+		/// </summary>
+		void SetDefaultPopulationValues();
 
 		/// <summary>
 		/// Population.
@@ -69,11 +95,21 @@ class GeneticAlgorithm {
 		/// <summary>
 		/// Fitness percentage of the population.
 		/// </summary>
-		float fitnessPercentage = 0.0f;
+		float averageFitness = 0.0f;
 
 		/// <summary>
 		/// Gene with more fitness.
 		/// </summary>
 		float topFitness = 0.0f;
-};
 
+		/// <summary>
+		/// Gene with less fitness.
+		/// </summary>
+		float minFitness = std::numeric_limits<float>::max();
+
+		/// <summary>
+		/// Generations stats.
+		/// </summary>
+		std::vector<GenerationStats> generationsStats;
+
+};

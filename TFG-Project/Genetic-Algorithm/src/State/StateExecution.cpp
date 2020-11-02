@@ -12,6 +12,7 @@
 #include <Utils/Config.h>
 
 #include <IMGUI/imgui.h>
+#include <IMGUI/implot.h>
 #include <GLM/gtc/type_ptr.hpp>
 
 /// <summary>

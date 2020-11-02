@@ -45,7 +45,7 @@ void OBBCollider::TranslateOBB(const glm::vec3 translation) {
 /// <param name="obb"> OBBCollider to check</param>
 /// <returns> True if colliding, false if not. </returns>
 bool OBBCollider::IsColliding(const OBBCollider* obb)  const {
-https://stackoverflow.com/questions/47866571/simple-oriented-bounding-box-obb-collision-detection-explaining
+	// <href="https://stackoverflow.com/questions/47866571/simple-oriented-bounding-box-obb-collision-detection-explaining">
 	static glm::vec3 rpos;
 	rpos = obb->GetCenter() - this->center;
 

@@ -155,6 +155,12 @@ class ESkeleton{
 		void SetFitness(const float newFitness) { fitnessValue = newFitness; }
 
 		/// <summary>
+		/// Sets the starting point.
+		/// </summary>
+		/// <param name="startingPoint"> Starting point. </param>
+		void SetStartingPoint(const glm::vec3 startingPoint) { this->startingPoint = startingPoint; }
+
+		/// <summary>
 		/// Returns if the skeleton is dead.
 		/// </summary>
 		/// <returns> IsDead. </returns>
@@ -163,7 +169,18 @@ class ESkeleton{
 		/// <summary>
 		/// Updates the fitness value.
 		/// </summary>
-		void UpdateFitness();
+		/// <return> New fitness </param>
+		float UpdateFitness();
+
+		/// <summary>
+		/// Hip default rotation.
+		/// </summary>
+		inline static glm::vec3 hipDefaultRotation{ 0.0f, 0.0f, -180.0f };
+
+		/// <summary>
+		/// Knee default rotation.
+		/// </summary>
+		inline static glm::vec3 kneeDefaultRotation{ 0.0f };
 
 	private:
 		/// <summary>

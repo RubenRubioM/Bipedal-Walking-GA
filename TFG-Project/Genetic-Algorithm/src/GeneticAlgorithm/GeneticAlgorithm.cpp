@@ -1,12 +1,15 @@
 #include "GeneticAlgorithm.h"
 
 #include <Utils/Config.h>
+#include <Utils/Utils.h>
 #include <Entities/Compositions/ESkeleton.h>
 #include <Entities/EMesh.h>
 #include <Render/ImGuiManager.h>
 
 #include <GLM/glm.hpp>
 #include <RANDOM/random.hpp>
+#include <IMGUI/implot.h>
+#include <NUMCPP/NumCpp.hpp>
 
 #include <iostream>
 #include <algorithm>
@@ -19,8 +22,8 @@ using Random = effolkronium::random_static;
 GeneticAlgorithm::GeneticAlgorithm() {
 	imGuiManager = ImGuiManager::GetInstance();
 
-	float xOffset = -30;
-	float xOffsetIncrease = 20;
+	glm::vec3 offset = Utils::defaultPosition;
+	glm::vec3 offsetIncrese = Utils::positionOffset;
 	auto setLegBoundaries = [](std::vector<EMesh*> leg) {
 		auto hip = leg[0];
 		auto knee = leg[1];
@@ -47,15 +50,15 @@ GeneticAlgorithm::GeneticAlgorithm() {
 	for (uint16_t i = 0; i < Config::populationSize; ++i) {
 
 		// Entities creation.
-		auto core = new EMesh(Transformable(glm::vec3(xOffset, 50.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0), glm::vec3(7.0f)), "media/Body.obj");
+		auto core = new EMesh(Transformable(offset, glm::vec3(0.0f, 0.0f, 0), glm::vec3(7.0f)), "media/Body.obj");
 		core->SetName("Core");
-		auto hip1 = new EMesh(Transformable(glm::vec3(-0.5f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -180.0f), glm::vec3(0.25f)), "media/lathi.obj", core);
+		auto hip1 = new EMesh(Transformable(glm::vec3(-0.5f, 0.0f, 0.0f), ESkeleton::hipDefaultRotation, glm::vec3(0.25f)), "media/lathi.obj", core);
 		hip1->SetName("Hip1");
-		auto knee1 = new EMesh(Transformable(glm::vec3(0.0f, 9.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)), "media/lathi.obj", hip1);
+		auto knee1 = new EMesh(Transformable(glm::vec3(0.0f, 9.0f, 0.0f), ESkeleton::kneeDefaultRotation, glm::vec3(1.0f)), "media/lathi.obj", hip1);
 		knee1->SetName("Knee1");
-		auto hip2 = new EMesh(Transformable(glm::vec3(0.5f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -180.0f), glm::vec3(0.25f)), "media/lathi.obj", core);
+		auto hip2 = new EMesh(Transformable(glm::vec3(0.5f, 0.0f, 0.0f), ESkeleton::hipDefaultRotation, glm::vec3(0.25f)), "media/lathi.obj", core);
 		hip2->SetName("Hip2");
-		auto knee2 = new EMesh(Transformable(glm::vec3(0.0f, 9.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)), "media/lathi.obj", hip2);
+		auto knee2 = new EMesh(Transformable(glm::vec3(0.0f, 9.0f, 0.0f), ESkeleton::kneeDefaultRotation, glm::vec3(1.0f)), "media/lathi.obj", hip2);
 		knee2->SetName("Knee2");
 		auto shoulder1 = new EMesh(Transformable(glm::vec3(-0.5f, 1.5f, 0.0f), glm::vec3(0.0f, 0.0f, 90.0f), glm::vec3(0.25f)), "media/lathi.obj", core);
 		shoulder1->SetName("Shoulder1");
@@ -86,7 +89,7 @@ GeneticAlgorithm::GeneticAlgorithm() {
 		setLegBoundaries(population[i]->GetLeg1());
 		setLegBoundaries(population[i]->GetLeg2());
 
-		xOffset += xOffsetIncrease;
+		offset.x += offsetIncrese.x;
 	}
 }
 
@@ -102,6 +105,16 @@ GeneticAlgorithm::~GeneticAlgorithm() {
 /// </summary>
 /// <param time="time"> Life of the generation. </param>
 void GeneticAlgorithm::Update(long long time) {
+	int deads = 0;
+	int totalFitness = 0;
+	float minGeneFitness = std::numeric_limits<float>::max();
+	float topGeneFitness = 0.0f;
+
+	// Sort the population based on the gene fitness.
+	std::sort(population.begin(), population.end(), [](std::shared_ptr<ESkeleton> skeleton1, std::shared_ptr<ESkeleton> skeleton2) {
+		return skeleton1->GetFitness() > skeleton2->GetFitness();
+	});
+
 	imGuiManager->Begin("Genetic algorithm debug");
 	imGuiManager->BeginTabBar("Genetic algorithm");
 
@@ -109,30 +122,31 @@ void GeneticAlgorithm::Update(long long time) {
 		imGuiManager->BulletText(std::string("Generation " + std::to_string(actualGeneration)));
 		imGuiManager->BulletText(std::string("Life time: " + std::to_string(time/1000.0) + "s"));
 		imGuiManager->BulletText(std::string("Deaths percentage: " + std::to_string(deathPercentage) + "%%"));
-		imGuiManager->BulletText(std::string("Average fitness: " + std::to_string(fitnessPercentage)));
+		imGuiManager->BulletText(std::string("Average fitness: " + std::to_string(averageFitness)));
 		imGuiManager->BulletText(std::string("Top fitness: " + std::to_string(topFitness)));
+		imGuiManager->BulletText(std::string("Min fitness: " + std::to_string(	(minFitness != std::numeric_limits<float>::max()) ? minFitness : 0.0  )));
 
 		imGuiManager->EndTab();
 	}
-	int deads = 0;
-	int totalFitness = 0;
-
-	// Sort the population based on the gene fitness.
-	std::sort(population.begin(), population.end(), [](std::shared_ptr<ESkeleton> skeleton1, std::shared_ptr<ESkeleton> skeleton2) {
-		return skeleton1->GetFitness() > skeleton2->GetFitness();
-	});
 
 	// Important genetic algorithm flow
-	for (auto gene : population) {
-		gene->UpdateFitness();
+	if (time > 0) {
+		for (auto gene : population) {
+			totalFitness += gene->UpdateFitness();
 
-		totalFitness += gene->GetFitness();
-		if (gene->IsDead()) {
-			deads++;
+			if (gene->IsDead()) {
+				deads++;
+			}
+		
+			topGeneFitness = (gene->GetFitness() >= topGeneFitness) ? gene->GetFitness() : topGeneFitness;
+			minGeneFitness = (gene->GetFitness() < minGeneFitness) ? gene->GetFitness() : minGeneFitness;
 		}
-
-		topFitness = (gene->GetFitness() >= topFitness) ? gene->GetFitness() : topFitness;
 	}
+
+	deathPercentage = (deads / (float)Config::populationSize) * 100.0;
+	averageFitness = (totalFitness / Config::populationSize);
+	minFitness = minGeneFitness;
+	topFitness = topGeneFitness;
 
 	// ImGui debug
 	if (imGuiManager->AddTab("Population")) {
@@ -146,7 +160,6 @@ void GeneticAlgorithm::Update(long long time) {
 			std::string dead = "";
 			if (gene->IsDead()) {
 				dead = "(dead)";
-				deads++;
 			}
 
 			if (imGuiManager->Header(std::string("Skeleton " + std::to_string(gene->GetSkeletonId()) + dead))) {
@@ -165,9 +178,6 @@ void GeneticAlgorithm::Update(long long time) {
 		imGuiManager->EndTab();
 	}
 
-	deathPercentage = (deads / (float)Config::populationSize) * 100.0;
-	fitnessPercentage = (totalFitness / Config::populationSize);
-
 	imGuiManager->EndTabBar();
 	imGuiManager->End();
 }
@@ -176,8 +186,116 @@ void GeneticAlgorithm::Update(long long time) {
 /// Creates a new generation.
 /// </summary>
 void GeneticAlgorithm::NewGeneration() {
-	// Reset all values and save the generation data.
+	SaveGenerationStats();
+
+	// Genetic algorithm flow: Selection -> Crossover -> Mutation
+	auto populationToChange = Selection();
+
+	SetDefaultPopulationValues();
+	ResetStats();
 	actualGeneration++;
+	std::cout << "Generation " << actualGeneration << " begins\n";
+}
+
+/// <summary>
+/// Selection function.
+/// </summary>
+/// <returns> Vector with the genes to change with crossover. </returns>
+std::vector<ESkeleton*> GeneticAlgorithm::Selection() {
+	int newGenes = std::ceil(Config::populationSize * Config::newGenProbability); // Number of genes who will be new (from crossover)
+	int genesToNewGeneration = 0;
+	auto populationAux = population;
+
+	switch (Config::selectionFunction){
+		case Config::SelectionFunction::ROULETTE: {
+			int rouletteSections = Config::rouletteSections;
+			nc::NdArray<float> fitnessSections = nc::linspace<float>(minFitness, topFitness, rouletteSections);
+			nc::NdArray<float> rouletteProbabilities = Utils::RouletteProbabilities(rouletteSections); // Generate the roulette probabilities array.
+
+			// We have newGenes which are the number of genes that have to be crossovered
+			// So, Config::populationSize - newGenes is the number of genes that survived throw the next generation.
+			while (genesToNewGeneration != Config::populationSize - newGenes) {
+				float probabilityValue = Random::get<float>(0, 1);
+				int sectionIndx = rouletteProbabilities.shape().cols - 2;
+
+				for (int i = 0; i < rouletteProbabilities.shape().cols - 1; i++) {
+					if (rouletteProbabilities[0, i] <= probabilityValue && probabilityValue <= rouletteProbabilities[0, i + 1]) {
+						sectionIndx = i;
+						break;
+					}
+				}
+
+				for (int j = 0; j < populationAux.size(); j++) {
+					if (fitnessSections[0, sectionIndx] <= populationAux[j]->GetFitness() && populationAux[j]->GetFitness() <= fitnessSections[0, sectionIndx + 1]) {
+						populationAux.erase(populationAux.begin() + j);
+						genesToNewGeneration++;
+						break;
+					}
+				}
+
+			}
+			break;
+		}
+
+		case Config::SelectionFunction::TOURNAMENT: {
+			break;
+		}
+
+		case Config::SelectionFunction::LINEAR: {
+			break;
+		}
+	}
+
+	std::vector<ESkeleton*> populationToChange;
+	for (auto gene : populationAux) {
+		populationToChange.push_back(gene.get());
+	}
+	return populationToChange;
+}
+
+/// <summary>
+/// Saves the generation stats.
+/// </summary>
+void GeneticAlgorithm::SaveGenerationStats() {
+	GenerationStats generationStats;
+	generationStats.generation = actualGeneration;
+	generationStats.deathPercentage = deathPercentage;
+	generationStats.averageFitness = averageFitness;
+	generationStats.topFitness = topFitness;
+	generationStats.minFitness = minFitness;
+
+	generationsStats.push_back(generationStats);
+}
+
+/// <summary>
+/// Resets all the generation values.
+/// </summary>
+void GeneticAlgorithm::ResetStats() {
+	deathPercentage = 0.0;
+	averageFitness = 0.0;
+	topFitness = 0.0;
+	minFitness = std::numeric_limits<float>::max();
+}
+
+/// <summary>
+/// Sets default values for position and live.
+/// </summary>
+void GeneticAlgorithm::SetDefaultPopulationValues() {
+	glm::vec3 offset = Utils::defaultPosition;
+	glm::vec3 offsetIncrese = Utils::positionOffset;
+
+	for (auto gene : population) {
+		gene->SetIsDead(false);
+		gene->GetCore()->SetPosition(offset);
+		gene->GetLeg1()[0]->SetRotation(ESkeleton::hipDefaultRotation);
+		gene->GetLeg2()[0]->SetRotation(ESkeleton::hipDefaultRotation);
+		gene->GetLeg1()[1]->SetRotation(ESkeleton::kneeDefaultRotation);
+		gene->GetLeg2()[1]->SetRotation(ESkeleton::kneeDefaultRotation);
+
+		gene->SetStartingPoint(gene->GetCore()->GetPosition());
+		gene->UpdateFitness();
+		offset.x += offsetIncrese.x;
+	}
 }
 
 /// <summary>
@@ -186,12 +304,4 @@ void GeneticAlgorithm::NewGeneration() {
 /// <returns> Population. </returns>
 std::vector<std::shared_ptr<ESkeleton>> GeneticAlgorithm::GetPopulation() {
 	return population;
-}
-
-/// <summary>
-/// Creates imgui stats for this gene.
-/// </summary>
-/// <param name="gene"> Gene. </param>
-void GeneticAlgorithm::GeneStats(ESkeleton* gene) {
-
 }

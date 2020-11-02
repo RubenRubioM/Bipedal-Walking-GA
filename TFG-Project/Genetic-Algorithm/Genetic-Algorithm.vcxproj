@@ -30,6 +30,9 @@
     <ClCompile Include="src\GeneticAlgorithm\GeneticAlgorithm.cpp" />
     <ClCompile Include="src\DataTypes\OBBCollider.cpp" />
     <ClCompile Include="src\Entities\Compositions\ESkeleton.cpp" />
+    <ClCompile Include="src\IMGUI\implot.cpp" />
+    <ClCompile Include="src\IMGUI\implot_demo.cpp" />
+    <ClCompile Include="src\IMGUI\implot_items.cpp" />
     <ClCompile Include="src\Physics\PhysicsEngine.cpp" />
     <ClCompile Include="src\Render\ImGuiManager.cpp" />
     <ClCompile Include="src\DataTypes\Transformable.cpp" />
@@ -52,6 +55,8 @@
     <ClInclude Include="src\DataTypes\OBBCollider.h" />
     <ClInclude Include="src\Entities\Compositions\ESkeleton.h" />
     <ClInclude Include="src\GeneticAlgorithm\GeneticAlgorithm.h" />
+    <ClInclude Include="src\IMGUI\implot.h" />
+    <ClInclude Include="src\IMGUI\implot_internal.h" />
     <ClInclude Include="src\Physics\PhysicsEngine.h" />
     <ClInclude Include="src\Render\ImGuiManager.h" />
     <ClInclude Include="src\DataTypes\Transformable.h" />
