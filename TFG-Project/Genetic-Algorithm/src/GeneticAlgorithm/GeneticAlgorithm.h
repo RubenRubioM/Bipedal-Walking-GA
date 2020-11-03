@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <vector>
+#include <utility>
 #include <limits>
 
 class ESkeleton;
@@ -53,9 +54,17 @@ class GeneticAlgorithm {
 
 		/// <summary>
 		/// Selection function.
+		/// pair.first  = vector with genes to be crossovered.
+		/// pair.second = vector with genes that passed to the next generation.
 		/// </summary>
-		/// <returns> Vector with the genes to change with crossover. </returns>
-		std::vector<ESkeleton*> Selection();
+		/// <returns> Pair with genes to change and genes that passed to the next generation. </returns>
+		std::pair<std::vector<ESkeleton*>, std::vector<ESkeleton*>> Selection();
+
+		/// <summary>
+		/// Crossover function.
+		/// </summary>
+		/// <param name="pairPopulation"> pair.first = genes to be crossovered | pair.second = genes to crossover</param>
+		void Crossover(std::pair<std::vector<ESkeleton*>, std::vector<ESkeleton*>> pairPopulation);
 
 		/// <summary>
 		/// Saves the generation stats.

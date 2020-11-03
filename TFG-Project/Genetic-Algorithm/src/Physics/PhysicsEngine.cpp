@@ -228,7 +228,8 @@ bool PhysicsEngine::FixPosition(ESkeleton* skeleton) const {
 	float skeletonMinY = (skeletonMinYLeg1 <= skeletonMinYLeg2) ? skeletonMinYLeg1 : skeletonMinYLeg2;
 	if (skeletonMinY <= terrainMaxY) {
 		// Fix position to set the skeleton above the terrain
-		float positionToPlace = ((core->GetCollider()->GetCenter().y - skeletonMinY) + terrainMaxY) - 10;
+		//TODO: Be carefull with this "17". It is because i have to place the model below the terrain but not to much. 
+		float positionToPlace = ((core->GetCollider()->GetCenter().y - skeletonMinY) + terrainMaxY) - 17;
 		core->SetPosition(glm::vec3(core->GetPosition().x, positionToPlace, core->GetPosition().z));
 		skeleton->SetOnAir(false);
 

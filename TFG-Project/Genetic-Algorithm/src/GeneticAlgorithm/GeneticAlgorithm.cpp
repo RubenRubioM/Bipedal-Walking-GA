@@ -50,23 +50,23 @@ GeneticAlgorithm::GeneticAlgorithm() {
 	for (uint16_t i = 0; i < Config::populationSize; ++i) {
 
 		// Entities creation.
-		auto core = new EMesh(Transformable(offset, glm::vec3(0.0f, 0.0f, 0), glm::vec3(7.0f)), "media/Body.obj");
+		auto core = new EMesh(Transformable(offset, glm::vec3(0.0f, 0.0f, 0), glm::vec3(0.1f)), "media/torso.obj");
 		core->SetName("Core");
-		auto hip1 = new EMesh(Transformable(glm::vec3(-0.5f, 0.0f, 0.0f), ESkeleton::hipDefaultRotation, glm::vec3(0.25f)), "media/lathi.obj", core);
+		auto hip1 = new EMesh(Transformable(glm::vec3(-28.0f, 0.0f, 0.0f), ESkeleton::hipDefaultRotation, glm::vec3(0.75f)), "media/cinturaD.obj", core);
 		hip1->SetName("Hip1");
-		auto knee1 = new EMesh(Transformable(glm::vec3(0.0f, 9.0f, 0.0f), ESkeleton::kneeDefaultRotation, glm::vec3(1.0f)), "media/lathi.obj", hip1);
+		auto knee1 = new EMesh(Transformable(glm::vec3(23.0f, 200.0f, 0.0f), ESkeleton::kneeDefaultRotation, glm::vec3(1.0f)), "media/rodilla.obj", hip1);
 		knee1->SetName("Knee1");
-		auto hip2 = new EMesh(Transformable(glm::vec3(0.5f, 0.0f, 0.0f), ESkeleton::hipDefaultRotation, glm::vec3(0.25f)), "media/lathi.obj", core);
+		auto hip2 = new EMesh(Transformable(glm::vec3(24.0f, 0.0f, 0.0f), ESkeleton::hipDefaultRotation, glm::vec3(0.75f)), "media/cinturaI.obj", core);
 		hip2->SetName("Hip2");
-		auto knee2 = new EMesh(Transformable(glm::vec3(0.0f, 9.0f, 0.0f), ESkeleton::kneeDefaultRotation, glm::vec3(1.0f)), "media/lathi.obj", hip2);
+		auto knee2 = new EMesh(Transformable(glm::vec3(-18.0f, 200.0f, 0.0f), ESkeleton::kneeDefaultRotation, glm::vec3(1.0f)), "media/rodilla.obj", hip2);
 		knee2->SetName("Knee2");
-		auto shoulder1 = new EMesh(Transformable(glm::vec3(-0.5f, 1.5f, 0.0f), glm::vec3(0.0f, 0.0f, 90.0f), glm::vec3(0.25f)), "media/lathi.obj", core);
+		auto shoulder1 = new EMesh(Transformable(glm::vec3(-50.0f, 150.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)), "media/brazo arriba.obj", core);
 		shoulder1->SetName("Shoulder1");
-		auto elbow1 = new EMesh(Transformable(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -180.0f), glm::vec3(0.25f)), "media/lathi.obj", shoulder1);
+		auto elbow1 = new EMesh(Transformable(glm::vec3(-80.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)), "media/brazo abajo.obj", shoulder1);
 		elbow1->SetName("Elbow1");
-		auto shoulder2 = new EMesh(Transformable(glm::vec3(0.5f, 1.5f, 0.0f), glm::vec3(0.0f, 0.0f, -90.0f), glm::vec3(0.25f)), "media/lathi.obj", core);
+		auto shoulder2 = new EMesh(Transformable(glm::vec3(40.0f, 150.0f, 0.0f), glm::vec3(0.0f, 180.0f, 0.0f), glm::vec3(1.0f)), "media/brazo arriba.obj", core);
 		shoulder2->SetName("Shoulder2");
-		auto elbow2 = new EMesh(Transformable(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, -180.0f), glm::vec3(0.25f)), "media/lathi.obj", shoulder2);
+		auto elbow2 = new EMesh(Transformable(glm::vec3(-80.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)), "media/brazo abajo.obj", shoulder2);
 		elbow2->SetName("Elbow2");
 
 		population.push_back(std::make_unique<ESkeleton>(core, hip1, knee1, hip2, knee2, shoulder1, elbow1, shoulder2, elbow2));
@@ -189,27 +189,31 @@ void GeneticAlgorithm::NewGeneration() {
 	SaveGenerationStats();
 
 	// Genetic algorithm flow: Selection -> Crossover -> Mutation
-	auto populationToChange = Selection();
+	auto pairPopulation = Selection();
+	Crossover(pairPopulation);
 
 	SetDefaultPopulationValues();
 	ResetStats();
 	actualGeneration++;
-	std::cout << "Generation " << actualGeneration << " begins\n";
+	std::cout << "---- Generation " << actualGeneration << " begins ----\n";
 }
 
 /// <summary>
 /// Selection function.
+/// pair.first  = vector with genes to be crossovered.
+/// pair.second = vector with genes that passed to the next generation.
 /// </summary>
-/// <returns> Vector with the genes to change with crossover. </returns>
-std::vector<ESkeleton*> GeneticAlgorithm::Selection() {
+/// <returns> Pair with genes to change and genes that passed to the next generation. </returns>
+std::pair<std::vector<ESkeleton*>, std::vector<ESkeleton*>> GeneticAlgorithm::Selection() {
 	int newGenes = std::ceil(Config::populationSize * Config::newGenProbability); // Number of genes who will be new (from crossover)
 	int genesToNewGeneration = 0;
 	auto populationAux = population;
+	std::vector<ESkeleton*> newPopulation;
 
 	switch (Config::selectionFunction){
 		case Config::SelectionFunction::ROULETTE: {
 			int rouletteSections = Config::rouletteSections;
-			nc::NdArray<float> fitnessSections = nc::linspace<float>(minFitness, topFitness, rouletteSections);
+			nc::NdArray<float> fitnessSections = nc::linspace<float>(minFitness, topFitness+0.001, rouletteSections);
 			nc::NdArray<float> rouletteProbabilities = Utils::RouletteProbabilities(rouletteSections); // Generate the roulette probabilities array.
 
 			// We have newGenes which are the number of genes that have to be crossovered
@@ -227,6 +231,7 @@ std::vector<ESkeleton*> GeneticAlgorithm::Selection() {
 
 				for (int j = 0; j < populationAux.size(); j++) {
 					if (fitnessSections[0, sectionIndx] <= populationAux[j]->GetFitness() && populationAux[j]->GetFitness() <= fitnessSections[0, sectionIndx + 1]) {
+						newPopulation.push_back(populationAux[j].get());
 						populationAux.erase(populationAux.begin() + j);
 						genesToNewGeneration++;
 						break;
@@ -250,7 +255,32 @@ std::vector<ESkeleton*> GeneticAlgorithm::Selection() {
 	for (auto gene : populationAux) {
 		populationToChange.push_back(gene.get());
 	}
-	return populationToChange;
+	return std::pair(populationToChange,newPopulation);
+}
+
+/// <summary>
+/// Crossover function.
+/// </summary>
+/// <param name="pairPopulation"> pair.first = genes to be crossovered | pair.second = genes to crossover</param>
+void GeneticAlgorithm::Crossover(std::pair<std::vector<ESkeleton*>, std::vector<ESkeleton*>> pairPopulation) {
+	auto genesToUpdate = pairPopulation.first;
+	auto newPopulation = pairPopulation.second;
+
+	for (auto gene : genesToUpdate) {
+		switch (Config::crossoverType) {
+			case Config::CrossoverType::AVERAGE: {
+
+				break;
+			}
+			case Config::CrossoverType::ARITHMETIC: {
+
+				break;
+			}
+			case Config::CrossoverType::HEURISTIC: {
+				break;
+			}
+		}
+	}
 }
 
 /// <summary>

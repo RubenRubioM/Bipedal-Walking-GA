@@ -17,6 +17,11 @@ class Config {
 		enum SelectionFunction {ROULETTE, TOURNAMENT, LINEAR};
 
 		/// <summary>
+		/// Enumeration of the crossover types.
+		/// </summary>
+		enum CrossoverType {HEURISTIC, ARITHMETIC, AVERAGE};
+
+		/// <summary>
 		/// Population size.
 		/// </summary>
 		inline static int populationSize{ 10 };
@@ -49,6 +54,10 @@ class Config {
 		inline static SelectionFunction selectionFunction{ SelectionFunction::ROULETTE };
 
 		/// <summary>
+		/// Crossover type.
+		/// </summary>
+		inline static CrossoverType crossoverType{ CrossoverType::AVERAGE };
+		/// <summary>
 		/// Roulette sections for probability.
 		/// </summary>
 		inline static int rouletteSections{ 5 };
@@ -61,5 +70,5 @@ class Config {
 		/// <summary>
 		/// Generation life span.
 		/// </summary>
-		inline static std::chrono::milliseconds generationLifeSpan = 10 * 1000ms;
+		inline static std::chrono::milliseconds generationLifeSpan = 30 * 1000ms;
 };
