@@ -19,7 +19,7 @@ class Config {
 		/// <summary>
 		/// Enumeration of the crossover types.
 		/// </summary>
-		enum CrossoverType {HEURISTIC, ARITHMETIC, AVERAGE};
+		enum CrossoverType {HEURISTIC, ARITHMETIC, AVERAGE, ONEPOINT};
 
 		/// <summary>
 		/// Population size.
@@ -56,7 +56,8 @@ class Config {
 		/// <summary>
 		/// Crossover type.
 		/// </summary>
-		inline static CrossoverType crossoverType{ CrossoverType::AVERAGE };
+		inline static CrossoverType crossoverType{ CrossoverType::ONEPOINT };
+
 		/// <summary>
 		/// Roulette sections for probability.
 		/// </summary>
@@ -70,5 +71,5 @@ class Config {
 		/// <summary>
 		/// Generation life span.
 		/// </summary>
-		inline static std::chrono::milliseconds generationLifeSpan = 30 * 1000ms;
+		inline static std::chrono::milliseconds generationLifeSpan = 40 * 1000ms;
 };

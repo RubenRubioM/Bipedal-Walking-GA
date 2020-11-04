@@ -36,6 +36,22 @@ class ESkeleton{
 		~ESkeleton();
 
 		/// <summary>
+		/// Comparison operator overload
+		/// </summary>
+		/// <param name="c1"> ESkeleton 1</param>
+		/// <param name="c2"> ESkeleton 2</param>
+		/// <returns> if they are equals</returns>
+		friend bool operator==(ESkeleton& c1, ESkeleton& c2);
+
+		/// <summary>
+		/// Comparison operator overload
+		/// </summary>
+		/// <param name="c1"> ESkeleton 1</param>
+		/// <param name="c2"> ESkeleton 2</param>
+		/// <returns> if they are not equals</returns>
+		friend bool operator!=(ESkeleton& c1, ESkeleton& c2);
+
+		/// <summary>
 		/// Returns skeleton identifier.
 		/// </summary>
 		/// <returns> Skeleton Id. </returns>

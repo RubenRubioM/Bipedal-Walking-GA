@@ -45,11 +45,39 @@ class GeneticAlgorithm {
 		/// Auxiliar struct to storage multiple data about the generation.
 		/// </summary>
 		struct GenerationStats {
-			int generation = 0;
-			float deathPercentage = 0.0;
-			float averageFitness = 0.0;
-			float topFitness = 0.0;
-			float minFitness = std::numeric_limits<float>::max();
+			public:
+				GenerationStats() = default;
+				~GenerationStats() = default;
+
+				int generation = 0;
+				float deathPercentage = 0.0;
+				float averageFitness = 0.0;
+				float topFitness = 0.0;
+				float minFitness = std::numeric_limits<float>::max();
+				float averageHip1Velocity = 0.0;
+				float averageKnee1Velocity = 0.0;
+				float averageHip2Velocity = 0.0;
+				float averageKnee2Velocity = 0.0;
+				float topHip1Velocity = std::numeric_limits<float>::lowest();
+				float topKnee1Velocity = std::numeric_limits<float>::lowest();
+				float topHip2Velocity = std::numeric_limits<float>::lowest();
+				float topKnee2Velocity = std::numeric_limits<float>::lowest();
+				float minHip1Velocity = std::numeric_limits<float>::max();
+				float minKnee1Velocity = std::numeric_limits<float>::max();
+				float minHip2Velocity = std::numeric_limits<float>::max();
+				float minKnee2Velocity = std::numeric_limits<float>::max();
+				std::pair<float, float> averageHip1RotationBoundaries;
+				std::pair<float, float> averageKnee1RotationBoundaries;
+				std::pair<float, float> averageHip2RotationBoundaries;
+				std::pair<float, float> averageKnee2RotationBoundaries;
+				float topHip1Rotation = std::numeric_limits<float>::lowest();
+				float topKnee1Rotation = std::numeric_limits<float>::lowest();
+				float topHip2Rotation = std::numeric_limits<float>::lowest();
+				float topKnee2Rotation = std::numeric_limits<float>::lowest();
+				float minHip1Rotation = std::numeric_limits<float>::max();
+				float minKnee1Rotation = std::numeric_limits<float>::max();
+				float minHip2Rotation = std::numeric_limits<float>::max();
+				float minKnee2Rotation = std::numeric_limits<float>::max();
 		};
 
 		/// <summary>
@@ -65,6 +93,11 @@ class GeneticAlgorithm {
 		/// </summary>
 		/// <param name="pairPopulation"> pair.first = genes to be crossovered | pair.second = genes to crossover</param>
 		void Crossover(std::pair<std::vector<ESkeleton*>, std::vector<ESkeleton*>> pairPopulation);
+
+		/// <summary>
+		/// Mutate the population.
+		/// </summary>
+		void Mutation();
 
 		/// <summary>
 		/// Saves the generation stats.

@@ -52,6 +52,26 @@ ESkeleton::~ESkeleton(){
 }
 
 /// <summary>
+/// Comparison operator overload
+/// </summary>
+/// <param name="c1"> ESkeleton 1</param>
+/// <param name="c2"> ESkeleton 2</param>
+/// <returns> if they are equals</returns>
+bool operator==(ESkeleton& c1, ESkeleton& c2) {
+	return (c1.GetSkeletonId() == c2.GetSkeletonId());
+}
+
+/// <summary>
+/// Comparison operator overload
+/// </summary>
+/// <param name="c1"> ESkeleton 1</param>
+/// <param name="c2"> ESkeleton 2</param>
+/// <returns> if they are not equals</returns>
+bool operator!=(ESkeleton& c1, ESkeleton& c2) {
+	return !(c1 == c2);
+}
+
+/// <summary>
 /// Returns all the skeleton parts.
 /// [0] = core
 /// [1] [2] = leg1

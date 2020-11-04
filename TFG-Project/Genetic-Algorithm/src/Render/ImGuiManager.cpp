@@ -32,6 +32,7 @@ ImGuiManager::~ImGuiManager() {
 void ImGuiManager::SetContext(GLFWwindow* window) {
 	ImGui::CreateContext();
 	ImPlot::CreateContext();
+	ImPlot::GetStyle().AntiAliasedLines = true;
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
@@ -175,19 +176,10 @@ void ImGuiManager::EndTab() {
 }
 
 /// <summary>
-/// Begin plot.
+/// Adds a separator.
 /// </summary>
-/// <param name="title"> Title. </param>
-/// <returns> If its open or not. </returns>
-bool ImGuiManager::BeginPlot(const std::string title) {
-	return ImPlot::BeginPlot(title.c_str());
-}
-
-/// <summary>
-/// End plot.
-/// </summary>
-void ImGuiManager::EndPlot() {
-	ImPlot::EndPlot();
+void ImGuiManager::Separator() {
+	ImGui::Separator();
 }
 
 /// <summary>

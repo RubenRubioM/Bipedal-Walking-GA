@@ -133,16 +133,9 @@ class ImGuiManager {
 		void EndTab();
 
 		/// <summary>
-		/// Begin plot.
+		/// Adds a separator.
 		/// </summary>
-		/// <param name="title"> Title. </param>
-		/// <returns> If its open or not. </returns>
-		bool BeginPlot(const std::string title);
-
-		/// <summary>
-		/// End plot.
-		/// </summary>
-		void EndPlot();
+		void Separator();
 
 	private:
 		/// <summary>
