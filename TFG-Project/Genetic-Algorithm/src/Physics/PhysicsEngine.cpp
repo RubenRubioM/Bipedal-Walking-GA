@@ -124,6 +124,40 @@ void PhysicsEngine::UpdateCamera(Entity* camera) {
 }
 
 /// <summary>
+/// Updates camera with target.
+/// </summary>
+/// <param name="camera"> Camera entity. </param>
+/// <param name="skeleton"> Skeleton target. </param>
+void PhysicsEngine::UpdateCamera(Entity* camera, ESkeleton* skeleton) {
+	auto targetPosition = skeleton->GetCore()->GetPosition();
+	camera->SetPosition(glm::vec3(targetPosition.x - 100, targetPosition.y + 40,targetPosition.z + 100));
+	static_cast<ECamera*>(camera)->SetTarget(targetPosition);
+	const auto& cam = device->GetActiveCamera();
+	const auto& camNode = device->GetActiveCameraNode();
+
+	camNode->SetTranslation(camera->GetPosition());
+	camNode->SetRotation(camera->GetRotation());
+	camNode->SetScalation(camera->GetScalation());
+
+	cam->SetCameraTarget(static_cast<ECamera*>(camera)->GetTarget());
+}
+
+
+/// <summary>
+/// Adds a colliding object to the physics engine
+/// </summary>
+/// <param name="entity"> Colliding object. </param>
+void PhysicsEngine::AddCollidingMesh(EMesh* entity) {
+	for (auto mesh : collidingMeshes) {
+		if (mesh->GetId() == entity->GetId()) {
+			return;
+		}
+	}
+	collidingMeshes.push_back(entity);
+
+}
+
+/// <summary>
 /// Returns whether to apply gravity or not
 /// </summary>
 /// <param name="skeleton"> Skeleton to apply gravity. </param>

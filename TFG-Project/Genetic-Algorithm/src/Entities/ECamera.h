@@ -9,6 +9,12 @@ class Transformable;
 /// </summary>
 class ECamera : public Entity{
 	public:
+
+		/// <summary>
+		/// Enumerations for the possible camera types.
+		/// </summary>
+		enum CameraType { BESTGENE, BESTLASTGENE, FREE };
+
 		/// <summary>
 		/// ECamera constructor.
 		/// </summary>
@@ -42,14 +48,31 @@ class ECamera : public Entity{
 		glm::vec3* GetTargetPtr() { return &target; }
 
 		/// <summary>
+		/// Returns the camera type.
+		/// </summary>
+		/// <returns> Camera type. </returns>
+		CameraType& GetCameraType() { return cameraType; }
+
+		/// <summary>
 		/// Sets camera target.
 		/// </summary>
 		/// <param name="target"> Camera target. </param>
 		void SetTarget(const glm::vec3 target) { this->target = target; }
+
+		/// <summary>
+		/// Sets camera type.
+		/// </summary>
+		/// <param name="type"> Type. </param>
+		void SetCameraType(CameraType type) { cameraType = type; }
+		/// <summary>
+		/// Camera type.
+		/// </summary>
+		CameraType cameraType{ CameraType::FREE };
 
 	private:
 		/// <summary>
 		/// Target camera.
 		/// </summary>
 		glm::vec3 target{ 0.0f };
+
 };

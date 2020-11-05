@@ -35,10 +35,28 @@ class GeneticAlgorithm {
 		void NewGeneration();
 
 		/// <summary>
+		/// Returns the actual generation.
+		/// </summary>
+		/// <returns> Actual generation. </returns>
+		int GetGeneration() { return actualGeneration; }
+
+		/// <summary>
 		/// Returns the population.
 		/// </summary>
 		/// <returns> Population. </returns>
 		std::vector<std::shared_ptr<ESkeleton>> GetPopulation();
+
+		/// <summary>
+		/// Returns the best gene of the last generation.
+		/// </summary>
+		/// <returns> Best gene of the last generation. </returns>
+		ESkeleton* GetBestGeneLastGeneration();
+
+		/// <summary>
+		/// Returns the best gene.
+		/// </summary>
+		/// <returns> Best gene. </returns>
+		ESkeleton* GetBestGene();
 
 	private:
 		/// <summary>
@@ -50,6 +68,7 @@ class GeneticAlgorithm {
 				~GenerationStats() = default;
 
 				int generation = 0;
+				int bestGeneId = 0;
 				float deathPercentage = 0.0;
 				float averageFitness = 0.0;
 				float topFitness = 0.0;
@@ -115,6 +134,12 @@ class GeneticAlgorithm {
 		void SetDefaultPopulationValues();
 
 		/// <summary>
+		/// Generates random skeleton values.
+		/// </summary>
+		/// <param name="skeleton"> Skeleton. </param>
+		void GenerateRandomSkeletonValues(ESkeleton* skeleton);
+
+		/// <summary>
 		/// Population.
 		/// </summary>
 		std::vector<std::shared_ptr<ESkeleton>> population;
@@ -123,6 +148,11 @@ class GeneticAlgorithm {
 		/// ImGuiManager pointer.
 		/// </summary>
 		ImGuiManager* imGuiManager{ nullptr };
+
+		/// <summary>
+		/// Best gene id.
+		/// </summary>
+		int bestGeneId = 0;
 
 		/// <summary>
 		/// Actual generation.

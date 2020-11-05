@@ -6,6 +6,8 @@
 
 using namespace std::chrono_literals;
 
+#define MSTOSECONDS 1000
+
 /// <summary>
 /// Program configuration.
 /// </summary>
@@ -41,12 +43,12 @@ class Config {
 		/// <summary>
 		/// Percentage of new genes in the new generation.
 		/// </summary>
-		inline static double newGenProbability{ 0.2 };
+		inline static float newGenProbability{ 0.2 };
 
 		/// <summary>
 		/// Probability to get a mutation.
 		/// </summary>
-		inline static double mutationProbability{ 0.01 };
+		inline static float mutationProbability{ 0.01 };
 
 		/// <summary>
 		/// Selection function.
@@ -67,9 +69,9 @@ class Config {
 		/// RotationVelocity for joints boundaries.
 		/// </summary>
 		inline static std::pair<glm::vec3, glm::vec3> rotationVelocityBoundaries{ glm::vec3(30.0f,0.0f,0.0f),glm::vec3(80.0f,0.0f,0.0f) };
-
+		
 		/// <summary>
-		/// Generation life span.
+		/// Generation life span in seconds.
 		/// </summary>
-		inline static std::chrono::milliseconds generationLifeSpan = 40 * 1000ms;
+		inline static int generationLifeSpan = 10;
 };

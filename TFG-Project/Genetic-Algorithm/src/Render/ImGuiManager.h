@@ -76,6 +76,24 @@ class ImGuiManager {
 		void TreePop();
 
 		/// <summary>
+		/// Creates a slider for integer value.
+		/// </summary>
+		/// <param name="title"> Title. </param>
+		/// <param name="value"> Variable. </param>
+		/// <param name="min"> Min value. </param>
+		/// <param name="max"> Max value. </param>
+		void IntSlider(const std::string title, int* value, int min, int max);
+
+		/// <summary>
+		/// Creates a slider for float value.
+		/// </summary>
+		/// <param name="title"> Title. </param>
+		/// <param name="value"> Variable. </param>
+		/// <param name="min"> Min value. </param>
+		/// <param name="max"> Max value. </param>
+		void FloatSlider(const std::string title, float* value, float min, float max);
+
+		/// <summary>
 		/// Creates a vec3 slider.
 		/// </summary>
 		/// <param name="vec3"> Vec3 value. </param>
@@ -85,11 +103,26 @@ class ImGuiManager {
 		void Vec3Slider(glm::vec3* vec3, const std::string name, const int min, const int max);
 
 		/// <summary>
+		/// Creates a radio button.
+		/// </summary>
+		/// <param name="title"> Title. </param>
+		/// <param name="value"> Value. </param>
+		/// <param name="idButton"> Button id. </param>
+		void RadioButton(const std::string title, int* value, int idButton);
+
+		/// <summary>
 		/// Creates an entity transformable fields.
 		/// </summary>
 		/// <param name="entity"> Entity pointer. </param>
 		/// <param name="name"> Entity name. </param>
 		void EntityTransformable(Entity* entity, const std::string name);
+
+		/// <summary>
+		/// Creates a button.
+		/// </summary>
+		/// <param name="title"> Title. </param>
+		/// <returns> If has been clicked. </returns>
+		bool Button(const std::string title);
 
 		/// <summary>
 		/// Creates a checkbox.
@@ -136,6 +169,33 @@ class ImGuiManager {
 		/// Adds a separator.
 		/// </summary>
 		void Separator();
+
+		/// <summary>
+		/// Display in the same line the next ImGui element.
+		/// </summary>
+		void SameLine();
+
+		/// <summary>
+		/// Returns if the last item is hovered.
+		/// </summary>
+		/// <returns> If the item is hovered. </returns>
+		bool IsHovered();
+
+		/// <summary>
+		/// Begins a tooltip.
+		/// </summary>
+		void BeginTooltip();
+
+		/// <summary>
+		/// Sets a tooltip.
+		/// </summary>
+		/// <param name="title"> Text. </param>
+		void SetTooltip(const std::string title);
+
+		/// <summary>
+		/// Ends a tooltip.
+		/// </summary>
+		void EndTooltip();
 
 	private:
 		/// <summary>

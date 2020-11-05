@@ -24,10 +24,10 @@ ESkeleton::ESkeleton(EMesh* core, EMesh* hip1, EMesh* knee1, EMesh* hip2, EMesh*
 	this->leg1Joints[1] = knee1; numOfJoints++;
 	this->leg2Joints[0] = hip2; numOfJoints++;
 	this->leg2Joints[1] = knee2; numOfJoints++;
-	this->arm1Joints[0] = shoulder1; numOfJoints;
-	this->arm1Joints[1] = elbow1; numOfJoints;
-	this->arm2Joints[0] = shoulder2; numOfJoints;
-	this->arm2Joints[1] = elbow2; numOfJoints;
+	this->arm1Joints[0] = shoulder1; numOfJoints++;
+	this->arm1Joints[1] = elbow1; numOfJoints++;
+	this->arm2Joints[0] = shoulder2; numOfJoints++;
+	this->arm2Joints[1] = elbow2; numOfJoints++;
 
 	SetFlexibility(Flexibility::MEDIUM);
 

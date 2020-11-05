@@ -24,31 +24,9 @@ GeneticAlgorithm::GeneticAlgorithm() {
 
 	glm::vec3 offset = Utils::defaultPosition;
 	glm::vec3 offsetIncrese = Utils::positionOffset;
-	auto setLegBoundaries = [](std::vector<EMesh*> leg) {
-		auto hip = leg[0];
-		auto knee = leg[1];
-
-		// Knee boundaries
-		std::pair<float, float> boundaries = { Random::get<float>(knee->GetRotationBoundaries().first, knee->GetRotationBoundaries().second) , Random::get<float>(knee->GetRotationBoundaries().first, knee->GetRotationBoundaries().second) };
-		knee->SetRotationBoundaries(std::pair<float, float>(std::min(boundaries.first, boundaries.second), std::max(boundaries.first, boundaries.second)));
-		
-		glm::vec3 kneeVelocity = glm::vec3(Random::get<float>(Config::rotationVelocityBoundaries.first.x, Config::rotationVelocityBoundaries.second.x), 0.0f, 0.0f);
-		knee->SetRotationVelocity(kneeVelocity);
-
-		// Hip boundaries
-		boundaries = { -1, -1 };
-		while (boundaries.first < 0 && boundaries.second < 0) {
-			boundaries = { Random::get<float>(hip->GetRotationBoundaries().first, hip->GetRotationBoundaries().second) , Random::get<float>(hip->GetRotationBoundaries().first, hip->GetRotationBoundaries().second) };
-		}
-		hip->SetRotationBoundaries(std::pair<float, float>(std::min(boundaries.first, boundaries.second), std::max(boundaries.first, boundaries.second)));
-		
-		glm::vec3 hipVelocity = glm::vec3(Random::get<float>(Config::rotationVelocityBoundaries.first.x, Config::rotationVelocityBoundaries.second.x), 0.0f, 0.0f);
-		hip->SetRotationVelocity(hipVelocity);
-	};
 
 	// Create population
 	for (uint16_t i = 0; i < Config::populationSize; ++i) {
-
 		// Entities creation.
 		auto core = new EMesh(Transformable(offset, glm::vec3(0.0f, 0.0f, 0), glm::vec3(0.1f)), "media/torso.obj");
 		core->SetName("Core");
@@ -71,23 +49,7 @@ GeneticAlgorithm::GeneticAlgorithm() {
 
 		population.push_back(std::make_unique<ESkeleton>(core, hip1, knee1, hip2, knee2, shoulder1, elbow1, shoulder2, elbow2));
 		
-		// Set skeleton flexibility
-		float flexibility = Random::get<float>(0, 1);
-		if (flexibility >= 0 && flexibility <= Config::flexibilityProbability.x) {
-			population[i]->SetFlexibility(ESkeleton::Flexibility::LOW);
-		}else if (flexibility > Config::flexibilityProbability.x && flexibility <= Config::flexibilityProbability.x + Config::flexibilityProbability.y) {
-			population[i]->SetFlexibility(ESkeleton::Flexibility::MEDIUM);
-		}else if (flexibility > Config::flexibilityProbability.x + Config::flexibilityProbability.y) {
-			population[i]->SetFlexibility(ESkeleton::Flexibility::HIGH);
-		}else {
-			std::cout << "No flexibility probability found, automatic set to Flexibility::HIGH" << std::endl;
-			population[i]->SetFlexibility(ESkeleton::Flexibility::HIGH);
-		}
-
-
-		// Set legs boundaries.
-		setLegBoundaries(population[i]->GetLeg1());
-		setLegBoundaries(population[i]->GetLeg2());
+		GenerateRandomSkeletonValues(population[i].get());
 
 		offset.x += offsetIncrese.x;
 	}
@@ -119,7 +81,7 @@ void GeneticAlgorithm::Update(long long time) {
 	imGuiManager->BeginTabBar("Genetic algorithm");
 
 	if (imGuiManager->AddTab("Resume")) {
-		imGuiManager->BulletText(std::string("Generation " + std::to_string(actualGeneration)));
+		imGuiManager->BulletText(std::string("Generation " + std::to_string(actualGeneration) + " (" + std::to_string(Config::maxGenerations - actualGeneration) + " left)"));
 		imGuiManager->BulletText(std::string("Life time: " + std::to_string(time/1000.0) + "s"));
 		imGuiManager->BulletText(std::string("Deaths percentage: " + std::to_string(deathPercentage) + "%%"));
 		imGuiManager->BulletText(std::string("Average fitness: " + std::to_string(averageFitness)));
@@ -357,8 +319,12 @@ void GeneticAlgorithm::Update(long long time) {
 			if (gene->IsDead()) {
 				deads++;
 			}
-		
-			topGeneFitness = (gene->GetFitness() >= topGeneFitness) ? gene->GetFitness() : topGeneFitness;
+			
+			if (gene->GetFitness() >= topGeneFitness) {
+				topGeneFitness = gene->GetFitness();
+				bestGeneId = gene->GetSkeletonId();
+			}
+
 			minGeneFitness = (gene->GetFitness() < minGeneFitness) ? gene->GetFitness() : minGeneFitness;
 		}
 	}
@@ -610,7 +576,13 @@ void GeneticAlgorithm::Crossover(std::pair<std::vector<ESkeleton*>, std::vector<
 /// Mutate population.
 /// </summary>
 void GeneticAlgorithm::Mutation() {
-	std::cout << "Mutation not implemented...\n";
+	for (auto gene : population) {
+		float prob = Random::get<float>(0, 1);
+
+		if (prob <= Config::mutationProbability) {
+			GenerateRandomSkeletonValues(gene.get());
+		}
+	}
 }
 
 /// <summary>
@@ -619,6 +591,7 @@ void GeneticAlgorithm::Mutation() {
 void GeneticAlgorithm::SaveGenerationStats() {
 	GenerationStats generationStats;
 	generationStats.generation = actualGeneration;
+	generationStats.bestGeneId = bestGeneId;
 	generationStats.deathPercentage = deathPercentage;
 	generationStats.averageFitness = averageFitness;
 	generationStats.topFitness = topFitness;
@@ -729,4 +702,78 @@ void GeneticAlgorithm::SetDefaultPopulationValues() {
 /// <returns> Population. </returns>
 std::vector<std::shared_ptr<ESkeleton>> GeneticAlgorithm::GetPopulation() {
 	return population;
+}
+
+/// <summary>
+/// Returns the best gene of the last generation
+/// </summary>
+/// <returns> Best gene of the last generation. </returns>
+ESkeleton* GeneticAlgorithm::GetBestGeneLastGeneration() {
+	if (generationsStats.size() > 0) {
+		int id = generationsStats[actualGeneration - 2].bestGeneId;
+
+		for (auto gene : population)
+			if (gene->GetSkeletonId() == id) return gene.get();
+	}
+	return nullptr;
+}
+
+/// <summary>
+/// Returns the best gene.
+/// </summary>
+/// <returns> Best gene. </returns>
+ESkeleton* GeneticAlgorithm::GetBestGene() {
+	for (auto gene : population)
+		if (gene->GetSkeletonId() == bestGeneId) return gene.get();
+
+	return nullptr;
+}
+
+/// <summary>
+/// Generates random skeleton values.
+/// </summary>
+/// <param name="skeleton"> Skeleton. </param>
+void GeneticAlgorithm::GenerateRandomSkeletonValues(ESkeleton* skeleton) {
+	auto setLegBoundaries = [](std::vector<EMesh*> leg) {
+		auto hip = leg[0];
+		auto knee = leg[1];
+
+		// Knee boundaries
+		std::pair<float, float> boundaries = { Random::get<float>(knee->GetRotationBoundaries().first, knee->GetRotationBoundaries().second) , Random::get<float>(knee->GetRotationBoundaries().first, knee->GetRotationBoundaries().second) };
+		knee->SetRotationBoundaries(std::pair<float, float>(std::min(boundaries.first, boundaries.second), std::max(boundaries.first, boundaries.second)));
+
+		glm::vec3 kneeVelocity = glm::vec3(Random::get<float>(Config::rotationVelocityBoundaries.first.x, Config::rotationVelocityBoundaries.second.x), 0.0f, 0.0f);
+		knee->SetRotationVelocity(kneeVelocity);
+
+		// Hip boundaries
+		boundaries = { -1, -1 };
+		while (boundaries.first < 0 && boundaries.second < 0) {
+			boundaries = { Random::get<float>(hip->GetRotationBoundaries().first, hip->GetRotationBoundaries().second) , Random::get<float>(hip->GetRotationBoundaries().first, hip->GetRotationBoundaries().second) };
+		}
+		hip->SetRotationBoundaries(std::pair<float, float>(std::min(boundaries.first, boundaries.second), std::max(boundaries.first, boundaries.second)));
+
+		glm::vec3 hipVelocity = glm::vec3(Random::get<float>(Config::rotationVelocityBoundaries.first.x, Config::rotationVelocityBoundaries.second.x), 0.0f, 0.0f);
+		hip->SetRotationVelocity(hipVelocity);
+	};
+
+	// Set skeleton flexibility
+	float flexibility = Random::get<float>(0, 1);
+	if (flexibility >= 0 && flexibility <= Config::flexibilityProbability.x) {
+		skeleton->SetFlexibility(ESkeleton::Flexibility::LOW);
+	}
+	else if (flexibility > Config::flexibilityProbability.x && flexibility <= Config::flexibilityProbability.x + Config::flexibilityProbability.y) {
+		skeleton->SetFlexibility(ESkeleton::Flexibility::MEDIUM);
+	}
+	else if (flexibility > Config::flexibilityProbability.x + Config::flexibilityProbability.y) {
+		skeleton->SetFlexibility(ESkeleton::Flexibility::HIGH);
+	}
+	else {
+		std::cout << "No flexibility probability found, automatic set to Flexibility::HIGH" << std::endl;
+		skeleton->SetFlexibility(ESkeleton::Flexibility::HIGH);
+	}
+
+
+	// Set legs boundaries.
+	setLegBoundaries(skeleton->GetLeg1());
+	setLegBoundaries(skeleton->GetLeg2());
 }

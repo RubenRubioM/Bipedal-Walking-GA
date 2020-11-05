@@ -61,6 +61,11 @@ class StateExecution : public State {
 		void ImGuiDebug();
 
 		/// <summary>
+		/// Shows configaration window, refactor method.
+		/// </summary>
+		void ShowConfigurationWindow();
+
+		/// <summary>
 		/// RenderEngine pointer.
 		/// </summary>
 		RenderEngine* renderEngine{ nullptr };
@@ -101,6 +106,11 @@ class StateExecution : public State {
 		bool showBoundingBoxes = false;
 
 		/// <summary>
+		/// Only target render.
+		/// </summary>
+		bool onlyTarget = false;
+
+		/// <summary>
 		/// Time to start the execution.
 		/// </summary>
 		std::chrono::milliseconds timeToStart = 3 * 1000ms;
@@ -109,4 +119,10 @@ class StateExecution : public State {
 		/// Clock.
 		/// </summary>
 		std::chrono::system_clock::time_point timeStart = std::chrono::system_clock::now();
+
+		/// <summary>
+		/// If the execution has started.
+		/// </summary>
+		bool executionStarted = false;
+
 };

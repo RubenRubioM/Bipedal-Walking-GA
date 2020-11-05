@@ -50,10 +50,17 @@ class PhysicsEngine{
 		void UpdateCamera(Entity* camera);
 
 		/// <summary>
+		/// Updates camera with target.
+		/// </summary>
+		/// <param name="camera"> Camera entity. </param>
+		/// <param name="skeleton"> Skeleton target. </param>
+		void UpdateCamera(Entity* camera, ESkeleton* skeleton);
+
+		/// <summary>
 		/// Adds a colliding object to the physics engine
 		/// </summary>
 		/// <param name="entity"> Colliding object. </param>
-		void AddCollidingMesh(EMesh* entity) { collidingMeshes.push_back(entity); }
+		void AddCollidingMesh(EMesh* entity);
 
 		//////////////////////////// DEBUG ////////////////////////////
 

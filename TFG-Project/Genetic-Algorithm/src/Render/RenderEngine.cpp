@@ -45,6 +45,10 @@ RenderEngine::~RenderEngine() {
 /// </summary>
 /// <param name="mesh"> Mesh. </param>
 void RenderEngine::AddMesh(EMesh* mesh) {
+	if (device->GetNodeByID(mesh->GetId())) {
+		return;
+	}
+
 	CLE::CLNode* node = nullptr;
 	CLE::CLNode* father = smgr;
 

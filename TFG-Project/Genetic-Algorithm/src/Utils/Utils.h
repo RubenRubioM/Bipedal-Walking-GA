@@ -28,7 +28,7 @@ class Utils {
 		/// <summary>
 		/// Position increase for every skeleton.
 		/// </summary>
-		inline static glm::vec3 positionOffset{ 40.0f,0.0f,0.0f };
+		inline static glm::vec3 positionOffset{ 60.0f,0.0f,0.0f };
 
 		/// <summary>
 		/// Generates a roulette probabilities with a non linear function.

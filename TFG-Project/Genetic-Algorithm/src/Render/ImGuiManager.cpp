@@ -99,6 +99,29 @@ void ImGuiManager::TreePop() {
 }
 
 /// <summary>
+/// Creates a slider for integer value.
+/// </summary>
+/// <param name="title"> Title. </param>
+/// <param name="value"> Variable. </param>
+/// <param name="min"> Min value. </param>
+/// <param name="max"> Max value. </param>
+void ImGuiManager::IntSlider(const std::string title, int* value, int min, int max) {
+	ImGui::SliderInt(title.c_str(), value, min, max);
+}
+
+/// <summary>
+/// Creates a slider for float value.
+/// </summary>
+/// <param name="title"> Title. </param>
+/// <param name="value"> Variable. </param>
+/// <param name="min"> Min value. </param>
+/// <param name="max"> Max value. </param>
+void ImGuiManager::FloatSlider(const std::string title, float* value, float min, float max) {
+	ImGui::SliderFloat(title.c_str(), value, min, max);
+}
+
+
+/// <summary>
 /// Creates a vec3 slider.
 /// </summary>
 /// <param name="vec3"> Vec3 value. </param>
@@ -110,6 +133,16 @@ void ImGuiManager::Vec3Slider(glm::vec3* vec3, const std::string name, const int
 }
 
 /// <summary>
+/// Creates a radio button.
+/// </summary>
+/// <param name="title"> Title. </param>
+/// <param name="value"> Value. </param>
+/// <param name="idButton"> Button id. </param>
+void ImGuiManager::RadioButton(const std::string title, int* value, int idButton) {
+	ImGui::RadioButton(title.c_str(), value, idButton);
+}
+
+/// <summary>
 /// Creates an entity transformable fields.
 /// </summary>
 /// <param name="entity"> Entity pointer. </param>
@@ -118,6 +151,15 @@ void ImGuiManager::EntityTransformable(Entity* entity, std::string name) {
 	Vec3Slider(entity->GetPositionPtr(), std::string(name + " position"), entity->GetPositionBoundaries().first, entity->GetPositionBoundaries().second);
 	Vec3Slider(entity->GetRotationPtr(), std::string(name + " rotation"), entity->GetRotationBoundaries().first, entity->GetRotationBoundaries().second);
 	Vec3Slider(entity->GetScalationPtr(), std::string(name + " scalation"), entity->GetScalationBoundaries().first, entity->GetScalationBoundaries().second);
+}
+
+/// <summary>
+/// Creates a button.
+/// </summary>
+/// <param name="title"> Title. </param>
+/// <returns> If has been clicked. </returns>
+bool ImGuiManager::Button(const std::string title) {
+	return ImGui::Button(title.c_str());
 }
 
 /// <summary>
@@ -180,6 +222,43 @@ void ImGuiManager::EndTab() {
 /// </summary>
 void ImGuiManager::Separator() {
 	ImGui::Separator();
+}
+
+/// <summary>
+/// Display in the same line the next ImGui element.
+/// </summary>
+void ImGuiManager::SameLine() {
+	ImGui::SameLine();
+}
+
+/// <summary>
+/// Returns if the last item is hovered.
+/// </summary>
+/// <returns> If the item is hovered. </returns>
+bool ImGuiManager::IsHovered() {
+	return ImGui::IsItemHovered();
+}
+
+/// <summary>
+/// Begins a tooltip.
+/// </summary>
+void ImGuiManager::BeginTooltip() {
+	ImGui::BeginTooltip();
+}
+
+/// <summary>
+/// Sets a tooltip.
+/// </summary>
+/// <param name="title"> Text. </param>
+void ImGuiManager::SetTooltip(const std::string title) {
+	ImGui::SetTooltip(title.c_str());
+}
+
+/// <summary>
+/// Ends a tooltip.
+/// </summary>
+void ImGuiManager::EndTooltip() {
+	ImGui::EndTooltip();
 }
 
 /// <summary>
