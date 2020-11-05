@@ -34,7 +34,7 @@ StateExecution::StateExecution() {
 		, "media/skybox/back.jpg");
 
 	// Field
-	terrain.push_back(make_unique<EMesh>(Transformable(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(2000.0f, 10.0f, 2000.0f)), "media/Grass_Block.obj"));
+	terrain.push_back(make_unique<EMesh>(Transformable(glm::vec3(500.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(2000.0f, 10.0f, 2000.0f)), "media/Grass_Block.obj"));
 	terrain[0]->SetName("Field");
 
 
@@ -231,10 +231,10 @@ void StateExecution::ImGuiDebug() {
 /// </summary>
 void StateExecution::ShowConfigurationWindow() {
 	imGuiManager->BulletText("Population size");
-	imGuiManager->IntSlider("Number of genes", &Config::populationSize, 3, 500);
+	imGuiManager->IntSlider("Number of genes", &Config::populationSize, 3, 200);
 	if (imGuiManager->IsHovered()) {
 		imGuiManager->BeginTooltip();
-		imGuiManager->Text("High values may occuor in performance issues");
+		imGuiManager->Text("High values may occuor performance issues");
 		imGuiManager->EndTooltip();
 	}
 

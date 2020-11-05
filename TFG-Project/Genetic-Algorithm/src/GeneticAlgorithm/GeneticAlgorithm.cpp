@@ -510,6 +510,7 @@ void GeneticAlgorithm::Crossover(std::pair<std::vector<ESkeleton*>, std::vector<
 
 	for (auto gene : genesToUpdate) {
 		// Parent1 will be the parent with best fitness
+		
 		ESkeleton* parent1 = nullptr;
 		ESkeleton* parent2 = nullptr;
 
@@ -526,6 +527,34 @@ void GeneticAlgorithm::Crossover(std::pair<std::vector<ESkeleton*>, std::vector<
 
 		// Flexibility will be always the higher one
 		gene->SetFlexibility(std::max(parent1->GetFlexibility(), parent2->GetFlexibility()));
+
+		// Lambda functions to set the values based on the lambda functions by parameter
+		auto setValues = [&gene,&parent1,&parent2](std::function<std::pair<float, float>(std::pair<float, float>, std::pair<float, float>)> pairLambda, std::function<glm::vec3(glm::vec3, glm::vec3)> vec3Lambda) {
+			// 0. Hip1 rotation boundaries
+			gene->GetLeg1()[0]->SetRotationBoundaries(pairLambda(parent1->GetLeg1()[0]->GetRotationBoundaries(), parent2->GetLeg1()[0]->GetRotationBoundaries()));
+
+			// 1. Knee1 rotation boundaries
+			gene->GetLeg1()[1]->SetRotationBoundaries(pairLambda(parent1->GetLeg1()[1]->GetRotationBoundaries(), parent2->GetLeg1()[1]->GetRotationBoundaries()));
+
+			// 2. Hip2 rotation boundaries
+			gene->GetLeg2()[0]->SetRotationBoundaries(pairLambda(parent1->GetLeg2()[0]->GetRotationBoundaries(), parent2->GetLeg2()[0]->GetRotationBoundaries()));
+
+			// 3. Knee2 rotation boundaries
+			gene->GetLeg2()[1]->SetRotationBoundaries(pairLambda(parent1->GetLeg2()[1]->GetRotationBoundaries(), parent2->GetLeg2()[1]->GetRotationBoundaries()));
+
+			// 4. Hip1 velocity
+			gene->GetLeg1()[0]->SetRotationVelocity(vec3Lambda(parent1->GetLeg1()[0]->GetRotationVelocity(), parent2->GetLeg1()[0]->GetRotationVelocity()));
+
+			//// 5. Knee1 velocity
+			gene->GetLeg1()[1]->SetRotationVelocity(vec3Lambda(parent1->GetLeg1()[1]->GetRotationVelocity(), parent2->GetLeg1()[1]->GetRotationVelocity()));
+
+			//// 6. Hip2 velocity
+			gene->GetLeg2()[0]->SetRotationVelocity(vec3Lambda(parent1->GetLeg2()[0]->GetRotationVelocity(), parent2->GetLeg2()[0]->GetRotationVelocity()));
+
+			//// 7. Knee2 velocity
+			gene->GetLeg2()[1]->SetRotationVelocity(vec3Lambda(parent1->GetLeg2()[1]->GetRotationVelocity(), parent2->GetLeg2()[1]->GetRotationVelocity()));
+
+		};
 
 		switch (Config::crossoverType) {
 			// Select a random point and before this point all the values will be from parent1 and after from parent2
@@ -558,14 +587,49 @@ void GeneticAlgorithm::Crossover(std::pair<std::vector<ESkeleton*>, std::vector<
 				break;
 			}
 			case Config::CrossoverType::AVERAGE: {
+				auto average = [](float value1, float value2) {
+					return (value1 + value2) / 2;
+				};
+				auto pairAverage = [&average](std::pair<float, float> v1, std::pair<float, float> v2) {
+					return std::pair<float, float>(average(v1.first, v2.first), average(v1.second, v2.second));
+				};
+				auto vec3Average = [&average](glm::vec3 v1, glm::vec3 v2) {
+					return glm::vec3(average(v1.x, v2.x), average(v1.y, v2.y), average(v1.z, v2.z));
+				};
 
+				setValues(pairAverage, vec3Average);
+				
 				break;
 			}
 			case Config::CrossoverType::ARITHMETIC: {
+				float alpha = Random::get<float>(0, 1);
+				auto arithmetic = [&alpha](float bestValue, float worstValue) {
+					return (alpha * bestValue) + (1 - alpha) * worstValue;
+				};
+				auto pairArithmetic = [&arithmetic](std::pair<float, float> bestPair, std::pair<float, float> worstPair) {
+					return std::pair<float, float>(arithmetic(bestPair.first, worstPair.first), arithmetic(bestPair.second, worstPair.second));
+				};
+				auto vec3Arithmetic = [&arithmetic](glm::vec3 bestVec3, glm::vec3 worstVec3) {
+					return glm::vec3(arithmetic(bestVec3.x, worstVec3.x), arithmetic(bestVec3.y, worstVec3.y), arithmetic(bestVec3.z, worstVec3.z));
+				};
 
+				setValues(pairArithmetic, vec3Arithmetic);
 				break;
 			}
 			case Config::CrossoverType::HEURISTIC: {
+				float ratio = Random::get<float>(0, 1);
+				auto heuristic = [&ratio](float bestValue, float worstValue) {
+					return worstValue + (ratio * (bestValue - worstValue));
+				};
+				auto pairHeuristic = [&heuristic](std::pair<float, float> bestPair, std::pair<float, float> worstPair) {
+					return std::pair<float, float>(heuristic(bestPair.first, worstPair.first), heuristic(bestPair.second, worstPair.second));
+				};
+				auto vec3Heuristic = [&heuristic](glm::vec3 bestVec3, glm::vec3 worstVec3) {
+					return glm::vec3(heuristic(bestVec3.x, worstVec3.x), heuristic(bestVec3.y, worstVec3.y), heuristic(bestVec3.z, worstVec3.z));
+				};
+
+				setValues(pairHeuristic, vec3Heuristic);
+				
 				break;
 			}
 		}
