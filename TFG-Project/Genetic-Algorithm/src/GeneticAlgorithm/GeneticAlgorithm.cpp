@@ -6,6 +6,7 @@
 #include <Entities/EMesh.h>
 #include <Render/ImGuiManager.h>
 
+#include <CSV/csv2.hpp>
 #include <GLM/glm.hpp>
 #include <RANDOM/random.hpp>
 #include <IMGUI/implot.h>
@@ -13,6 +14,7 @@
 
 #include <iostream>
 #include <algorithm>
+#include <ctime>
 
 using Random = effolkronium::random_static;
 
@@ -320,7 +322,7 @@ void GeneticAlgorithm::Update(long long time) {
 				deads++;
 			}
 			
-			if (gene->GetFitness() >= topGeneFitness) {
+			if (gene->GetFitness() > topGeneFitness) {
 				topGeneFitness = gene->GetFitness();
 				bestGeneId = gene->GetSkeletonId();
 			}
@@ -840,4 +842,130 @@ void GeneticAlgorithm::GenerateRandomSkeletonValues(ESkeleton* skeleton) {
 	// Set legs boundaries.
 	setLegBoundaries(skeleton->GetLeg1());
 	setLegBoundaries(skeleton->GetLeg2());
+}
+
+/// <summary>
+/// Exports the generation's data to a csv.
+/// </summary>
+void GeneticAlgorithm::WriteCSV() {
+	// current date/time based on current system
+	std::time_t now = std::time(0);
+
+	// convert now to string form
+	std::string dt = std::ctime(&now);
+
+	std::ofstream stream(std::string("Simulation.csv"));
+	csv2::Writer<csv2::delimiter<','>> writer(stream);
+
+	std::string selectionFunction;
+	switch (Config::selectionFunction) {
+		case Config::SelectionFunction::ROULETTE: {
+			selectionFunction = "Roulette";
+			break;
+		}
+		case Config::SelectionFunction::TOURNAMENT: {
+			selectionFunction = "Tournament";
+			break;
+		}
+		case Config::SelectionFunction::LINEAR: {
+			selectionFunction = "Linear";
+			break;
+		}
+	}
+	std::string crossoverType;
+	switch (Config::crossoverType) {
+		case(Config::CrossoverType::HEURISTIC): {
+			crossoverType = "Heuristic";
+			break;
+		}
+		case(Config::CrossoverType::ARITHMETIC): {
+			crossoverType = "Arithmetic";
+			break;
+		}
+		case(Config::CrossoverType::AVERAGE): {
+			crossoverType = "Average";
+			break;
+		}
+		case(Config::CrossoverType::ONEPOINT): {
+			crossoverType = "One point";
+			break;
+		}
+	}
+
+	std::vector<std::vector<std::string>> rows =
+	{
+		{"Population size", "Life span (sec)", "Max generations", "New genes probability", "Mutation rate", "Selection function", "Crossover operator"},
+		{std::to_string(Config::populationSize), std::to_string(Config::generationLifeSpan),std::to_string(Config::maxGenerations)
+		, std::to_string(Config::newGenProbability), std::to_string(Config::mutationProbability), selectionFunction, crossoverType},
+		{"", "", "", "", "", "", ""},
+		{"", "", "", "", "", "", ""},
+
+		{"Generation", "Death percentage", "Average fitness", "Top fitness", "Min fitness"
+		, "Average hip1 velocity", "Average knee1 velocity", "Average hip2 velocity", "Average knee2 velocity"
+		, "Top hip1 velocity", "Top knee1 velocity", "Top hip2 velocity", "Top knee2 velocity"
+		, "Min hip1 velocity", "Min knee1 velocity", "Min hip2 velocity", "Min knee2 velocity"
+		, "Average hip1 rotation", "Average knee1 rotation", "Average hip2 rotation", "Average knee2 rotation"
+		, "Top hip1 rotation", "Top knee1 rotation", "Top hip2 rotation", "Top knee2 rotation"
+		, "Min hip1 rotation", "Min knee1 rotation", "Min hip2 rotation", "Min knee2 rotation"  }
+	};
+	int actualRow = 5;
+	float totalDeath = 0.0f;
+	float totalFitness = 0.0f;
+	float totalMaxFitness = 0.0f;
+	float totalMinFitness = 0.0f;
+	for (auto generation : generationsStats) {
+		std::vector<std::string> row;
+		row.push_back(std::to_string(generation.generation));
+		totalDeath += generation.deathPercentage;
+		row.push_back(std::to_string(generation.deathPercentage));
+		totalFitness += generation.averageFitness;
+		row.push_back(std::to_string(generation.averageFitness));
+		totalMaxFitness += generation.topFitness;
+		row.push_back(std::to_string(generation.topFitness));
+		totalMinFitness += generation.minFitness;
+		row.push_back(std::to_string(generation.minFitness));
+		row.push_back(std::to_string(generation.averageHip1Velocity));
+		row.push_back(std::to_string(generation.averageKnee1Velocity));
+		row.push_back(std::to_string(generation.averageHip2Velocity));
+		row.push_back(std::to_string(generation.averageKnee2Velocity));
+		row.push_back(std::to_string(generation.topHip1Velocity));
+		row.push_back(std::to_string(generation.topKnee1Velocity));
+		row.push_back(std::to_string(generation.topHip2Velocity));
+		row.push_back(std::to_string(generation.topKnee2Velocity));
+		row.push_back(std::to_string(generation.minHip1Velocity));
+		row.push_back(std::to_string(generation.minKnee1Velocity));
+		row.push_back(std::to_string(generation.minHip2Velocity));
+		row.push_back(std::to_string(generation.minKnee2Velocity));
+		row.push_back(std::string("<" + std::to_string(generation.averageHip1RotationBoundaries.first) + " | " + std::to_string(generation.averageHip1RotationBoundaries.second) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.averageKnee1RotationBoundaries.first) + " | " + std::to_string(generation.averageKnee1RotationBoundaries.second) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.averageHip2RotationBoundaries.first) + " | " + std::to_string(generation.averageHip2RotationBoundaries.second) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.averageKnee2RotationBoundaries.first) + " | " + std::to_string(generation.averageKnee2RotationBoundaries.second) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.topHip1Rotation) + " | " + std::to_string(generation.topHip1Rotation) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.topKnee1Rotation) + " | " + std::to_string(generation.topKnee1Rotation) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.topHip2Rotation) + " | " + std::to_string(generation.topHip2Rotation) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.topKnee2Rotation) + " | " + std::to_string(generation.topKnee2Rotation) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.minHip1Rotation) + " | " + std::to_string(generation.minHip1Rotation) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.minKnee1Rotation) + " | " + std::to_string(generation.minKnee1Rotation) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.minHip2Rotation) + " | " + std::to_string(generation.minHip2Rotation) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.minKnee2Rotation) + " | " + std::to_string(generation.minKnee2Rotation) + ">"));
+
+		rows.insert(rows.begin() + actualRow, row);
+		actualRow++;
+	}
+	float meanDeaths = totalDeath / (float)generationsStats.size();
+	float meanFitness = totalFitness / (float)generationsStats.size();
+	float meanTopFitness = totalMaxFitness / (float)generationsStats.size();
+	float meanMinFitness = totalMinFitness / (float)generationsStats.size();
+	std::vector<std::string> row;
+	row.push_back("Average: ");
+	row.push_back(std::to_string(meanDeaths));
+	row.push_back(std::to_string(meanFitness));
+	row.push_back(std::to_string(meanTopFitness));
+	row.push_back(std::to_string(meanMinFitness));
+	rows.insert(rows.begin() + actualRow, row);
+
+	writer.write_rows(rows);
+	stream.close();
+
+	std::cout << "Data set exported\n";
 }

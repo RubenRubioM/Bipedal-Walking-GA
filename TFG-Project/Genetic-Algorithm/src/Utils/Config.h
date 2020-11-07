@@ -43,12 +43,12 @@ class Config {
 		/// <summary>
 		/// Percentage of new genes in the new generation.
 		/// </summary>
-		inline static float newGenProbability{ 0.2 };
+		inline static float newGenProbability{ 0.2f };
 
 		/// <summary>
 		/// Probability to get a mutation.
 		/// </summary>
-		inline static float mutationProbability{ 0.01 };
+		inline static float mutationProbability{ 0.01f };
 
 		/// <summary>
 		/// Selection function.

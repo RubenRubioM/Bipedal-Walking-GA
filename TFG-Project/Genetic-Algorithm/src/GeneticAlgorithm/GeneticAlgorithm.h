@@ -58,6 +58,11 @@ class GeneticAlgorithm {
 		/// <returns> Best gene. </returns>
 		ESkeleton* GetBestGene();
 
+		/// <summary>
+		/// Exports the generation's data to a csv.
+		/// </summary>
+		void WriteCSV();
+
 	private:
 		/// <summary>
 		/// Auxiliar struct to storage multiple data about the generation.
