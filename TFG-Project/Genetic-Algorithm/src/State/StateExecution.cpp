@@ -96,7 +96,7 @@ void StateExecution::Update() {
 				setVisible(skeleton.get(), true);
 		}
 
-		if (time >= std::chrono::milliseconds(0).count() && geneticAlgorithm->GetGeneration() < Config::maxGenerations) {
+		if (time >= std::chrono::milliseconds(0).count() && geneticAlgorithm->GetGeneration() < Config::maxGenerations + 1) {
 			for (const auto& skeleton : skeletons) {
 				physicsEngine->UpdateSkeleton(skeleton.get());
 			}
@@ -108,7 +108,7 @@ void StateExecution::Update() {
 
 		geneticAlgorithm->Update(time);
 
-		if (time >= Config::generationLifeSpan * MSTOSECONDS && geneticAlgorithm->GetGeneration() < Config::maxGenerations) {
+		if (time >= Config::generationLifeSpan * MSTOSECONDS && geneticAlgorithm->GetGeneration() < Config::maxGenerations + 1) {
 			timeStart = std::chrono::system_clock::now();
 			geneticAlgorithm->NewGeneration();
 		}
@@ -259,11 +259,19 @@ void StateExecution::ShowConfigurationWindow() {
 	imGuiManager->BulletText("Selection function");
 	imGuiManager->RadioButton("Roulette", (int*)&Config::selectionFunction, 0); imGuiManager->SameLine();
 	imGuiManager->RadioButton("Tournament", (int*)&Config::selectionFunction, 1); imGuiManager->SameLine();
-	imGuiManager->RadioButton("Linear", (int*)&Config::selectionFunction, 2);
+	imGuiManager->RadioButton("Linear rank", (int*)&Config::selectionFunction, 2);
 
 	if (Config::selectionFunction == Config::SelectionFunction::ROULETTE) {
 		// Shows roulette sections
-		imGuiManager->IntSlider("Number of sections", &Config::rouletteSections, 1, 100);
+		imGuiManager->IntSlider("Number of sections", &Config::rouletteSections, 1, Config::populationSize);
+	} else if (Config::selectionFunction == Config::SelectionFunction::TOURNAMENT) {
+		// Shows tournament members.
+		imGuiManager->IntSlider("Number of members", &Config::tournamentMembers, 1, Config::populationSize);
+		if (imGuiManager->IsHovered()) {
+			imGuiManager->BeginTooltip();
+			imGuiManager->Text("High number of members will occour in less diversity");
+			imGuiManager->EndTooltip();
+		}
 	}
 
 	imGuiManager->Separator();

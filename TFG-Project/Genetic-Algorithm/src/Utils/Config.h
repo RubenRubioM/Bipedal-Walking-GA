@@ -16,7 +16,7 @@ class Config {
 		/// <summary>
 		/// Enumeration of selections functions avaliables.
 		/// </summary>
-		enum SelectionFunction {ROULETTE, TOURNAMENT, LINEAR};
+		enum SelectionFunction {ROULETTE, TOURNAMENT, LINEAR_RANK};
 
 		/// <summary>
 		/// Enumeration of the crossover types.
@@ -64,6 +64,11 @@ class Config {
 		/// Roulette sections for probability.
 		/// </summary>
 		inline static int rouletteSections{ 5 };
+
+		/// <summary>
+		/// Tournament members to fight.
+		/// </summary>
+		inline static int tournamentMembers{ 2 };
 
 		/// <summary>
 		/// RotationVelocity for joints boundaries.

@@ -332,7 +332,7 @@ void GeneticAlgorithm::Update(long long time) {
 	}
 
 	deathPercentage = (deads / (float)Config::populationSize) * 100.0;
-	averageFitness = (totalFitness / Config::populationSize);
+	averageFitness = (totalFitness / (float)Config::populationSize);
 	minFitness = minGeneFitness;
 	topFitness = topGeneFitness;
 
@@ -444,13 +444,20 @@ std::pair<std::vector<ESkeleton*>, std::vector<ESkeleton*>> GeneticAlgorithm::Se
 
 	switch (Config::selectionFunction){
 		case Config::SelectionFunction::ROULETTE: {
-			int rouletteSections = Config::rouletteSections;
-			nc::NdArray<float> fitnessSections = nc::linspace<float>(minFitness, topFitness+0.001, rouletteSections);
-			nc::NdArray<float> rouletteProbabilities = Utils::RouletteProbabilities(rouletteSections); // Generate the roulette probabilities array.
-
 			// We have newGenes which are the number of genes that have to be crossovered
 			// So, Config::populationSize - newGenes is the number of genes that survived throw the next generation.
 			while (genesToNewGeneration != Config::populationSize - newGenes) {
+				float localMinFitness = std::numeric_limits<float>::max();
+				float localTopFitness = std::numeric_limits<float>::lowest();
+				for (auto gene : populationAux) {
+					localMinFitness = (gene->GetFitness() < localMinFitness) ? gene->GetFitness() : localMinFitness;
+					localTopFitness = (gene->GetFitness() > localTopFitness) ? gene->GetFitness() : localTopFitness;
+				}
+
+				int rouletteSections = Config::rouletteSections;
+				nc::NdArray<float> fitnessSections = nc::linspace<float>(localMinFitness, localTopFitness + 0.001, rouletteSections);
+				nc::NdArray<float> rouletteProbabilities = Utils::RouletteProbabilities(rouletteSections); // Generate the roulette probabilities array.
+
 				float probabilityValue = Random::get<float>(0, 1);
 				int sectionIndx = rouletteProbabilities.shape().cols - 2;
 
@@ -462,7 +469,9 @@ std::pair<std::vector<ESkeleton*>, std::vector<ESkeleton*>> GeneticAlgorithm::Se
 				}
 
 				for (int j = 0; j < populationAux.size(); j++) {
-					if (fitnessSections[0, sectionIndx] <= populationAux[j]->GetFitness() && populationAux[j]->GetFitness() <= fitnessSections[0, sectionIndx + 1]) {
+					if (fitnessSections[0, sectionIndx] <= populationAux[j]->GetFitness() 
+						&& populationAux[j]->GetFitness() <= fitnessSections[0, sectionIndx + 1]) {
+
 						newPopulation.push_back(populationAux[j].get());
 						populationAux.erase(populationAux.begin() + j);
 						genesToNewGeneration++;
@@ -475,10 +484,93 @@ std::pair<std::vector<ESkeleton*>, std::vector<ESkeleton*>> GeneticAlgorithm::Se
 		}
 
 		case Config::SelectionFunction::TOURNAMENT: {
+			// NOTE: Since we have a sorted vector by fitness, the tournament winner will be always the minimum index
+			//		 between all the Config::tournamentMembers but just for scalability we will not have this in count and
+			//		 we will act as if the vector is not sorted.
+			while (genesToNewGeneration != Config::populationSize - newGenes) {
+				std::vector<int> membersIndexs;
+
+				// If we have enought genes to set a tournament
+				if (Config::tournamentMembers <= populationAux.size()) {
+					while (membersIndexs.size() < Config::tournamentMembers) {
+						int indx = Random::get<int>(0, populationAux.size()-1);
+						bool repeated = false;
+
+						for (int memberIndex : membersIndexs) {
+							if (memberIndex == indx) {
+								repeated = true;
+								break;
+							}
+						}
+
+						// If the index is not repeated, add it to the vector
+						if (!repeated)
+							membersIndexs.push_back(indx);
+					}
+				}else {
+					// If we have less genes than members to pick for the tournament just pick all the rest
+					for (uint16_t i = 0; i < populationAux.size(); ++i) {
+						membersIndexs.push_back(i);
+					}
+				}
+
+				// Now, FIGHT!
+				int winnerIndex = 0;
+				float maxTournamentFitness = std::numeric_limits<float>::lowest();
+
+				for (int index : membersIndexs) {
+					if (populationAux[index]->GetFitness() > maxTournamentFitness) {
+						winnerIndex = index;
+						maxTournamentFitness = populationAux[index]->GetFitness();
+					}
+				}
+
+				newPopulation.push_back(populationAux[winnerIndex].get());
+				populationAux.erase(populationAux.begin() + winnerIndex);
+				genesToNewGeneration++;
+			}
+
 			break;
 		}
 
-		case Config::SelectionFunction::LINEAR: {
+		case Config::SelectionFunction::LINEAR_RANK: {
+			// Sort the population based on the gene fitness. Worst = first
+			std::sort(populationAux.begin(), populationAux.end(), [](std::shared_ptr<ESkeleton> skeleton1, std::shared_ptr<ESkeleton> skeleton2) {
+				return skeleton1->GetFitness() < skeleton2->GetFitness();
+			});
+
+			// We have to recalculate rank table because the population change
+			while (genesToNewGeneration != Config::populationSize - newGenes) {
+				// Calculate the sum of all gene fitness
+				float totalFitness = 0;
+				int j = 0;
+				for (auto gene : populationAux) {
+					totalFitness += gene->GetFitness();
+					j++;
+				}
+				
+				// Create an array with probabilities from 0 to 1
+				nc::NdArray<float> rankProbabilities = nc::zeros<float>(1, populationAux.size() + 1);
+				float actualTotalFitness = 0;
+				for (uint16_t i = 1; i < rankProbabilities.shape().cols; i++) {
+					rankProbabilities[0, i] = (populationAux[i - 1]->GetFitness() / totalFitness) + actualTotalFitness;
+					actualTotalFitness += populationAux[i - 1]->GetFitness() / totalFitness;
+				}
+
+				// Calculate the random value and check which gene is
+				float probabilityValue = Random::get<float>(0, 1);
+				int selectionIndx = 0;
+
+				for (int i = 0; i < rankProbabilities.shape().cols - 1; i++) {
+					if (rankProbabilities[0, i] <= probabilityValue && probabilityValue <= rankProbabilities[0, i + 1]) {
+						newPopulation.push_back(populationAux[i].get());
+						populationAux.erase(populationAux.begin() + i);
+						genesToNewGeneration++;
+						break;
+					}
+				}
+			}
+
 			break;
 		}
 	}
@@ -848,13 +940,14 @@ void GeneticAlgorithm::GenerateRandomSkeletonValues(ESkeleton* skeleton) {
 /// Exports the generation's data to a csv.
 /// </summary>
 void GeneticAlgorithm::WriteCSV() {
+	int randomNumber = Random::get<int>(0, std::numeric_limits<int>::max());
 	// current date/time based on current system
 	std::time_t now = std::time(0);
 
 	// convert now to string form
-	std::string dt = std::ctime(&now);
-
-	std::ofstream stream(std::string("Simulation.csv"));
+	std::string time = std::asctime(std::localtime(&now));
+	std::string title("Simulations/Simulation" + std::to_string(randomNumber) +".csv");
+	std::ofstream stream(title);
 	csv2::Writer<csv2::delimiter<','>> writer(stream);
 
 	std::string selectionFunction;
@@ -867,8 +960,8 @@ void GeneticAlgorithm::WriteCSV() {
 			selectionFunction = "Tournament";
 			break;
 		}
-		case Config::SelectionFunction::LINEAR: {
-			selectionFunction = "Linear";
+		case Config::SelectionFunction::LINEAR_RANK: {
+			selectionFunction = "Linear rank";
 			break;
 		}
 	}
