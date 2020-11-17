@@ -200,8 +200,10 @@ void PhysicsEngine::ApplySkeletonMovement(ESkeleton* skeleton) const {
 		}
 
 	};
+
 	// TODO: Check the speed of the core.
 	auto checkCoreMovement = [&core](EMesh* hip, EMesh* knee, bool onAir) {
+		// If (hip going backwards and still above 0 rotation || knee going backwards and hip above 0 rotation) && touching the floor
 		if (((hip->GetRotationVelocity().x < 0 && hip->GetRotation().x > 0) || (knee->GetRotationVelocity().x < 0 && hip->GetRotation().x > 0)) && !onAir) {
 			auto position = core->GetPosition();
 			float newZ = position.z + ((std::abs(hip->GetRotationVelocity().x / 10) + std::abs(knee->GetRotationVelocity().x / 10)) * Utils::deltaTime);
@@ -212,17 +214,14 @@ void PhysicsEngine::ApplySkeletonMovement(ESkeleton* skeleton) const {
 		return false;
 	};
 
-	
-
 	applyJointRotation(hip1);
 	applyJointRotation(knee1);
 	applyJointRotation(hip2);
 	applyJointRotation(knee2);
 
 	// To just apply one leg at a time
-	if(!checkCoreMovement(hip1, knee1, skeleton->GetLeg1OnAir()))
-		checkCoreMovement(hip2, knee2, skeleton->GetLeg2OnAir());
-
+	checkCoreMovement(hip1, knee1, skeleton->GetLeg1OnAir());
+	checkCoreMovement(hip2, knee2, skeleton->GetLeg2OnAir());
 }
 
 /// <summary>
@@ -262,14 +261,13 @@ bool PhysicsEngine::FixPosition(ESkeleton* skeleton) const {
 	float skeletonMinY = (skeletonMinYLeg1 <= skeletonMinYLeg2) ? skeletonMinYLeg1 : skeletonMinYLeg2;
 	if (skeletonMinY <= terrainMaxY) {
 		// Fix position to set the skeleton above the terrain
-		//TODO: Be carefull with this "17". It is because i have to place the model below the terrain but not to much. 
+		//TODO: Be carefull with this "17". It is because I have to place the model below the terrain but not to much. 
 		float positionToPlace = ((core->GetCollider()->GetCenter().y - skeletonMinY) + terrainMaxY) - 17;
 		core->SetPosition(glm::vec3(core->GetPosition().x, positionToPlace, core->GetPosition().z));
 		skeleton->SetOnAir(false);
 
 		return true;
-	}
-	else {
+	}else {
 		skeleton->SetOnAir(true);
 
 		return false;
@@ -290,7 +288,11 @@ bool PhysicsEngine::SkeletonDead(ESkeleton* skeleton) const {
 		- Case 1: Both hips rotations are less -30º.
 		- Case 2: Both hip rotations minus knee rotation are greater 30º.
 		- Case 3: The hip in front minus knee rotation is greater than 90º and the hip behind is lower than -90º.
-			-Case 3.1: Same but with the other leg.
+			- Case 3.1: Same but with the other leg.
+		- Case 4: The hip in front rotation is greater than 120º and the hip behind is lower than -90º.
+			- Case 4.1: Same but with the other leg.
+		- Case 5: The hip behind rotation lower than -30º and hip in front on air.
+			- Case 5.1: Same but with the other leg.
 	*/
 
 	// Case 1
@@ -305,9 +307,25 @@ bool PhysicsEngine::SkeletonDead(ESkeleton* skeleton) const {
 	if (leg1[0]->GetRotation().x - std::abs(leg1[1]->GetRotation().x) > 90 && leg2[0]->GetRotation().x < -90)
 		return true;
 
-	// Case 3.1
-	if (leg2[0]->GetRotation().x - std::abs(leg2[1]->GetRotation().x) > 90 && leg1[0]->GetRotation().x < -90)
+		// Case 3.1
+		if (leg2[0]->GetRotation().x - std::abs(leg2[1]->GetRotation().x) > 90 && leg1[0]->GetRotation().x < -90)
+			return true;
+
+	// Case 4
+	if (leg1[0]->GetRotation().x > 120 && leg2[0]->GetRotation().x < -90)
 		return true;
+		
+		// Case 4.1
+		if (leg2[0]->GetRotation().x > 120 && leg1[0]->GetRotation().x < -90)
+			return true;
+
+	// Case 5
+	if (leg1[0]->GetRotation().x < -30 && skeleton->GetLeg2OnAir())
+		return true;
+		
+		// Case 5.1
+		if (leg2[0]->GetRotation().x < -30 && skeleton->GetLeg1OnAir())
+			return true;
 
 	return false;
 }
