@@ -930,7 +930,6 @@ void GeneticAlgorithm::GenerateRandomSkeletonValues(ESkeleton* skeleton) {
 		skeleton->SetFlexibility(ESkeleton::Flexibility::HIGH);
 	}
 
-
 	// Set legs boundaries.
 	setLegBoundaries(skeleton->GetLeg1());
 	setLegBoundaries(skeleton->GetLeg2());
