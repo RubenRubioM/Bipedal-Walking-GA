@@ -130,7 +130,7 @@ void PhysicsEngine::UpdateCamera(Entity* camera) {
 /// <param name="skeleton"> Skeleton target. </param>
 void PhysicsEngine::UpdateCamera(Entity* camera, ESkeleton* skeleton) {
 	auto targetPosition = skeleton->GetCore()->GetPosition();
-	camera->SetPosition(glm::vec3(targetPosition.x - 100, targetPosition.y + 40,targetPosition.z + 20));
+	camera->SetPosition(glm::vec3(targetPosition.x - 100, targetPosition.y + 40,targetPosition.z + 10));
 	static_cast<ECamera*>(camera)->SetTarget(targetPosition);
 	const auto& cam = device->GetActiveCamera();
 	const auto& camNode = device->GetActiveCameraNode();
