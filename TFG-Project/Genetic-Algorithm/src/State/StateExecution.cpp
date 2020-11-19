@@ -126,7 +126,9 @@ void StateExecution::Update() {
 /// </summary>
 void StateExecution::Render() {
 	renderEngine->BeginScene();
+	renderEngine->DrawAll();
 
+	// Now we can render primiteves like lines
 	if (executionStarted) {
 		imGuiManager->Begin("Debug");
 
@@ -166,9 +168,13 @@ void StateExecution::Render() {
 			geneticAlgorithm->WriteCSV();
 		}
 		imGuiManager->End();
+		
+		renderEngine->DrawDistanceLines();
+		if (auto gene = geneticAlgorithm->GetBestGene()) {
+			renderEngine->DrawFirstPlaceLine(gene->GetCore()->GetPosition());
+		}
 	}
 	
-	renderEngine->DrawAll();
 	imGuiManager->Render();
 	renderEngine->EndScene();
 }

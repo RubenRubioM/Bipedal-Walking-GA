@@ -5,6 +5,7 @@
 #include <Entities/EMesh.h>
 #include <Render/ImGuiManager.h>
 #include <DataTypes/OBBCollider.h>
+#include <Utils/Config.h>
 
 #include <GLM/gtx/string_cast.hpp>
 
@@ -150,6 +151,27 @@ void RenderEngine::DrawBoundingBox(EMesh* entity) {
 	Draw3DLine(vertexs[5], vertexs[7]);
 	Draw3DLine(vertexs[6], vertexs[7]);
 	//Draw3DLine(center, glm::vec3(200, 10, -200), CLE::CLColor(0,200,0,255));
+}
+
+/// <summary>
+/// Draw distance lines.
+/// </summary>
+void RenderEngine::DrawDistanceLines() {
+	device->SetDrawLineWidth(3);
+	int nLines = Config::generationLifeSpan; // 10s * 75 distance. In 10s no way they reach z = 750
+	float distance = 75;
+	
+	for (uint16_t i = 0; i < nLines; i++) {
+		Draw3DLine(glm::vec3(-5000, 25, i * distance), glm::vec3(5000, 25, i * distance), CLE::CLColor(0, 255.0, 255.0, 255.0));
+	}
+}
+
+/// <summary>
+/// Draw a line for the first skeleton.
+/// </summary>
+/// <param name="position"> Position. </param>
+void RenderEngine::DrawFirstPlaceLine(glm::vec3 position) {
+	Draw3DLine(glm::vec3(-5000, 50, position.z + 2), glm::vec3(5000, 50, position.z + 2), CLE::CLColor(255.0, 0.0, 255.0, 255.0));
 }
 
 /// <summary>

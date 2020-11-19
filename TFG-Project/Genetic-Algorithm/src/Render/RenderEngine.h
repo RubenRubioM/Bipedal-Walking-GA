@@ -68,6 +68,17 @@ class RenderEngine{
 		void DrawBoundingBox(EMesh* entity);
 
 		/// <summary>
+		/// Draw distance lines.
+		/// </summary>
+		void DrawDistanceLines();
+
+		/// <summary>
+		/// Draw a line for the first skeleton.
+		/// </summary>
+		/// <param name="position"> Position. </param>
+		void DrawFirstPlaceLine(glm::vec3 position);
+
+		/// <summary>
 		/// Returns true if the windows stills open.
 		/// </summary>
 		/// <returns> True if windows stills open. </returns>
