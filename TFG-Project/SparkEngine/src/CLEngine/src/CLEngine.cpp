@@ -629,7 +629,7 @@ const void CLEngine::Draw3DLine(float x1, float y1, float z1, float x2, float y2
     glUniform1i(glGetUniformLocation(debugShader, "localMode"), 0);
 
     glBindVertexArray(VAOLine);
-    glDrawArrays(GL_LINE_LOOP, 0,2); 
+    glDrawArrays(GL_LINES, 0,2); 
     glUseProgram(0);
     glBindVertexArray(0);
 

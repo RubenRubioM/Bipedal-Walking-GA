@@ -202,7 +202,7 @@ class ESkeleton{
 		/// <summary>
 		/// Skeleton identifier.
 		/// </summary>
-		int skeletonId = 0;
+		uint16_t skeletonId = 0;
 
 		/// <summary>
 		/// Num of joints.
