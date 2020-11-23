@@ -264,13 +264,9 @@ void StateExecution::ShowConfigurationWindow() {
 
 	imGuiManager->BulletText("Selection function");
 	imGuiManager->RadioButton("Roulette", (int*)&Config::selectionFunction, 0); imGuiManager->SameLine();
-	imGuiManager->RadioButton("Tournament", (int*)&Config::selectionFunction, 1); imGuiManager->SameLine();
-	imGuiManager->RadioButton("Linear rank", (int*)&Config::selectionFunction, 2);
+	imGuiManager->RadioButton("Tournament", (int*)&Config::selectionFunction, 1); 
 
-	if (Config::selectionFunction == Config::SelectionFunction::ROULETTE) {
-		// Shows roulette sections
-		imGuiManager->IntSlider("Number of sections", &Config::rouletteSections, 1, Config::populationSize);
-	} else if (Config::selectionFunction == Config::SelectionFunction::TOURNAMENT) {
+	if (Config::selectionFunction == Config::SelectionFunction::TOURNAMENT) {
 		// Shows tournament members.
 		imGuiManager->IntSlider("Number of members", &Config::tournamentMembers, 1, Config::populationSize);
 		if (imGuiManager->IsHovered()) {

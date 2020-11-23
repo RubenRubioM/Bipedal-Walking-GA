@@ -327,7 +327,7 @@ void GeneticAlgorithm::Update(long long time) {
 				bestGeneId = gene->GetSkeletonId();
 			}
 
-			minGeneFitness = (gene->GetFitness() < minGeneFitness) ? gene->GetFitness() : minGeneFitness;
+			minGeneFitness = (gene->GetFitness() < minGeneFitness && !gene->IsDead()) ? gene->GetFitness() : minGeneFitness;
 		}
 	}
 
@@ -444,96 +444,6 @@ std::pair<std::vector<ESkeleton*>, std::vector<ESkeleton*>> GeneticAlgorithm::Se
 
 	switch (Config::selectionFunction){
 		case Config::SelectionFunction::ROULETTE: {
-			// We have newGenes which are the number of genes that have to be crossovered
-			// So, Config::populationSize - newGenes is the number of genes that survived throw the next generation.
-			while (genesToNewGeneration != Config::populationSize - newGenes) {
-				float localMinFitness = std::numeric_limits<float>::max();
-				float localTopFitness = std::numeric_limits<float>::lowest();
-				for (auto gene : populationAux) {
-					localMinFitness = (gene->GetFitness() < localMinFitness) ? gene->GetFitness() : localMinFitness;
-					localTopFitness = (gene->GetFitness() > localTopFitness) ? gene->GetFitness() : localTopFitness;
-				}
-
-				int rouletteSections = Config::rouletteSections;
-				nc::NdArray<float> fitnessSections = nc::linspace<float>(localMinFitness, localTopFitness + 0.001, rouletteSections);
-				nc::NdArray<float> rouletteProbabilities = Utils::RouletteProbabilities(rouletteSections); // Generate the roulette probabilities array.
-
-				float probabilityValue = Random::get<float>(0, 1);
-				int sectionIndx = rouletteProbabilities.shape().cols - 2;
-
-				for (int i = 0; i < rouletteProbabilities.shape().cols - 1; i++) {
-					if (rouletteProbabilities[0, i] <= probabilityValue && probabilityValue <= rouletteProbabilities[0, i + 1]) {
-						sectionIndx = i;
-						break;
-					}
-				}
-
-				for (int j = 0; j < populationAux.size(); j++) {
-					if (fitnessSections[0, sectionIndx] <= populationAux[j]->GetFitness() 
-						&& populationAux[j]->GetFitness() <= fitnessSections[0, sectionIndx + 1]) {
-
-						newPopulation.push_back(populationAux[j].get());
-						populationAux.erase(populationAux.begin() + j);
-						genesToNewGeneration++;
-						break;
-					}
-				}
-
-			}
-			break;
-		}
-
-		case Config::SelectionFunction::TOURNAMENT: {
-			// NOTE: Since we have a sorted vector by fitness, the tournament winner will be always the minimum index
-			//		 between all the Config::tournamentMembers but just for scalability we will not have this in count and
-			//		 we will act as if the vector is not sorted.
-			while (genesToNewGeneration != Config::populationSize - newGenes) {
-				std::vector<int> membersIndexs;
-
-				// If we have enought genes to set a tournament
-				if (Config::tournamentMembers <= populationAux.size()) {
-					while (membersIndexs.size() < Config::tournamentMembers) {
-						int indx = Random::get<int>(0, populationAux.size()-1);
-						bool repeated = false;
-
-						for (int memberIndex : membersIndexs) {
-							if (memberIndex == indx) {
-								repeated = true;
-								break;
-							}
-						}
-
-						// If the index is not repeated, add it to the vector
-						if (!repeated)
-							membersIndexs.push_back(indx);
-					}
-				}else {
-					// If we have less genes than members to pick for the tournament just pick all the rest
-					for (uint16_t i = 0; i < populationAux.size(); ++i) {
-						membersIndexs.push_back(i);
-					}
-				}
-
-				// Now, FIGHT!
-				int winnerIndex = 0;
-				float maxTournamentFitness = std::numeric_limits<float>::lowest();
-
-				for (int index : membersIndexs) {
-					if (populationAux[index]->GetFitness() > maxTournamentFitness) {
-						winnerIndex = index;
-						maxTournamentFitness = populationAux[index]->GetFitness();
-					}
-				}
-
-				newPopulation.push_back(populationAux[winnerIndex].get());
-				populationAux.erase(populationAux.begin() + winnerIndex);
-				genesToNewGeneration++;
-			}
-
-			break;
-		}
-
-		case Config::SelectionFunction::LINEAR_RANK: {
 			// Sort the population based on the gene fitness. Worst = first
 			std::sort(populationAux.begin(), populationAux.end(), [](std::shared_ptr<ESkeleton> skeleton1, std::shared_ptr<ESkeleton> skeleton2) {
 				return skeleton1->GetFitness() < skeleton2->GetFitness();
@@ -573,6 +483,58 @@ std::pair<std::vector<ESkeleton*>, std::vector<ESkeleton*>> GeneticAlgorithm::Se
 
 			break;
 		}
+
+		case Config::SelectionFunction::TOURNAMENT: {
+			// NOTE: Since we have a sorted vector by fitness, the tournament winner will be always the minimum index
+			//		 between all the Config::tournamentMembers but just for scalability we will not have this in count and
+			//		 we will act as if the vector is not sorted.
+			while (genesToNewGeneration != Config::populationSize - newGenes) {
+				std::vector<int> membersIndexs;
+
+				// If we have enought genes to set a tournament
+				if (Config::tournamentMembers <= populationAux.size()) {
+					while (membersIndexs.size() < Config::tournamentMembers) {
+						int indx = Random::get<int>(0, populationAux.size() - 1);
+						bool repeated = false;
+
+						for (int memberIndex : membersIndexs) {
+							if (memberIndex == indx) {
+								repeated = true;
+								break;
+							}
+						}
+
+						// If the index is not repeated, add it to the vector
+						if (!repeated)
+							membersIndexs.push_back(indx);
+					}
+				}
+				else {
+					// If we have less genes than members to pick for the tournament just pick all the rest
+					for (uint16_t i = 0; i < populationAux.size(); ++i) {
+						membersIndexs.push_back(i);
+					}
+				}
+
+				// Now, FIGHT!
+				int winnerIndex = 0;
+				float maxTournamentFitness = std::numeric_limits<float>::lowest();
+
+				for (int index : membersIndexs) {
+					if (populationAux[index]->GetFitness() > maxTournamentFitness) {
+						winnerIndex = index;
+						maxTournamentFitness = populationAux[index]->GetFitness();
+					}
+				}
+
+				newPopulation.push_back(populationAux[winnerIndex].get());
+				populationAux.erase(populationAux.begin() + winnerIndex);
+				genesToNewGeneration++;
+			}
+
+			break;
+		}
+
 	}
 
 	std::vector<ESkeleton*> populationToChange;
@@ -959,11 +921,8 @@ void GeneticAlgorithm::WriteCSV() {
 			selectionFunction = "Tournament";
 			break;
 		}
-		case Config::SelectionFunction::LINEAR_RANK: {
-			selectionFunction = "Linear rank";
-			break;
-		}
 	}
+
 	std::string crossoverType;
 	switch (Config::crossoverType) {
 		case(Config::CrossoverType::HEURISTIC): {
@@ -989,7 +948,7 @@ void GeneticAlgorithm::WriteCSV() {
 		{"Population size", "Life span (sec)", "Max generations", "New genes probability", "Mutation rate", "Selection function", "Crossover operator"},
 		{std::to_string(Config::populationSize), std::to_string(Config::generationLifeSpan),std::to_string(Config::maxGenerations)
 		, std::to_string(Config::newGenProbability), std::to_string(Config::mutationProbability), selectionFunction, crossoverType},
-		{"", "", "", "", "", "", ""},
+		{"", "", "", "", "Tournament members", std::to_string(Config::tournamentMembers), ""},
 		{"", "", "", "", "", "", ""},
 
 		{"Generation", "Death percentage", "Average fitness", "Top fitness", "Min fitness"
@@ -1059,5 +1018,5 @@ void GeneticAlgorithm::WriteCSV() {
 	writer.write_rows(rows);
 	stream.close();
 
-	std::cout << "Data set exported\n";
+	std::cout << title <<" exported\n";
 }

@@ -16,7 +16,7 @@ class Config {
 		/// <summary>
 		/// Enumeration of selections functions avaliables.
 		/// </summary>
-		enum SelectionFunction {ROULETTE, TOURNAMENT, LINEAR_RANK};
+		enum SelectionFunction {ROULETTE, TOURNAMENT};
 
 		/// <summary>
 		/// Enumeration of the crossover types.
@@ -59,11 +59,6 @@ class Config {
 		/// Crossover type.
 		/// </summary>
 		inline static CrossoverType crossoverType{ CrossoverType::ONEPOINT };
-
-		/// <summary>
-		/// Roulette sections for probability.
-		/// </summary>
-		inline static int rouletteSections{ 5 };
 
 		/// <summary>
 		/// Tournament members to fight.

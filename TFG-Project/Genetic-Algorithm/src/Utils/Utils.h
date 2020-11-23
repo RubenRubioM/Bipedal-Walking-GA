@@ -30,24 +30,5 @@ class Utils {
 		/// </summary>
 		inline static glm::vec3 positionOffset{ 60.0f,0.0f,0.0f };
 
-		/// <summary>
-		/// Generates a roulette probabilities with a non linear function.
-		/// </summary>
-		/// <param name="nElements"> Number of sections. </param>
-		/// <returns> Array with probabilities. </returns>
-		static nc::NdArray<float> RouletteProbabilities(int nElements) {
-			// href: https://en.wikipedia.org/wiki/Fitness_proportionate_selection
-			int sumOfFitness = 10;
-			float previousProbability = 0.0f;
-			nc::NdArray<float> probabilities = nc::zeros<float>(1,nElements);
-
-			for (int i = 0; i < nElements; i++) {
-				previousProbability = previousProbability + (i+1 / sumOfFitness);
-				probabilities[0,i] = previousProbability;
-			}
-
-			return nc::divide(probabilities, previousProbability);
-		}
-
 	private:
 };
