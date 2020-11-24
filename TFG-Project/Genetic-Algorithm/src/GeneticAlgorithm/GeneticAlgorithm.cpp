@@ -675,7 +675,7 @@ void GeneticAlgorithm::Crossover(std::pair<std::vector<ESkeleton*>, std::vector<
 			case Config::CrossoverType::HEURISTIC: {
 				float ratio = Random::get<float>(0, 1);
 				auto heuristic = [&ratio](float bestValue, float worstValue) {
-					return worstValue + (ratio * (bestValue - worstValue));
+					return bestValue + (ratio * (bestValue - worstValue));
 				};
 				auto pairHeuristic = [&heuristic](std::pair<float, float> bestPair, std::pair<float, float> worstPair) {
 					return std::pair<float, float>(heuristic(bestPair.first, worstPair.first), heuristic(bestPair.second, worstPair.second));
