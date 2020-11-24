@@ -268,7 +268,7 @@ void StateExecution::ShowConfigurationWindow() {
 
 	if (Config::selectionFunction == Config::SelectionFunction::TOURNAMENT) {
 		// Shows tournament members.
-		imGuiManager->IntSlider("Number of members", &Config::tournamentMembers, 1, Config::populationSize);
+		imGuiManager->IntSlider("Number of members", &Config::tournamentMembers, 2, Config::populationSize);
 		if (imGuiManager->IsHovered()) {
 			imGuiManager->BeginTooltip();
 			imGuiManager->Text("High number of members will occour in less diversity");

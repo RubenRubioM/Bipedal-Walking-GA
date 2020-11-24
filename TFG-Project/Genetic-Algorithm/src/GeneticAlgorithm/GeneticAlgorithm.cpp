@@ -404,6 +404,16 @@ void GeneticAlgorithm::Update(long long time) {
 				imGuiManager->BulletText(std::string("Min hip2 rotation: " + std::to_string(generation.minHip2Rotation)));
 				imGuiManager->BulletText(std::string("Min knee2 rotation: " + std::to_string(generation.minKnee2Rotation)));
 
+				imGuiManager->BulletText(std::string("Best gene hip1 rotation boundaries: <" + std::to_string(generation.bestHip1RotationBoundaries.first) + ", " + std::to_string(generation.bestHip1RotationBoundaries.second) + ">"));
+				imGuiManager->BulletText(std::string("Best gene knee1 rotation boundaries: <" + std::to_string(generation.bestKnee1RotationBoundaries.first) + ", " + std::to_string(generation.bestKnee1RotationBoundaries.second) + ">"));
+				imGuiManager->BulletText(std::string("Best gene hip2 rotation boundaries: <" + std::to_string(generation.bestHip2RotationBoundaries.first) + ", " + std::to_string(generation.bestHip2RotationBoundaries.second) + ">"));
+				imGuiManager->BulletText(std::string("Best gene knee2 rotation boundaries: <" + std::to_string(generation.bestKnee2RotationBoundaries.first) + ", " + std::to_string(generation.bestKnee2RotationBoundaries.second) + ">"));
+
+				imGuiManager->BulletText(std::string("Best gene hip1 velocity: " + std::to_string(generation.bestHip1Velocity)));
+				imGuiManager->BulletText(std::string("Best gene knee1 velocity: " + std::to_string(generation.bestKnee1Velocity)));
+				imGuiManager->BulletText(std::string("Best gene hip2 velocity: " + std::to_string(generation.bestHip2Velocity)));
+				imGuiManager->BulletText(std::string("Best gene knee2 velocity: " + std::to_string(generation.bestKnee2Velocity)));
+
 			}
 		}
 		imGuiManager->EndTab();
@@ -418,7 +428,8 @@ void GeneticAlgorithm::Update(long long time) {
 /// </summary>
 void GeneticAlgorithm::NewGeneration() {
 	SaveGenerationStats();
-
+	auto gene = GetBestGene();
+	std::cout << "Skeleton " << gene->GetSkeletonId() << ": " << gene->GetFitness() << std::endl;
 	// Genetic algorithm flow: Selection -> Crossover -> Mutation
 	auto pairPopulation = Selection();
 	Crossover(pairPopulation);
@@ -684,6 +695,7 @@ void GeneticAlgorithm::Crossover(std::pair<std::vector<ESkeleton*>, std::vector<
 					return glm::vec3(heuristic(bestVec3.x, worstVec3.x), heuristic(bestVec3.y, worstVec3.y), heuristic(bestVec3.z, worstVec3.z));
 				};
 
+				// TODO: Cambiar esto por un valor n para hacer pruebas y que no se salgan de los valores limites.
 				setValues(pairHeuristic, vec3Heuristic);
 				
 				break;
@@ -716,6 +728,8 @@ void GeneticAlgorithm::SaveGenerationStats() {
 	generationStats.averageFitness = averageFitness;
 	generationStats.topFitness = topFitness;
 	generationStats.minFitness = minFitness;
+
+	auto bestGene = GetBestGene();
 
 	float size = (float)population.size();
 	float hip1Velocity = 0.0;
@@ -770,6 +784,14 @@ void GeneticAlgorithm::SaveGenerationStats() {
 		generationStats.minKnee2Rotation = (knee2->GetRotationBoundaries().first < generationStats.minKnee2Rotation) ? knee2->GetRotationBoundaries().first : generationStats.minKnee2Rotation;
 		generationStats.topKnee2Rotation = (knee2->GetRotationBoundaries().second > generationStats.topKnee2Rotation) ? knee2->GetRotationBoundaries().second : generationStats.topKnee2Rotation;
 
+		generationStats.bestHip1RotationBoundaries = bestGene->GetLeg1()[0]->GetRotationBoundaries();
+		generationStats.bestKnee1RotationBoundaries = bestGene->GetLeg1()[1]->GetRotationBoundaries();
+		generationStats.bestHip2RotationBoundaries = bestGene->GetLeg2()[0]->GetRotationBoundaries();
+		generationStats.bestKnee2RotationBoundaries = bestGene->GetLeg2()[1]->GetRotationBoundaries();
+		generationStats.bestHip1Velocity = std::abs(bestGene->GetLeg1()[0]->GetRotationVelocity().x);
+		generationStats.bestKnee1Velocity = std::abs(bestGene->GetLeg1()[1]->GetRotationVelocity().x);
+		generationStats.bestHip2Velocity = std::abs(bestGene->GetLeg2()[0]->GetRotationVelocity().x);
+		generationStats.bestKnee2Velocity = std::abs(bestGene->GetLeg2()[1]->GetRotationVelocity().x);
 	}
 
 	generationStats.averageHip1Velocity = hip1Velocity / size;
@@ -957,7 +979,9 @@ void GeneticAlgorithm::WriteCSV() {
 		, "Min hip1 velocity", "Min knee1 velocity", "Min hip2 velocity", "Min knee2 velocity"
 		, "Average hip1 rotation", "Average knee1 rotation", "Average hip2 rotation", "Average knee2 rotation"
 		, "Top hip1 rotation", "Top knee1 rotation", "Top hip2 rotation", "Top knee2 rotation"
-		, "Min hip1 rotation", "Min knee1 rotation", "Min hip2 rotation", "Min knee2 rotation"  }
+		, "Min hip1 rotation", "Min knee1 rotation", "Min hip2 rotation", "Min knee2 rotation"
+		, "Best gene hip1 rotation", "Best gene knee1 rotation", "Best gene hip2 rotation", "Best gene knee2 rotation"
+	    , "Best gene hip1 velocity", "Best gene knee1 velocity", "Best gene hip2 velocity", "Best gene knee2 velocity", }
 	};
 	int actualRow = 5;
 	float totalDeath = 0.0f;
@@ -999,6 +1023,14 @@ void GeneticAlgorithm::WriteCSV() {
 		row.push_back(std::string("<" + std::to_string(generation.minKnee1Rotation) + " | " + std::to_string(generation.minKnee1Rotation) + ">"));
 		row.push_back(std::string("<" + std::to_string(generation.minHip2Rotation) + " | " + std::to_string(generation.minHip2Rotation) + ">"));
 		row.push_back(std::string("<" + std::to_string(generation.minKnee2Rotation) + " | " + std::to_string(generation.minKnee2Rotation) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.bestHip1RotationBoundaries.first) + " | " + std::to_string(generation.bestHip1RotationBoundaries.second) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.bestKnee1RotationBoundaries.first) + " | " + std::to_string(generation.bestKnee1RotationBoundaries.second) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.bestHip2RotationBoundaries.first) + " | " + std::to_string(generation.bestHip2RotationBoundaries.second) + ">"));
+		row.push_back(std::string("<" + std::to_string(generation.bestKnee2RotationBoundaries.first) + " | " + std::to_string(generation.bestKnee2RotationBoundaries.second) + ">"));
+		row.push_back(std::to_string(generation.bestHip1Velocity));
+		row.push_back(std::to_string(generation.bestKnee1Velocity));
+		row.push_back(std::to_string(generation.bestHip2Velocity));
+		row.push_back(std::to_string(generation.bestKnee2Velocity));
 
 		rows.insert(rows.begin() + actualRow, row);
 		actualRow++;

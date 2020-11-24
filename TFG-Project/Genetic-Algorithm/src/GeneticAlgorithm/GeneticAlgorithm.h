@@ -102,6 +102,15 @@ class GeneticAlgorithm {
 				float minKnee1Rotation = std::numeric_limits<float>::max();
 				float minHip2Rotation = std::numeric_limits<float>::max();
 				float minKnee2Rotation = std::numeric_limits<float>::max();
+				std::pair<float, float> bestHip1RotationBoundaries;
+				std::pair<float, float> bestKnee1RotationBoundaries;
+				std::pair<float, float> bestHip2RotationBoundaries;
+				std::pair<float, float> bestKnee2RotationBoundaries;
+				float bestHip1Velocity = 0;
+				float bestKnee1Velocity = 0;
+				float bestHip2Velocity = 0;
+				float bestKnee2Velocity = 0;
+				
 		};
 
 		/// <summary>
