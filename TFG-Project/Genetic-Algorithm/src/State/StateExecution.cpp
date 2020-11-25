@@ -284,6 +284,11 @@ void StateExecution::ShowConfigurationWindow() {
 	imGuiManager->RadioButton("Average", (int*)&Config::crossoverType, 2); imGuiManager->SameLine();
 	imGuiManager->RadioButton("One point", (int*)&Config::crossoverType, 3);
 
+	if (Config::crossoverType == Config::CrossoverType::HEURISTIC) {
+		// Shows heuristic tries.
+		imGuiManager->IntSlider("Number of tries", &Config::heuristicTries, 2, 100);
+	}
+
 	imGuiManager->Separator();
 
 	if (imGuiManager->Button("Start simulation")) {

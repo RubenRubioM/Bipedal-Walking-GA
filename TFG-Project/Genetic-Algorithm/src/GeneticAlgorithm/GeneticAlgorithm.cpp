@@ -684,19 +684,61 @@ void GeneticAlgorithm::Crossover(std::pair<std::vector<ESkeleton*>, std::vector<
 				break;
 			}
 			case Config::CrossoverType::HEURISTIC: {
-				float ratio = Random::get<float>(0, 1);
-				auto heuristic = [&ratio](float bestValue, float worstValue) {
+				auto heuristic = [](float bestValue, float worstValue, float ratio) {
 					return bestValue + (ratio * (bestValue - worstValue));
 				};
-				auto pairHeuristic = [&heuristic](std::pair<float, float> bestPair, std::pair<float, float> worstPair) {
-					return std::pair<float, float>(heuristic(bestPair.first, worstPair.first), heuristic(bestPair.second, worstPair.second));
+				auto pairHeuristic = [&heuristic](std::pair<float, float> bestPair, std::pair<float, float> worstPair, float min, float max) {
+					auto pair = std::pair<float, float>(worstPair.first,worstPair.second);
+
+					for (uint16_t i = 0; i < Config::heuristicTries; ++i) {
+						float ratio = Random::get<float>(0, 1);
+
+						pair = std::pair<float, float>(heuristic(bestPair.first, worstPair.first,ratio), heuristic(bestPair.second, worstPair.second,ratio));
+						if ((pair.first >= min && pair.first <= max) && (pair.second >= min && pair.second <= max)) {
+							return pair;
+						}
+					}
+					pair = std::pair<float, float>(worstPair.first, worstPair.second);
+
+					return pair;
 				};
-				auto vec3Heuristic = [&heuristic](glm::vec3 bestVec3, glm::vec3 worstVec3) {
-					return glm::vec3(heuristic(bestVec3.x, worstVec3.x), heuristic(bestVec3.y, worstVec3.y), heuristic(bestVec3.z, worstVec3.z));
+				auto vec3Heuristic = [&heuristic](glm::vec3 bestVec3, glm::vec3 worstVec3, float min, float max) {
+					auto vec3 = glm::vec3(worstVec3.x, worstVec3.y, worstVec3.z);
+
+					for (uint16_t i = 0; i < Config::heuristicTries; i++) {
+						float ratio = Random::get<float>(0, 1);
+
+						vec3 = glm::vec3(heuristic(bestVec3.x, worstVec3.x,ratio), heuristic(bestVec3.y, worstVec3.y,ratio), heuristic(bestVec3.z, worstVec3.z,ratio));
+						if (vec3.x >= min && vec3.x <= max) {
+							return vec3;
+						}
+					}
+					vec3 = glm::vec3(worstVec3.x, worstVec3.y, worstVec3.z);
+
+					return vec3;
 				};
 
 				// TODO: Cambiar esto por un valor n para hacer pruebas y que no se salgan de los valores limites.
-				setValues(pairHeuristic, vec3Heuristic);
+				
+				float rotationVelocityMin = Config::rotationVelocityBoundaries.first.x;
+				float rotationVelocityMax = Config::rotationVelocityBoundaries.second.x;
+
+				// 0. Hip1 rotation boundaries
+				gene->GetLeg1()[0]->SetRotationBoundaries(pairHeuristic(parent1->GetLeg1()[0]->GetRotationBoundaries(), parent2->GetLeg1()[0]->GetRotationBoundaries(),-160,160));
+				// 1. Knee1 rotation boundaries
+				gene->GetLeg1()[1]->SetRotationBoundaries(pairHeuristic(parent1->GetLeg1()[1]->GetRotationBoundaries(), parent2->GetLeg1()[1]->GetRotationBoundaries(), -160, 0));
+				// 2. Hip2 rotation boundaries
+				gene->GetLeg2()[0]->SetRotationBoundaries(pairHeuristic(parent1->GetLeg2()[0]->GetRotationBoundaries(), parent2->GetLeg2()[0]->GetRotationBoundaries(), -160, 160));
+				// 3. Knee2 rotation boundaries
+				gene->GetLeg2()[1]->SetRotationBoundaries(pairHeuristic(parent1->GetLeg2()[1]->GetRotationBoundaries(), parent2->GetLeg2()[1]->GetRotationBoundaries(), -160, 0));
+				// 4. Hip1 velocity
+				gene->GetLeg1()[0]->SetRotationVelocity(vec3Heuristic(parent1->GetLeg1()[0]->GetRotationVelocity(), parent2->GetLeg1()[0]->GetRotationVelocity(), rotationVelocityMin, rotationVelocityMax));
+				// 5. Knee1 velocity
+				gene->GetLeg1()[1]->SetRotationVelocity(vec3Heuristic(parent1->GetLeg1()[1]->GetRotationVelocity(), parent2->GetLeg1()[1]->GetRotationVelocity(), rotationVelocityMin, rotationVelocityMax));
+				// 6. Hip2 velocity
+				gene->GetLeg2()[0]->SetRotationVelocity(vec3Heuristic(parent1->GetLeg2()[0]->GetRotationVelocity(), parent2->GetLeg2()[0]->GetRotationVelocity(), rotationVelocityMin, rotationVelocityMax));
+				// 7. Knee2 velocity
+				gene->GetLeg2()[1]->SetRotationVelocity(vec3Heuristic(parent1->GetLeg2()[1]->GetRotationVelocity(), parent2->GetLeg2()[1]->GetRotationVelocity(), rotationVelocityMin, rotationVelocityMax));
 				
 				break;
 			}

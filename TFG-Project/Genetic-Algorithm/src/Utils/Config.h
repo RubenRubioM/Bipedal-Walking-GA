@@ -74,4 +74,9 @@ class Config {
 		/// Generation life span in seconds.
 		/// </summary>
 		inline static int generationLifeSpan = 10;
+
+		/// <summary>
+		/// Number of tries before assing the worse parent value.
+		/// </summary>
+		inline static int heuristicTries = 50;
 };
