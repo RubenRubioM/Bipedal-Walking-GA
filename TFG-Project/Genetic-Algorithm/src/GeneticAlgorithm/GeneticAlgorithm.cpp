@@ -55,6 +55,51 @@ GeneticAlgorithm::GeneticAlgorithm() {
 
 		offset.x += offsetIncrese.x;
 	}
+
+	std::cout << "==============================\n";
+
+	std::cout << "Population size: " << Config::populationSize << std::endl;
+	std::cout << "Life span: " << Config::generationLifeSpan << std::endl;
+	std::cout << "Max generations: " << Config::maxGenerations << std::endl;
+	std::cout << "New genes probability: " << Config::newGenProbability * 100 << "%" << std::endl;
+	std::cout << "Mutation rate: " << Config::mutationProbability * 100 << "%" <<std::endl;
+
+	std::string selectionFunction;
+	switch (Config::selectionFunction) {
+		case Config::SelectionFunction::ROULETTE: {
+			selectionFunction = "Roulette";
+			break;
+		}
+		case Config::SelectionFunction::TOURNAMENT: {
+			selectionFunction = "Tournament-" + std::to_string(Config::tournamentMembers);
+			break;
+		}
+	}
+	std::cout << "Selection function: " << selectionFunction << std::endl;
+	
+	std::string crossoverType;
+	switch (Config::crossoverType) {
+		case(Config::CrossoverType::HEURISTIC): {
+			crossoverType = "Heuristic";
+			break;
+		}
+		case(Config::CrossoverType::ARITHMETIC): {
+			crossoverType = "Arithmetic";
+			break;
+		}
+		case(Config::CrossoverType::AVERAGE): {
+			crossoverType = "Average";
+			break;
+		}
+		case(Config::CrossoverType::ONEPOINT): {
+			crossoverType = "One point";
+			break;
+		}
+	}
+	std::cout << "Crossover type: " << crossoverType << std::endl;
+
+	std::cout << "==============================\n";
+
 }
 
 /// <summary>
@@ -429,7 +474,6 @@ void GeneticAlgorithm::Update(long long time) {
 void GeneticAlgorithm::NewGeneration() {
 	SaveGenerationStats();
 	auto gene = GetBestGene();
-	std::cout << "Skeleton " << gene->GetSkeletonId() << ": " << gene->GetFitness() << std::endl;
 	// Genetic algorithm flow: Selection -> Crossover -> Mutation
 	auto pairPopulation = Selection();
 	Crossover(pairPopulation);
@@ -438,7 +482,6 @@ void GeneticAlgorithm::NewGeneration() {
 	SetDefaultPopulationValues();
 	ResetStats();
 	actualGeneration++;
-	std::cout << "---- Generation " << actualGeneration << " begins ----\n";
 }
 
 /// <summary>

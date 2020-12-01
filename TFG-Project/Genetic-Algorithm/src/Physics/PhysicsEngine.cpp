@@ -190,6 +190,11 @@ void PhysicsEngine::ApplySkeletonMovement(ESkeleton* skeleton) const {
 	auto applyJointRotation = [](EMesh* joint) {
 		joint->SetRotation(joint->GetRotation() + (joint->GetRotationVelocity() * Utils::deltaTime));
 
+		auto rotationBoundaries = joint->GetRotationBoundaries();
+		auto lowerRotation = (rotationBoundaries.first < rotationBoundaries.second) ? rotationBoundaries.first : rotationBoundaries.second;
+		auto greaterRotation = (rotationBoundaries.first >= rotationBoundaries.second) ? rotationBoundaries.first : rotationBoundaries.second;
+		joint->SetRotationBoundaries(std::pair<float, float>(lowerRotation, greaterRotation));
+
 		if (joint->GetRotation().x >= joint->GetRotationBoundaries().second) {
 			joint->SetRotation(glm::vec3(joint->GetRotationBoundaries().second, joint->GetRotation().y, joint->GetRotation().z));
 			joint->SetRotationVelocity(-joint->GetRotationVelocity());

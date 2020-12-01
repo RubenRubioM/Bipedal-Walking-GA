@@ -241,7 +241,7 @@ void StateExecution::ImGuiDebug() {
 /// </summary>
 void StateExecution::ShowConfigurationWindow() {
 	imGuiManager->BulletText("Population size");
-	imGuiManager->IntSlider("Number of genes", &Config::populationSize, 3, 200);
+	imGuiManager->IntSlider("Number of genes", &Config::populationSize, 2, 200);
 	if (imGuiManager->IsHovered()) {
 		imGuiManager->BeginTooltip();
 		imGuiManager->Text("High values may occuor performance issues");
@@ -255,7 +255,7 @@ void StateExecution::ShowConfigurationWindow() {
 	imGuiManager->IntSlider("Number of generations", &Config::maxGenerations, 2, 500);
 
 	imGuiManager->BulletText("New genes probability");
-	imGuiManager->FloatSlider("Percentage of new genes", &Config::newGenProbability, 0.01, 0.99);
+	imGuiManager->FloatSlider("Percentage of new genes", &Config::newGenProbability, 0, 1);
 
 	imGuiManager->BulletText("Mutation probability");
 	imGuiManager->FloatSlider("Percentage of mutations", &Config::mutationProbability, 0, 1);

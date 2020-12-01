@@ -1,11 +1,4 @@
 
-@misc{noauthor_zotero_nodate,
-	title = {Zotero {\textbar} {Email} validation},
-	url = {https://www.zotero.org/user/validate/4904e54e2a2fbab0b4b4},
-	urldate = {2020-10-28},
-	file = {Zotero | Email validation:C\:\\Users\\ruben\\Zotero\\storage\\P75IZDRK\\4904e54e2a2fbab0b4b4.html:text/html},
-}
-
 @article{johnny_huynh_separating_2008,
 	title = {Separating {Axis} {Theorem} for {Oriented} {Bounding} {Boxes}},
 	language = {en},
@@ -24,16 +17,6 @@
 	year = {2008},
 	pages = {40},
 	file = {Eberly - Dynamic Collision Detection using Oriented Boundin.pdf:C\:\\Users\\ruben\\Zotero\\storage\\2JWI9K36\\Eberly - Dynamic Collision Detection using Oriented Boundin.pdf:application/pdf},
-}
-
-@book{de_vries_learn_nodate,
-	title = {Learn {OpenGL}},
-	copyright = {Creative Commons Attribution-NonCommercial 3.0 Unported License},
-	url = {https://learnopengl.com/book/offline%20learnopengl.pdf},
-	abstract = {La transcripción de la web learopengl.org para aprender a utilizar OpenGL},
-	urldate = {2020-10-28},
-	author = {de Vries, Joey},
-	file = {offline learnopengl.pdf:C\:\\Users\\ruben\\Zotero\\storage\\ZFLQU9GE\\offline learnopengl.pdf:application/pdf},
 }
 
 @book{joey_de_vries_learn_2020,
@@ -78,198 +61,14 @@
 	file = {Bustos y Vázquez - Algoritmos Genéticos. Aplicación al Juego de las N.pdf:C\:\\Users\\ruben\\Zotero\\storage\\IW7I65VV\\Bustos y Vázquez - Algoritmos Genéticos. Aplicación al Juego de las N.pdf:application/pdf},
 }
 
-@article{takeyas_introduccion_nodate,
+@article{takeyas_introduccion_2011,
 	title = {{INTRODUCCIÓN} {A} {LA} {INTELIGENCIA} {ARTIFICIAL}},
 	language = {es},
 	author = {Takeyas, Bruno López},
+	month = aug,
+	year = {2011},
 	pages = {3},
 	file = {Takeyas - INTRODUCCIÓN A LA INTELIGENCIA ARTIFICIAL.pdf:C\:\\Users\\ruben\\Zotero\\storage\\WIIR5W3J\\Takeyas - INTRODUCCIÓN A LA INTELIGENCIA ARTIFICIAL.pdf:application/pdf},
-}
-
-@misc{noauthor_basic_nodate,
-	title = {Basic {Questions}},
-	url = {http://www-formal.stanford.edu/jmc/whatisai/node1.html},
-	urldate = {2020-10-30},
-	file = {Basic Questions:C\:\\Users\\ruben\\Zotero\\storage\\4V9SUH7E\\node1.html:text/html},
-}
-
-@misc{john_mccarthy_what_nodate,
-	title = {{WHAT} {IS} {ARTIFICIAL} {INTELLIGENCE}?},
-	language = {en},
-	urldate = {2020-10-30},
-	collaborator = {{John McCarthy}},
-	file = {WHAT IS ARTIFICIAL INTELLIGENCE?:C\:\\Users\\ruben\\Zotero\\storage\\J99EH2HS\\whatisai.html:text/html},
-}
-
-@misc{noauthor_fitness_2020,
-	title = {Fitness proportionate selection},
-	copyright = {Creative Commons Attribution-ShareAlike License},
-	abstract = {Fitness proportionate selection, also known as roulette wheel selection, is a genetic operator used in genetic algorithms for selecting potentially useful solutions for recombination.
-In fitness proportionate selection, as in all selection methods, the fitness function assigns a fitness to possible solutions or chromosomes.  This fitness level is used to associate a probability of selection with each individual chromosome. If 
-  
-    
-      
-        
-          f
-          
-            i
-          
-        
-      
-    
-    \{{\textbackslash}displaystyle f\_\{i\}\}
-   is the fitness of individual 
-  
-    
-      
-        i
-      
-    
-    \{{\textbackslash}displaystyle i\}
-   in the population, its probability of being selected is 
-
-  
-    
-      
-        
-          p
-          
-            i
-          
-        
-        =
-        
-          
-            
-              f
-              
-                i
-              
-            
-            
-              
-                Σ
-                
-                  j
-                  =
-                  1
-                
-                
-                  N
-                
-              
-              
-                f
-                
-                  j
-                
-              
-            
-          
-        
-        ,
-      
-    
-    \{{\textbackslash}displaystyle p\_\{i\}=\{{\textbackslash}frac \{f\_\{i\}\}\{{\textbackslash}Sigma \_\{j=1\}{\textasciicircum}\{N\}f\_\{j\}\}\},\}
-  where 
-  
-    
-      
-        N
-      
-    
-    \{{\textbackslash}displaystyle N\}
-   is the number of individuals in the population.
-This could be imagined similar to a Roulette wheel in a casino. Usually a proportion of the wheel is assigned to each of the possible selections based on their fitness value. This could be achieved by dividing the fitness of a selection by the total fitness of all the selections, thereby normalizing them to 1. Then a random selection is made similar to how the roulette wheel is rotated.
-While candidate solutions with a higher fitness will be less likely to be eliminated, there is still a chance that they may be eliminated because their probability of selection is less than 1 (or 100\%).  Contrast this with a less sophisticated selection algorithm, such as truncation selection, which will eliminate a fixed percentage of the weakest candidates. With fitness proportionate selection there is a chance some weaker solutions may survive the selection process. This is because even though the probability that the weaker solutions will survive is low, it is not zero which means it is still possible they will survive; this is an advantage, because there is a chance that even weak solutions may have some features or characteristics which could prove useful following the recombination process.
-The analogy to a roulette wheel can be envisaged by imagining a roulette wheel in which each candidate solution represents a pocket on the wheel; the size of the pockets are proportionate to the probability of selection of the solution.  Selecting N chromosomes from the population is equivalent to playing N games on the roulette wheel, as each candidate is drawn independently.
-Other selection techniques, such as stochastic universal sampling or tournament selection, are often used in practice. This is because they have less stochastic noise, or are fast, easy to implement and have a constant selection pressure.The naive implementation is carried out by first generating the cumulative probability distribution (CDF) over the list of individuals using a probability proportional to the fitness of the individual. A uniform random number from the range [0,1) is chosen and the inverse of the CDF for that number gives an individual. This corresponds to the roulette ball falling in the bin of an individual with a probability proportional to its width. The "bin" corresponding to the inverse of the uniform random number can be found most quickly by using a binary search over the elements of the CDF. It takes in the O(log n) time to choose an individual. A faster alternative that generates individuals in O(1) time will be to use the alias method.
-Recently, a very simple algorithm was introduced that is based on "stochastic acceptance". The algorithm randomly selects an individual (say 
-  
-    
-      
-        i
-      
-    
-    \{{\textbackslash}displaystyle i\}
-  ) and accepts the selection with probability 
-  
-    
-      
-        
-          f
-          
-            i
-          
-        
-        
-          /
-        
-        
-          f
-          
-            M
-          
-        
-      
-    
-    \{{\textbackslash}displaystyle f\_\{i\}/f\_\{M\}\}
-  , where 
-  
-    
-      
-        
-          f
-          
-            M
-          
-        
-      
-    
-    \{{\textbackslash}displaystyle f\_\{M\}\}
-   is the maximum fitness in the population. Certain analysis indicates that the stochastic acceptance version has a considerably better performance than versions based on linear or binary search, especially in applications where fitness values might change during the run. While the behavior of this algorithm is typically fast, some fitness distributions (such as exponential distributions) may require 
-  
-    
-      
-        O
-        (
-        n
-        )
-      
-    
-    \{{\textbackslash}displaystyle O(n)\}
-   iterations in the worst case. This algorithm also requires more random numbers than binary search.},
-	language = {en},
-	urldate = {2020-11-02},
-	journal = {Wikipedia},
-	month = sep,
-	year = {2020},
-	note = {Page Version ID: 979505220},
-	file = {Snapshot:C\:\\Users\\ruben\\Zotero\\storage\\68LG9XSQ\\index.html:text/html},
-}
-
-@misc{noauthor_tournament_2020,
-	title = {Tournament selection},
-	copyright = {Creative Commons Attribution-ShareAlike License},
-	url = {https://en.wikipedia.org/w/index.php?title=Tournament_selection&oldid=981242416},
-	abstract = {Tournament selection is a method of selecting an individual from a population of individuals in a genetic algorithm. Tournament selection involves running several "tournaments" among a few individuals (or "chromosomes") chosen at random from the population.  The winner of each tournament (the one with the best fitness) is selected for crossover.  Selection pressure, a probabilistic measure of a chromosome's likelihood of participation in the tournament based on the participant selection pool size, is easily adjusted by changing the tournament size, the reason is that if the tournament size is larger, weak individuals have a smaller chance to be selected, because, if a weak individual is selected to be in a tournament, there is a higher probability that a stronger individual is also in that tournament.
-The tournament selection method may be described in pseudo code:
-
-choose k (the tournament size) individuals from the population at random
-choose the best individual from the tournament with probability p
-choose the second best individual with probability p*(1-p)
-choose the third best individual with probability p*((1-p){\textasciicircum}2)
-and so on
-
-Deterministic tournament selection selects the best individual (when p = 1) in any tournament. A 1-way tournament (k = 1) selection is equivalent to random selection. There are two variants of the selection: with and without replacement. The variant without replacement guarantees that when selecting N individuals from a population of N elements, each individual participates in exactly k tournaments. An algorithm is proposed in . Note that depending on the number of elements selected, selection without replacement does not guarantee that no individual is selected more than once. It just guarantees that each individual has an equal chance of participating in the same number of tournaments.
-In comparison with the (stochastic) fitness proportionate selection method, tournament selection is often implemented in practice due to its lack of stochastic noise.Tournament selection has several benefits over alternative selection methods for genetic algorithms (for example, fitness proportionate selection and reward-based selection): it is efficient to code, works on parallel architectures and allows the selection pressure to be easily adjusted.  Tournament selection has also been shown to be independent of the scaling of the genetic algorithm fitness function (or 'objective function') in some classifier systems.},
-	language = {en},
-	urldate = {2020-11-02},
-	journal = {Wikipedia},
-	month = oct,
-	year = {2020},
-	note = {Page Version ID: 981242416},
-	file = {Snapshot:C\:\\Users\\ruben\\Zotero\\storage\\PJQG5A8Y\\index.html:text/html},
 }
 
 @article{nazif_optimized_2010,
@@ -280,37 +79,6 @@ In comparison with the (stochastic) fitness proportionate selection method, tour
 	author = {Nazif, Habibeh and Lee, Lai Soon},
 	month = jan,
 	year = {2010},
-}
-
-@article{zakir_h_ahmed_genetic_nodate,
-	title = {Genetic {Algorithm} for the {Traveling} {Salesman} {Problem} using {Sequential} {Constructive} {Crossover} {Operator}},
-	abstract = {This paper develops a new crossover operator, Sequential Constructive crossover (SCX), for a genetic algorithm that generates high quality solutions to the Traveling Salesman Problem (TSP). The sequential constructive crossover operator constructs an offspring from a pair of parents using better edges on the basis of their values that may be present in the parents' structure maintaining the sequence of nodes in the parent chromosomes. The efficiency of the SCX is compared as against some existing crossover operators; namely, edge recombination crossover (ERX) and generalized N-point crossover (GNX) for some benchmark TSPLIB instances. Experimental results show that the new crossover operator is better than the ERX and GNX.},
-	language = {en},
-	journal = {International Journal of Biometrics},
-	author = {{Zakir H Ahmed}},
-	pages = {10},
-	file = {Ahmed - Genetic Algorithm for the Traveling Salesman Probl.pdf:C\:\\Users\\ruben\\Zotero\\storage\\XGRUFFG2\\Ahmed - Genetic Algorithm for the Traveling Salesman Probl.pdf:application/pdf},
-}
-
-@misc{ahmed_genetic_2010,
-	title = {{GENETIC} {ALGORITHM} {FOR} {THE} {TRAVELING} {SALESMAN} {PROBLEM} {USING} {SEQUENTIAL} {CONSTRUCTIVE} {CROSSOVER}},
-	url = {/paper/GENETIC-ALGORITHM-FOR-THE-TRAVELING-SALESMAN-USING-Ahmed/a1e650daed4ed9c6a403b08e5d50b3ea9f3b5de4},
-	abstract = {This paper develops a new crossover operator, Sequential Constructive crossover (SCX), for a genetic algorithm that generates high quality solutions to the Traveling Salesman Problem (TSP). The sequential constructive crossover operator constructs an offspring from a pair of parents using better edges on the basis of their values that may be present in the parents\&\#39; structure maintaining the sequence of nodes in the parent chromosomes. The efficiency of the SCX is compared as against some existing crossover operators; namely, edge recombination crossover (ERX) and generalized N-point crossover (GNX) for some benchmark TSPLIB instances. Experimental results show that the new crossover operator is better than the ERX and GNX.},
-	language = {en},
-	urldate = {2020-11-03},
-	journal = {undefined},
-	author = {Ahmed, Z. H.},
-	year = {2010},
-	file = {Snapshot:C\:\\Users\\ruben\\Zotero\\storage\\LFBCK8RH\\a1e650daed4ed9c6a403b08e5d50b3ea9f3b5de4.html:text/html},
-}
-
-@article{yilmaz_kaya_novel_nodate,
-	title = {A {Novel} {Crossover} {Operator} for {Genetic} {Algorithms}: {Ring} {Crossover}},
-	abstract = {The genetic algorithm (GA) is an optimization and search technique based on the principles of genetics and natural selection. A GA allows a population composed of many individuals to evolve under specified selection rules to a state that maximizes the “fitness” function. In that process, crossover operator plays an important role. To comprehend the GAs as a whole, it is necessary to understand the role of a crossover operator. Today, there are a number of different crossover operators that can be used in GAs. However, how to decide what operator to use for solving a problem? A number of test functions with various levels of difficulty has been selected as a test polygon for determine the performance of crossover operators.},
-	language = {en},
-	author = {{Yılmaz Kaya} and {Murat Uyar} and {Ramazan Tekđn}},
-	pages = {4},
-	file = {Kaya et al. - A Novel Crossover Operator for Genetic Algorithms.pdf:C\:\\Users\\ruben\\Zotero\\storage\\JSLG65DN\\Kaya et al. - A Novel Crossover Operator for Genetic Algorithms.pdf:application/pdf},
 }
 
 @article{dr_anantkumar_umbarkar_crossover_2015,
@@ -337,26 +105,11 @@ In comparison with the (stochastic) fitness proportionate selection method, tour
 	year = {2000},
 	keywords = {antenna phased arrays, antenna radiation patterns, Application software, array factors, Displays, Electromagnetics, electromagnetics problems, Explosions, genetic algorithm, genetic algorithms, Genetic algorithms, Genetic mutations, Helium, linear antenna array, linear antenna arrays, numerical experiments, optimum mutation rate, optimum population size, phase weights, Phased arrays, run time, sidelobe level, simple real genetic algorithm, Vectors, Wheels},
 	pages = {1034--1037 vol.2},
-	file = {IEEE Xplore Abstract Record:C\:\\Users\\ruben\\Zotero\\storage\\BIQQMKZ9\\875398.html:text/html},
-}
-
-@inproceedings{r_l_haupt_optimum_2000-1,
-	title = {Optimum population size and mutation rate for a simple real genetic algorithm that optimizes array factors},
-	volume = {2},
-	doi = {10.1109/APS.2000.875398},
-	abstract = {There has been an explosion of papers describing applications of a genetic algorithm (GA) to electromagnetics problems. Most of the work has followed traditional GA philosophy when choosing the population size and mutation rate of the genetic algorithm. This paper reports the results of experiments to determine the optimum population size and mutation rate for a simple real genetic algorithm. The choice of population size and mutation rate can cause the run time of the GA to vary by several orders of magnitude. The results of this investigation show that a small population size and relatively large mutation rate is far superior to the large population sizes and low mutation rates that is used by most of the papers presented in the electromagnetics community and by the GA community at large. The results of the numerical experiments presented in this paper suggest that the best mutation rate for GAs lies between 5 and 20\% while the population size should be less than 16.},
-	booktitle = {{IEEE} {Antennas} and {Propagation} {Society} {International} {Symposium}. {Transmitting} {Waves} of {Progress} to the {Next} {Millennium}. 2000 {Digest}. {Held} in conjunction with: {USNC}/{URSI} {National} {Radio} {Science} {Meeting} ({C}},
-	author = {{R. L. Haupt}},
-	month = jul,
-	year = {2000},
-	keywords = {antenna phased arrays, antenna radiation patterns, Application software, array factors, Displays, Electromagnetics, electromagnetics problems, Explosions, genetic algorithm, genetic algorithms, Genetic algorithms, Genetic mutations, Helium, linear antenna array, linear antenna arrays, numerical experiments, optimum mutation rate, optimum population size, phase weights, Phased arrays, run time, sidelobe level, simple real genetic algorithm, Vectors, Wheels},
-	pages = {1034--1037 vol.2},
 	file = {IEEE Xplore Full Text PDF:C\:\\Users\\ruben\\Zotero\\storage\\VSI7MX7Y\\Haupt - 2000 - Optimum population size and mutation rate for a si.pdf:application/pdf;IEEE Xplore Abstract Record:C\:\\Users\\ruben\\Zotero\\storage\\9GGUGU9B\\875398.html:text/html},
 }
 
 @article{david_ha_visual_2017,
 	title = {A {Visual} {Guide} to {Evolution} {Strategies}},
-	url = {https://blog.otoro.net/2017/10/29/visual-evolution-strategies/},
 	abstract = {A Visual Guide to Evolution Strategies},
 	urldate = {2020-11-08},
 	author = {{David Ha}},
@@ -367,7 +120,6 @@ In comparison with the (stochastic) fitness proportionate selection method, tour
 
 @article{andrew_n_sloss_2019_2019,
 	title = {2019 {Evolutionary} {Algorithms} {Review}},
-	url = {http://arxiv.org/abs/1906.08870},
 	abstract = {Evolutionary algorithm research and applications began over 50 years ago. Like other artificial intelligence techniques, evolutionary algorithms will likely see increased use and development due to the increased availability of computation, more robust and available open source software libraries, and the increasing demand for artificial intelligence techniques. As these techniques become more adopted and capable, it is the right time to take a perspective of their ability to integrate into society and the human processes they intend to augment. In this review, we explore a new taxonomy of evolutionary algorithms and resulting classifications that look at five main areas: the ability to manage the control of the environment with limiters, the ability to explain and repeat the search process, the ability to understand input and output causality within a solution, the ability to manage algorithm bias due to data or user design, and lastly, the ability to add corrective measures. These areas are motivated by today's pressures on industry to conform to both societies concerns and new government regulatory rules. As many reviews of evolutionary algorithms exist, after motivating this new taxonomy, we briefly classify a broad range of algorithms and identify areas of future research.},
 	urldate = {2020-11-08},
 	journal = {arXiv:1906.08870 [cs]},
@@ -388,65 +140,12 @@ In comparison with the (stochastic) fitness proportionate selection method, tour
 	author = {{OpenAI}},
 	month = nov,
 	year = {2020},
-	note = {original-date: 2016-04-27T14:59:16Z},
-}
-
-@misc{noauthor_openaigym_nodate,
-	title = {openai/gym},
-	url = {https://github.com/openai/gym},
-	abstract = {A toolkit for developing and comparing reinforcement learning algorithms. - openai/gym},
-	language = {en},
-	urldate = {2020-11-08},
-	journal = {GitHub},
-	file = {Snapshot:C\:\\Users\\ruben\\Zotero\\storage\\DK3CLLTA\\bipedal_walker.html:text/html},
-}
-
-@misc{openai_gym_nodate,
-	title = {Gym: {A} toolkit for developing and comparing reinforcement learning algorithms},
-	shorttitle = {Gym},
-	url = {https://gym.openai.com},
-	abstract = {A toolkit for developing and comparing reinforcement learning algorithms},
-	urldate = {2020-11-08},
-	author = {OpenAI},
-	file = {Snapshot:C\:\\Users\\ruben\\Zotero\\storage\\NMVHZNS4\\BipedalWalker-v2.html:text/html},
-}
-
-@misc{m_gestal_indice_nodate,
-	title = {Índice {General}},
-	url = {http://sabia.tic.udc.es/mgestal/cv/aaggtutorial/node1.html},
-	urldate = {2020-11-09},
-	author = {{M. Gestal}},
-	file = {Índice General:C\:\\Users\\ruben\\Zotero\\storage\\S858YXFU\\node1.html:text/html},
-}
-
-@misc{noauthor_65_nodate,
-	title = {6.5 {Mutación}},
-	url = {http://sabia.tic.udc.es/mgestal/cv/aaggtutorial/node19.html},
-	urldate = {2020-11-09},
-	file = {6.5 Mutación:C\:\\Users\\ruben\\Zotero\\storage\\WLJKRXHU\\node19.html:text/html},
-}
-
-@misc{marcos_gestal_pose_introduccion_nodate,
-	title = {Introducción a los {Algoritmos} {Genéticos}},
-	url = {http://sabia.tic.udc.es/mgestal/cv/aaggtutorial/aagg.html},
-	urldate = {2020-11-09},
-	author = {{Marcos Gestal Pose}},
-	file = {Introducción a los Algoritmos Genéticos:C\:\\Users\\ruben\\Zotero\\storage\\F8IWIZPL\\aagg.html:text/html},
-}
-
-@article{pose_introduccion_nodate,
-	title = {Introducción a los {Algoritmos} {Genéticos}},
-	language = {es},
-	author = {Pose, Marcos Gestal},
-	pages = {16},
-	file = {Pose - Introduccio´n a los Algoritmos Gen´eticos.pdf:C\:\\Users\\ruben\\Zotero\\storage\\HIV829XR\\Pose - Introduccio´n a los Algoritmos Gen´eticos.pdf:application/pdf},
 }
 
 @article{thomas_geijtenbeek_flexible_2013,
 	title = {Flexible muscle-based locomotion for bipedal creatures},
 	volume = {32},
 	issn = {0730-0301, 1557-7368},
-	url = {https://dl.acm.org/doi/10.1145/2508363.2508399},
 	doi = {10.1145/2508363.2508399},
 	abstract = {We present a muscle-based control method for simulated bipeds in which both the muscle routing and control parameters are optimized. This yields a generic locomotion control method that supports a variety of bipedal creatures. All actuation forces are the result of 3D simulated muscles, and a model of neural delay is included for all feedback paths. As a result, our controllers generate torque patterns that incorporate biomechanical constraints. The synthesized controllers ﬁnd different gaits based on target speed, can cope with uneven terrain and external perturbations, and can steer to target directions.},
 	language = {en},
@@ -468,18 +167,16 @@ In comparison with the (stochastic) fitness proportionate selection method, tour
 	author = {{Robert Jankowski}},
 	month = nov,
 	year = {2020},
-	note = {original-date: 2019-09-02T17:24:45Z},
 	keywords = {bipedalwalker, cartpole-v0, cnn, deep-learning, genetic-algorithm, neural-network, neural-networks, openai-gym, pytorch},
 }
 
 @misc{david_ha_slime_2020,
 	title = {Slime {Volleyball} {Gym} {Environment}},
-	url = {https://github.com/hardmaru/slimevolleygym},
 	author = {{David Ha}},
 	year = {2020},
 }
 
-@article{ahmed_genetic_2010-1,
+@article{ahmed_genetic_2010,
 	title = {Genetic {Algorithm} for the {Traveling} {Salesman} {Problem} using {Sequential} {Constructive} {Crossover} {Operator}},
 	volume = {3},
 	doi = {10.14569/IJACSA.2020.0110275},
@@ -494,7 +191,6 @@ In comparison with the (stochastic) fitness proportionate selection method, tour
 @article{kaya_novel_2011,
 	title = {A {Novel} {Crossover} {Operator} for {Genetic} {Algorithms}: {Ring} {Crossover}},
 	shorttitle = {A {Novel} {Crossover} {Operator} for {Genetic} {Algorithms}},
-	url = {http://arxiv.org/abs/1105.0355},
 	abstract = {The genetic algorithm (GA) is an optimization and search technique based on the principles of genetics and natural selection. A GA allows a population composed of many individuals to evolve under specified selection rules to a state that maximizes the "fitness" function. In that process, crossover operator plays an important role. To comprehend the GAs as a whole, it is necessary to understand the role of a crossover operator. Today, there are a number of different crossover operators that can be used in GAs. However, how to decide what operator to use for solving a problem? A number of test functions with various levels of difficulty has been selected as a test polygon for determine the performance of crossover operators. In this paper, a novel crossover operator called 'ring crossover' is proposed. In order to evaluate the efficiency and feasibility of the proposed operator, a comparison between the results of this study and results of different crossover operators used in GAs is made through a number of test functions with various levels of difficulty. Results of this study clearly show significant differences between the proposed operator and the other crossover operators.},
 	urldate = {2020-11-12},
 	journal = {arXiv:1105.0355 [cs]},
@@ -506,45 +202,18 @@ In comparison with the (stochastic) fitness proportionate selection method, tour
 	file = {arXiv Fulltext PDF:C\:\\Users\\ruben\\Zotero\\storage\\V39WAU4P\\Kaya et al. - 2011 - A Novel Crossover Operator for Genetic Algorithms.pdf:application/pdf;arXiv.org Snapshot:C\:\\Users\\ruben\\Zotero\\storage\\5V5GGRQV\\1105.html:text/html},
 }
 
-@article{huynh_separating_nodate,
-	title = {Separating {Axis} {Theorem} for {Oriented} {Bounding} {Boxes}},
-	language = {en},
-	author = {Huynh, Johnny},
-	pages = {45},
-	file = {Huynh - Separating Axis Theorem for Oriented Bounding Boxe.pdf:C\:\\Users\\ruben\\Zotero\\storage\\XLEX8YDS\\Huynh - Separating Axis Theorem for Oriented Bounding Boxe.pdf:application/pdf},
-}
-
-@article{carlos_algoritmos_nodate,
-	title = {Algoritmos {Genéticos}. {Aplicación} al {Juego} de las {N} {Reinas}},
-	url = {https://www.academia.edu/28323442/Algoritmos_Gen%C3%A9ticos_Aplicaci%C3%B3n_al_Juego_de_las_N_Reinas},
-	abstract = {Algoritmos Genéticos. Aplicación al Juego de las N Reinas},
-	language = {en},
-	urldate = {2020-11-12},
-	author = {Carlos, Juan},
-	file = {Snapshot:C\:\\Users\\ruben\\Zotero\\storage\\4PY8J8SM\\Algoritmos_Genéticos_Aplicación_al_Juego_de_las_N_Reinas.html:text/html},
-}
-
-@article{sedeno_articulo_nodate,
-	title = {{ARTICULO} {Introduccion} a la {Inteligencia} {Artificial}},
-	url = {https://www.academia.edu/28832393/ARTICULO_Introduccion_a_la_Inteligencia_Artificial},
-	abstract = {ARTICULO Introduccion a la Inteligencia Artificial},
-	language = {en},
-	urldate = {2020-11-12},
-	author = {Sedeño, Nicolas},
-	file = {Snapshot:C\:\\Users\\ruben\\Zotero\\storage\\UN38QC9A\\ARTICULO_Introduccion_a_la_Inteligencia_Artificial.html:text/html},
-}
-
-@article{marwala_forecasting_nodate,
+@article{marwala_forecasting_2010,
 	title = {Forecasting the {Stock} {Market} {Index} {Using} {Artificial} {Intelligence} {Techniques}},
+	abstract = {The weak form of Efficient Market hypothesis (EMH) states that it is impossible to forecast the future price of an asset based on the information contained in the historical prices of an asset. This means that the market behaves as a random walk and as a result makes forecasting impossible. Furthermore, financial forecasting is a difficult task due to the intrinsic complexity of the financial system. The objective of this work was to use artificial intelligence (AI) techniques to model and predict the future price of a stock market index. Three artificial intelligence techniques, namely, neural networks (NN), support vector machines and neuro-fuzzy systems are implemented in forecasting the future price of a stock market index based on its historical price information. Artificial intelligence techniques have the ability to take into consideration financial system complexities and they are used as financial time series forecasting tools. Two techniques are used to benchmark the AI techniques, namely, Autoregressive Moving Average (ARMA) which is linear modelling technique and random walk (RW) technique. The experimentation was performed on data obtained from the Johannesburg Stock Exchange. The data used was a series of past closing prices of the All Share Index. The results showed that the three techniques have the ability to predict the future price of the Index with an acceptable accuracy. All three artificial intelligence techniques outperformed the linear model. However, the random walk method outperfomed all the other techniques. These techniques show an ability to predict the future price however, because of the transaction costs of trading in the market, it is not possible to show that the three techniques can disprove the weak form of market efficiency. The results show that the ranking of performances support vector machines, neuro-fuzzy systems, multilayer perceptron neural networks is dependent on the accuracy measure used.},
 	language = {en},
 	author = {Marwala, Lufuno Ronald},
+	year = {2010},
 	pages = {166},
 	file = {Marwala - Forecasting the Stock Market Index Using Artificia.pdf:C\:\\Users\\ruben\\Zotero\\storage\\VAPXP46E\\Marwala - Forecasting the Stock Market Index Using Artificia.pdf:application/pdf},
 }
 
 @misc{santos_using_2020,
 	title = {Using {Deep} {Learning} {AI} to {Predict} the {Stock} {Market}},
-	url = {https://towardsdatascience.com/using-deep-learning-ai-to-predict-the-stock-market-9399cf15a312},
 	abstract = {Forecasting Stock Prices with Neural Networks containing Multivariable Inputs from Technical Analysis},
 	language = {en},
 	urldate = {2020-11-13},
@@ -568,7 +237,6 @@ In comparison with the (stochastic) fitness proportionate selection method, tour
 @article{kumar_blending_2012,
 	title = {Blending {Roulette} {Wheel} {Selection} \& {Rank} {Selection} in {Genetic} {Algorithms}},
 	issn = {20103700},
-	url = {http://www.ijmlc.org/show-32-116-1.html},
 	doi = {10.7763/IJMLC.2012.V2.146},
 	abstract = {Both exploration and exploitation are the techniques employed normally by all the optimization techniques. In genetic algorithms, the roulette wheel selection operator has essence of exploitation while rank selection is influenced by exploration. In this paper, a blend of these two selection operators is proposed that is a perfect mix of both i.e. exploration and exploitation. The blended selection operator is more exploratory in nature in initial iterations and with the passage of time, it gradually shifts towards exploitation. The proposed solution is implemented in MATLAB using travelling salesman problem and the results were compared with roulette wheel selection and rank selection with different problem sizes.},
 	language = {en},
@@ -593,65 +261,6 @@ In comparison with the (stochastic) fitness proportionate selection method, tour
 	file = {IEEE Xplore Full Text PDF:C\:\\Users\\ruben\\Zotero\\storage\\UXKGHRS8\\Shukla et al. - 2015 - Comparative review of selection techniques in gene.pdf:application/pdf;IEEE Xplore Abstract Record:C\:\\Users\\ruben\\Zotero\\storage\\8GEYD4TJ\\7154916.html:text/html},
 }
 
-@book{jyotishree_knowledge_2012,
-	title = {Knowledge based operation and problems representation in genetic algorithms},
-	copyright = {university},
-	url = {http://shodhganga.inflibnet.ac.in:8080/jspui/handle/10603/32680},
-	abstract = {None},
-	language = {English},
-	urldate = {2020-11-18},
-	author = {Jyotishree},
-	year = {2012},
-	note = {Accepted: 2015-01-09T04:50:15Z
-Publisher: Kurukshetra},
-	file = {Snapshot:C\:\\Users\\ruben\\Zotero\\storage\\3X7PLCQK\\32680.html:text/html;Snapshot:C\:\\Users\\ruben\\Zotero\\storage\\KYLLIF86\\32680.html:text/html},
-}
-
-@article{waltman_transcatheter_1980,
-	title = {Transcatheter embolization versus vasopressin infusion for the control of arteriocapillary gastrointestinal bleeding},
-	volume = {3},
-	issn = {0174-1551},
-	doi = {10.1007/BF02552746},
-	abstract = {The transcatheter method appropriate for use in the control of arteriocapillary gastrointestinal bleeding is a point of controversy. Intraarterial vasopressin infusion, which has been performed in more than 500 patients at the Massachusetts General Hospital, has achieved control in 90\% of patients actively bleeding from the stomach and colon. In view of the severity of hemorrhage and associated illnesses in these patients, the complication rate associated with this method was low. Intraarterial vasopressin infusions were ineffective in pyloroduodenal and postoperative bleeding sites and hemorrhage from abscesses. While embolization can control bleeding in these areas, complications have been shown despite precise selective catheter placement. Because of catheterization difficulties and the permanency of the vascular occlusion, embolization is reserved for patients in whom surgical intervention would be associated with extreme risks.},
-	language = {eng},
-	number = {4},
-	journal = {Cardiovascular and Interventional Radiology},
-	author = {Waltman, A. C.},
-	year = {1980},
-	pmid = {6970077},
-	keywords = {Adult, Aged, Angiography, Catheterization, Embolization, Therapeutic, Female, Gastrointestinal Hemorrhage, Humans, Infusions, Intra-Arterial, Male, Middle Aged, Vasopressins},
-	pages = {289--295},
-}
-
-@article{waltman_transcatheter_1980-1,
-	title = {Transcatheter embolization versus vasopressin infusion for the control of arteriocapillary gastrointestinal bleeding},
-	volume = {3},
-	issn = {0174-1551},
-	doi = {10.1007/BF02552746},
-	abstract = {The transcatheter method appropriate for use in the control of arteriocapillary gastrointestinal bleeding is a point of controversy. Intraarterial vasopressin infusion, which has been performed in more than 500 patients at the Massachusetts General Hospital, has achieved control in 90\% of patients actively bleeding from the stomach and colon. In view of the severity of hemorrhage and associated illnesses in these patients, the complication rate associated with this method was low. Intraarterial vasopressin infusions were ineffective in pyloroduodenal and postoperative bleeding sites and hemorrhage from abscesses. While embolization can control bleeding in these areas, complications have been shown despite precise selective catheter placement. Because of catheterization difficulties and the permanency of the vascular occlusion, embolization is reserved for patients in whom surgical intervention would be associated with extreme risks.},
-	language = {eng},
-	number = {4},
-	journal = {Cardiovascular and Interventional Radiology},
-	author = {Waltman, A. C.},
-	year = {1980},
-	pmid = {6970077},
-	keywords = {Adult, Aged, Angiography, Catheterization, Embolization, Therapeutic, Female, Gastrointestinal Hemorrhage, Humans, Infusions, Intra-Arterial, Male, Middle Aged, Vasopressins},
-	pages = {289--295},
-}
-
-@misc{noauthor_tecnicas_2019,
-	title = {Técnicas de la inteligencia artificial: ¿{Cuáles} son y para qué se utilizan?},
-	shorttitle = {Técnicas de la inteligencia artificial},
-	url = {https://www.apd.es/tecnicas-de-la-inteligencia-artificial-cuales-son-y-para-que-se-utilizan/},
-	abstract = {Sirven para desarrollar e investigar diversas aplicaciones dentro del campo de la informática. Descubrimos las 15 técnicas de la inteligencia Artificial.},
-	language = {es},
-	urldate = {2020-11-18},
-	journal = {APD España},
-	month = apr,
-	year = {2019},
-	file = {Snapshot:C\:\\Users\\ruben\\Zotero\\storage\\ZDKBVX9N\\tecnicas-de-la-inteligencia-artificial-cuales-son-y-para-que-se-utilizan.html:text/html},
-}
-
 @book{sucar_probabilistic_2015,
 	address = {London},
 	edition = {1st ed. 2015},
@@ -667,27 +276,6 @@ Publisher: Kurukshetra},
 	keywords = {Artificial intelligence, Artificial Intelligence, Electrical engineering, Electrical Engineering, Mathematical statistics, Pattern recognition, Pattern Recognition, Probabilities, Probability and Statistics in Computer Science, Probability Theory and Stochastic Processes},
 }
 
-@book{de_vries_learn_2020,
-	title = {Learn {OpenGL}: {Learn} modern {OpenGL} graphics programming in a step-by-step fashion},
-	isbn = {978-90-90-33256-7},
-	shorttitle = {Learn {OpenGL}},
-	abstract = {Graphics programmers are often coined the 'wizards' of the game industry. As every magician knows, terms like wizardry and magic are often somewhat exaggerated. Yet, there is a certain charm to graphics programming: the ability to conjure up complete living worlds at our fingertips. Learn OpenGL will teach you the basics, the intermediate, and tons of advanced knowledge, using modern (core-profile) OpenGL. The aim of this book is to show you all there is to modern OpenGL in an easy-to-understand fashion, with clear examples and step-by-step instructions, while also providing a useful reference for later studies. After years of continuous work and improvements on the accompanying website learnopengl.com, with the help of thousands of readers, its content has been professionally revised for this physical copy you now find in your hands. Graphics programming isn't as hard as many people make it out to be... you just need to start.},
-	language = {English},
-	author = {de Vries, Joey},
-	year = {2020},
-	note = {OCLC: 1198376019},
-}
-
-@article{collobert_natural_nodate,
-	title = {Natural {Language} {Processing} ({Almost}) from {Scratch}},
-	abstract = {We propose a uniﬁed neural network architecture and learning algorithm that can be applied to various natural language processing tasks including part-of-speech tagging, chunking, named entity recognition, and semantic role labeling. This versatility is achieved by trying to avoid task-speciﬁc engineering and therefore disregarding a lot of prior knowledge. Instead of exploiting man-made input features carefully optimized for each task, our system learns internal representations on the basis of vast amounts of mostly unlabeled training data. This work is then used as a basis for building a freely available tagging system with good performance and minimal computational requirements.},
-	language = {en},
-	journal = {NATURAL LANGUAGE PROCESSING},
-	author = {Collobert, Ronan and Weston, Jason and Bottou, Leon and Karlen, Michael and Kavukcuoglu, Koray and Kuksa, Pavel},
-	pages = {45},
-	file = {Collobert et al. - Natural Language Processing (Almost) from Scratch.pdf:C\:\\Users\\ruben\\Zotero\\storage\\9GG8N6B4\\Collobert et al. - Natural Language Processing (Almost) from Scratch.pdf:application/pdf},
-}
-
 @article{collobert_natural_2011,
 	title = {Natural {Language} {Processing} ({Almost}) from {Scratch}},
 	volume = {12},
@@ -700,4 +288,60 @@ Publisher: Kurukshetra},
 	year = {2011},
 	pages = {2493--2537},
 	file = {Full Text PDF:C\:\\Users\\ruben\\Zotero\\storage\\5ZJR8CUA\\Collobert et al. - 2011 - Natural Language Processing (Almost) from Scratch.pdf:application/pdf},
+}
+
+@misc{furqan_performance_2017,
+	title = {Performance of {Arithmetic} {Crossover} and {Heuristic} {Crossover} in {Genetic} {Algorithm} {Based} on {Alpha} {Parameter}},
+	abstract = {Genetic algorithm (GA) is a heuristic search algorithm based on the idea of natural selection that 
+occurs in the process of evolution and genetic operations. One of the critical stages in the genetic algorithm is a crossover process. In the crossover, phase occurs the gene mix between the parent that it will determine the 
+diversity in the population. This paper will describe the effects of the alpha parameter in the crossover process 
+which includes arithmetic crossover and heuristic crossover. The Case studies that used in this study is the Traveling Salesman Problem (TSP). The influence of parameters on the performance of genetic algorithm alpha 
+is associated with gene diversity resulting from the crossover. The results showed that in the arithmetic 
+crossover, the best alpha value is 0.5, becoming the best alpha value because of a balanced genes combination 
+from both parents. On Heuristic Crossover obtained different results where the alpha value which gives the best performance is 0.9. This method slightly different from the Arithmetic Crossover caused on Heuristic 
+Crossover; the alpha parameter used as multiplier factor after the subtraction process of genes from both 
+parents.},
+	language = {en},
+	urldate = {2020-11-24},
+	journal = {undefined},
+	author = {Furqan, Mhd and Hartono, H. and Ongko, Erianto and Ikhsan, M.},
+	year = {2017},
+	file = {Snapshot:C\:\\Users\\ruben\\Zotero\\storage\\777JKTPV\\903dce68eb97f50c3993305100c95d8607d1e459.html:text/html},
+}
+
+@article{gestal_introduccion_2013,
+	title = {Introduccion a los {Algoritmos} {Geneticos}},
+	author = {Gestal, Marcos},
+	month = aug,
+	year = {2013},
+	file = {Full Text PDF:C\:\\Users\\ruben\\Zotero\\storage\\IGXDMJB4\\Gestal - 2013 - Introduccion a los Algoritmos Geneticos.pdf:application/pdf},
+}
+
+@misc{mccarthy_basic_2007,
+	title = {Basic {Questions}},
+	urldate = {2020-11-29},
+	author = {McCarthy, John},
+	month = nov,
+	year = {2007},
+	file = {Basic Questions:C\:\\Users\\ruben\\Zotero\\storage\\DDM8YVJV\\node1.html:text/html},
+}
+
+@article{moghaddam_stock_2016,
+	title = {Stock market index prediction using artificial neural network},
+	volume = {21},
+	issn = {2077-1886},
+	doi = {10.1016/j.jefas.2016.07.002},
+	abstract = {In this study the ability of artificial neural network (ANN) in forecasting the daily NASDAQ stock exchange rate was investigated. Several feed forward ANNs that were trained by the back propagation algorithm have been assessed. The methodology used in this study considered the short-term historical stock prices as well as the day of week as inputs. Daily stock exchange rates of NASDAQ from January 28, 2015 to 18 June, 2015 are used to develop a robust model. First 70 days (January 28 to March 7) are selected as training dataset and the last 29 days are used for testing the model prediction ability. Networks for NASDAQ index prediction for two type of input dataset (four prior days and nine prior days) were developed and validated.
+Resumen
+En este estudio se investigó la capacidad de previsión del índice bursátil diario NASDAQ, por parte de la red neuronal artificial (RNA). Se evaluaron diversas RNA proalimentadas, que fueron entrenadas mediante un algoritmo de retropropagación. La metodología utilizada en este estudio consideró como inputs los precios bursátiles históricos a corto plazo, así como el día de la semana. Se utilizaron los índices bursátiles diarios de NASDAQ del 28 de enero al 18 de junio de 2015, para desarrollar un modelo robusto. Se seleccionaron los primeros 70 días (del 28 de enero al 7 de marzo) como conjuntos de datos de entrenamiento, y los últimos 29 días para probar la capacidad del modelo de predicción. Se desarrollaron y validaron redes para la predicción del índice NASDAQ, para dos tipos de conjuntos de datos de input (los cuatro y los nueve días previos).},
+	language = {en},
+	number = {41},
+	urldate = {2020-11-29},
+	journal = {Journal of Economics, Finance and Administrative Science},
+	author = {Moghaddam, Amin Hedayati and Moghaddam, Moein Hedayati and Esfandyari, Morteza},
+	month = dec,
+	year = {2016},
+	keywords = {ANN, NASDAQ, Predicción, Prediction},
+	pages = {89--93},
+	file = {ScienceDirect Full Text PDF:C\:\\Users\\ruben\\Zotero\\storage\\5P65IHJK\\Moghaddam et al. - 2016 - Stock market index prediction using artificial neu.pdf:application/pdf;ScienceDirect Snapshot:C\:\\Users\\ruben\\Zotero\\storage\\WTKC936M\\S2077188616300245.html:text/html},
 }
