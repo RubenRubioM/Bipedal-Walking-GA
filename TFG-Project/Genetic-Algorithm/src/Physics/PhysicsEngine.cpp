@@ -206,7 +206,6 @@ void PhysicsEngine::ApplySkeletonMovement(ESkeleton* skeleton) const {
 
 	};
 
-	// TODO: Check the speed of the core.
 	auto checkCoreMovement = [&core](EMesh* hip, EMesh* knee, bool onAir) {
 		// If (hip going backwards and still above 0 rotation || knee going backwards and hip above 0 rotation) && touching the floor
 		if (((hip->GetRotationVelocity().x < 0 && hip->GetRotation().x > 0) || (knee->GetRotationVelocity().x < 0 && hip->GetRotation().x > 0)) && !onAir) {
