@@ -30,21 +30,21 @@ GeneticAlgorithm::GeneticAlgorithm() {
 	// Create population
 	for (uint16_t i = 0; i < Config::populationSize; ++i) {
 		// Entities creation.
-		auto core = new EMesh(Transformable(offset, glm::vec3(0.0f, 0.0f, 0), glm::vec3(0.1f)), "media/torso.obj");
+		auto core = new EMesh(Transformable(offset, glm::vec3(0.0f, 0.0f, 0), glm::vec3(0.1f)), "media/torso2.obj");
 		core->SetName("Core");
-		auto hip1 = new EMesh(Transformable(glm::vec3(-28.0f, 0.0f, 0.0f), ESkeleton::hipDefaultRotation, glm::vec3(0.75f)), "media/cinturaD.obj", core);
+		auto hip1 = new EMesh(Transformable(glm::vec3(-28.0f, 0.0f, 0.0f), ESkeleton::hipDefaultRotation, glm::vec3(0.75f)), "media/cinturaD2.obj", core);
 		hip1->SetName("Hip1");
 		auto knee1 = new EMesh(Transformable(glm::vec3(23.0f, 200.0f, 0.0f), ESkeleton::kneeDefaultRotation, glm::vec3(1.0f)), "media/rodilla.obj", hip1);
 		knee1->SetName("Knee1");
-		auto hip2 = new EMesh(Transformable(glm::vec3(24.0f, 0.0f, 0.0f), ESkeleton::hipDefaultRotation, glm::vec3(0.75f)), "media/cinturaI.obj", core);
+		auto hip2 = new EMesh(Transformable(glm::vec3(24.0f, 0.0f, 0.0f), ESkeleton::hipDefaultRotation, glm::vec3(0.75f)), "media/cinturaI2.obj", core);
 		hip2->SetName("Hip2");
 		auto knee2 = new EMesh(Transformable(glm::vec3(-18.0f, 200.0f, 0.0f), ESkeleton::kneeDefaultRotation, glm::vec3(1.0f)), "media/rodilla.obj", hip2);
 		knee2->SetName("Knee2");
-		auto shoulder1 = new EMesh(Transformable(glm::vec3(-50.0f, 150.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)), "media/brazo arriba.obj", core);
+		auto shoulder1 = new EMesh(Transformable(glm::vec3(-50.0f, 150.0f, -20.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)), "media/brazo arriba.obj", core);
 		shoulder1->SetName("Shoulder1");
 		auto elbow1 = new EMesh(Transformable(glm::vec3(-80.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)), "media/brazo abajo.obj", shoulder1);
 		elbow1->SetName("Elbow1");
-		auto shoulder2 = new EMesh(Transformable(glm::vec3(40.0f, 150.0f, 0.0f), glm::vec3(0.0f, 180.0f, 0.0f), glm::vec3(1.0f)), "media/brazo arriba.obj", core);
+		auto shoulder2 = new EMesh(Transformable(glm::vec3(40.0f, 150.0f, -20.0f), glm::vec3(0.0f, 180.0f, 0.0f), glm::vec3(1.0f)), "media/brazo arriba.obj", core);
 		shoulder2->SetName("Shoulder2");
 		auto elbow2 = new EMesh(Transformable(glm::vec3(-80.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1.0f)), "media/brazo abajo.obj", shoulder2);
 		elbow2->SetName("Elbow2");

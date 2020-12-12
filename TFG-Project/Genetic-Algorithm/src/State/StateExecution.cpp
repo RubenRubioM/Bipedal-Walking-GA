@@ -164,7 +164,7 @@ void StateExecution::Render() {
 		}
 		imGuiManager->Checkbox("Gravity", &physicsEngine->GetGravityActivated());
 
-		if (imGuiManager->Button("Export generation dataset")) {
+		if (imGuiManager->Button("Export dataset")) {
 			geneticAlgorithm->WriteCSV();
 		}
 		imGuiManager->End();
