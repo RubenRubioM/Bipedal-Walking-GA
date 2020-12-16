@@ -254,11 +254,11 @@ void StateExecution::ShowConfigurationWindow() {
 	imGuiManager->BulletText("Maximum generations");
 	imGuiManager->IntSlider("Number of generations", &Config::maxGenerations, 2, 500);
 
-	imGuiManager->BulletText("New genes probability");
+	imGuiManager->BulletText("Percentage of new genes");
 	imGuiManager->FloatSlider("Percentage of new genes", &Config::newGenProbability, 0, 1);
 
 	imGuiManager->BulletText("Mutation probability");
-	imGuiManager->FloatSlider("Percentage of mutations", &Config::mutationProbability, 0, 1);
+	imGuiManager->FloatSlider("Gen mutation probability", &Config::mutationProbability, 0, 1);
 
 	imGuiManager->Separator();
 

@@ -26,7 +26,7 @@ class Config {
 		/// <summary>
 		/// Population size.
 		/// </summary>
-		inline static int populationSize{ 10 };
+		inline static int populationSize{ 50 };
 		
 		/// <summary>
 		/// Flexibility probability distribution.
