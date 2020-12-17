@@ -1,4 +1,4 @@
-# Genetic-Algorithm-TFG
+# Bipedal walking with genetics algorithms
 One of the goals in this project is to facilitate the understanding about one of the many fields in the artificial intelligence, genetic algorithms. The way to achieve this goal has been through the visual representation of both execution and data.
 
 In order to achieve this visual representation, the problem about teaching how to walk to a bipedal structure with the aforementioned genetic algorithms has been raised. First, an exhaustive investigation of the use of these algorithms has been carried out and similar projects made with them have been presented.
