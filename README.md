@@ -7,4 +7,4 @@ A graphic and physic engine have been necessary in order to be able to visualize
 
 Finally, this tool has been used to extract and detail the final results, that is, the solution to the given problem and the study of every parameter involved in the execution of the algorithm. This way, the user counts with the final results aswell as the posibility of using the tool to extract his own conclusions since the best way to learn something is by doing by yourself.
 
-You can read the full thesis [this](https://github.com/RubenRubioM/Genetic-Algorithm-TFG/blob/develop/Thesis/Thesis.pdf)
+You can read the full thesis [here](https://github.com/RubenRubioM/Genetic-Algorithm-TFG/blob/develop/Thesis/Thesis.pdf)
