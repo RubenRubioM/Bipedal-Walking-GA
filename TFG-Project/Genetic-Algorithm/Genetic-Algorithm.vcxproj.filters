@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Program.cpp" />
+    <ClCompile Include="src\Entities\Entity.cpp" />
+    <ClCompile Include="src\Entities\EMesh.cpp" />
+    <ClCompile Include="src\Entities\ECamera.cpp" />
+    <ClCompile Include="src\Render\RenderEngine.cpp" />
+    <ClCompile Include="src\State\State.cpp" />
+    <ClCompile Include="src\State\StateExecution.cpp" />
+    <ClCompile Include="src\DataTypes\Transformable.cpp" />
+    <ClCompile Include="src\IMGUI\imgui.cpp" />
+    <ClCompile Include="src\IMGUI\imgui_demo.cpp" />
+    <ClCompile Include="src\IMGUI\imgui_draw.cpp" />
+    <ClCompile Include="src\IMGUI\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\IMGUI\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\IMGUI\imgui_widgets.cpp" />
+    <ClCompile Include="src\Render\ImGuiManager.cpp" />
+    <ClCompile Include="src\Physics\PhysicsEngine.cpp" />
+    <ClCompile Include="src\DataTypes\OBBCollider.cpp" />
+    <ClCompile Include="src\Entities\Compositions\ESkeleton.cpp" />
+    <ClCompile Include="src\GeneticAlgorithm\GeneticAlgorithm.cpp" />
+    <ClCompile Include="src\IMGUI\implot_items.cpp" />
+    <ClCompile Include="src\IMGUI\implot_demo.cpp" />
+    <ClCompile Include="src\IMGUI\implot.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Program.h" />
+    <ClInclude Include="src\Entities\Entity.h" />
+    <ClInclude Include="src\Entities\EMesh.h" />
+    <ClInclude Include="src\Utils\Shaders.h" />
+    <ClInclude Include="src\Entities\ECamera.h" />
+    <ClInclude Include="src\Render\RenderEngine.h" />
+    <ClInclude Include="src\State\State.h" />
+    <ClInclude Include="src\State\StateExecution.h" />
+    <ClInclude Include="src\DataTypes\Transformable.h" />
+    <ClInclude Include="src\IMGUI\imconfig.h" />
+    <ClInclude Include="src\IMGUI\imgui.h" />
+    <ClInclude Include="src\IMGUI\imgui_impl_glfw.h" />
+    <ClInclude Include="src\IMGUI\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\IMGUI\imgui_internal.h" />
+    <ClInclude Include="src\IMGUI\imstb_rectpack.h" />
+    <ClInclude Include="src\IMGUI\imstb_textedit.h" />
+    <ClInclude Include="src\IMGUI\imstb_truetype.h" />
+    <ClInclude Include="src\Render\ImGuiManager.h" />
+    <ClInclude Include="src\Physics\PhysicsEngine.h" />
+    <ClInclude Include="src\DataTypes\OBBCollider.h" />
+    <ClInclude Include="src\Entities\Compositions\ESkeleton.h" />
+    <ClInclude Include="src\Utils\Utils.h" />
+    <ClInclude Include="src\GeneticAlgorithm\GeneticAlgorithm.h" />
+    <ClInclude Include="src\Utils\Config.h" />
+    <ClInclude Include="src\IMGUI\implot.h" />
+    <ClInclude Include="src\IMGUI\implot_internal.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\CMakeLists.txt" />
+  </ItemGroup>
+</Project>
